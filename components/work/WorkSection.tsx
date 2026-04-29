@@ -35,7 +35,9 @@ export function WorkSection() {
       )}
     >
       <div className="mb-20 flex flex-col items-center gap-20 max-sm:mb-12 max-sm:gap-12">
-        <Title variant="display">our work</Title>
+        <div className={cn(styles.title, open && styles.titleHidden)}>
+          <Title variant="display">our work</Title>
+        </div>
         <Folder open={open} onClick={onClick} />
       </div>
 
