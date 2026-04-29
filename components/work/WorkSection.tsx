@@ -5,6 +5,7 @@ import { Title } from "@/components/Title";
 import { Folder } from "./Folder";
 import { WorkRow } from "./WorkRow";
 import { CaatPreview } from "./CaatPreview";
+import { MoupPreview } from "./MoupPreview";
 import { VolleytubePreview } from "./VolleytubePreview";
 import { ProvolleyPreview } from "./ProvolleyPreview";
 import styles from "./WorkSection.module.css";
@@ -51,6 +52,12 @@ export function WorkSection() {
           brand="caat"
           category="webapp · in-house"
           description="A college application platform where students track every deadline, essay, scholarship, and document, all in one place."
+        />
+        <WorkRow
+          preview={<MoupPreview />}
+          brand="moup"
+          category="webapp · in-house"
+          description="Movies Ordered Using Pairwise. A film ranking app that replaces broken star ratings with head-to-head comparisons — pick this or that, and build a perfectly ordered list of your favourites."
         />
         <WorkRow
           preview={<VolleytubePreview />}

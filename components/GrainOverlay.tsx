@@ -16,7 +16,7 @@ export function GrainOverlay() {
     if (!ctx) return;
 
     const size = 1024;
-    const patternAlpha = 8;
+    const patternAlpha = 18;
     const patternRefreshInterval = 3;
 
     const resize = () => {
