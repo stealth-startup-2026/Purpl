@@ -1,0 +1,268 @@
+/* CSS recreation of the caat (mycaat.com) hero. */
+
+.tile {
+  background: #ffffff;
+  border: 1px solid var(--color-line-soft);
+}
+
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 1px, #000 1px, #000 2px);
+  background-size: 100% 4px;
+  opacity: 0.025;
+}
+
+.hero {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: clamp(0.7rem, 1.6vw, 1.1rem) clamp(0.9rem, 1.8vw, 1.3rem);
+  display: grid;
+  grid-template-columns: 56% 44%;
+  column-gap: 0.6rem;
+  align-items: center;
+  color: #000;
+  font-family: var(--font-source-serif), Georgia, serif;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+
+.badge {
+  border: 1px solid #000;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.42rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 0.22rem 0.5rem;
+  font-weight: 500;
+  color: #000;
+}
+
+.title {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: #000;
+  margin: 0.1rem 0 0;
+}
+
+.titleRow {
+  display: block;
+  font-size: clamp(0.75rem, 1.5vw, 1.05rem);
+  font-weight: 700;
+}
+
+.titleAccent {
+  display: block;
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.85vw, 2rem);
+  color: var(--color-caat-red);
+  text-decoration: underline;
+  text-decoration-color: var(--color-caat-red);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+  line-height: 1;
+}
+
+.subtitle {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 0.5rem;
+  font-weight: 400;
+  color: #525252;
+  max-width: 24ch;
+  line-height: 1.4;
+  margin-top: 0.2rem;
+}
+
+.cta {
+  background: #000;
+  color: #fff;
+  padding: 0.32rem 0.6rem;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.42rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.early {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 0.42rem;
+  color: #525252;
+  margin-top: 0.15rem;
+}
+
+.early strong { color: #000; font-weight: 700; }
+
+.right {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shadow {
+  position: absolute;
+  width: 92%;
+  height: 88%;
+  background: #F5F5F5;
+  border: 1px solid #E5E5E5;
+  transform: rotate(-1deg) translate(4px, 4px);
+  z-index: 0;
+}
+
+.mockup {
+  position: relative;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid #000;
+  transform: rotate(-2.5deg);
+  font-family: var(--font-source-serif), Georgia, serif;
+  z-index: 1;
+}
+
+.bar {
+  background: #000;
+  color: #fff;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 700;
+  font-size: 0.4rem;
+  letter-spacing: 0.15em;
+  padding: 0.22rem 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px solid #000;
+}
+
+.dots { display: flex; gap: 0.13rem; }
+.dots i { width: 0.32rem; height: 0.32rem; border: 1px solid #fff; }
+
+.body {
+  padding: 0.38rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+}
+
+.greeting strong {
+  display: block;
+  font-family: var(--font-playfair), Georgia, serif;
+  font-weight: 700;
+  font-size: 0.46rem;
+  color: #000;
+}
+
+.greeting em {
+  display: block;
+  font-style: normal;
+  font-size: 0.34rem;
+  color: #525252;
+  margin-top: 0.05rem;
+}
+
+.card {
+  border: 1px solid #000;
+  padding: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cardHead { display: flex; justify-content: space-between; align-items: center; }
+
+.cardTitle {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.34rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #000;
+}
+
+.pct {
+  background: var(--color-caat-red);
+  color: #fff;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.32rem;
+  font-weight: 700;
+  padding: 0.04rem 0.22rem;
+}
+
+.progress { height: 0.1rem; background: #E5E5E5; }
+.progress > div { width: 40%; height: 100%; background: var(--color-caat-red); }
+
+.pills { display: grid; grid-template-columns: 1fr 1fr; gap: 0.14rem; }
+
+.pills span {
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 0.32rem;
+  font-weight: 500;
+  color: #000;
+  border: 1px solid #E5E5E5;
+  padding: 0.07rem 0.22rem;
+  display: flex;
+  align-items: center;
+  gap: 0.18rem;
+}
+
+.pills span::before {
+  content: "";
+  width: 0.22rem;
+  height: 0.22rem;
+  border-radius: 50%;
+  border: 1px solid #888;
+}
+
+.pills span.done {
+  background: #F5F5F5;
+  border-color: transparent;
+  color: #888;
+  text-decoration: line-through;
+}
+
+.pills span.done::before {
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+.deadlines { display: flex; flex-direction: column; gap: 0.18rem; }
+
+.deadline {
+  display: flex;
+  align-items: center;
+  gap: 0.22rem;
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 0.34rem;
+  color: #000;
+}
+
+.deadline i { width: 0.18rem; height: 0.18rem; flex-shrink: 0; }
+
+.deadline em {
+  font-style: normal;
+  color: #888;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.3rem;
+  margin-left: auto;
+}
+
+.deadline b {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.32rem;
+  font-weight: 700;
+  margin-left: 0.2rem;
+}

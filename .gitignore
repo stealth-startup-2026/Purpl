@@ -9,7 +9,14 @@
 .idea/
 *.swp
 
-# Node (in case we add tooling later)
+# Node / Next.js
 node_modules/
+.next/
+out/
 .env
 .env.local
+.env.*.local
+next-env.d.ts.bak
+
+# TypeScript incremental build info
+*.tsbuildinfo

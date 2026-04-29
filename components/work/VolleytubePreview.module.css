@@ -1,0 +1,179 @@
+/* Match-detail layout (mirrors the volleytube /results/match/[id] screen). */
+
+.tile {
+  background: #FAFAF7;
+  border: 1px solid var(--color-line-soft);
+}
+
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: linear-gradient(180deg, rgba(168, 32, 26, 0.025), transparent 30%);
+}
+
+.preview {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: clamp(0.85rem, 1.8vw, 1.3rem) clamp(0.95rem, 2vw, 1.4rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.5rem, 0.95vw, 0.7rem);
+  color: #0A0A0A;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.16rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid #E8E5DD;
+}
+
+.kicker {
+  color: var(--color-vt-red);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.subline {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.48rem;
+  color: #4A4A4A;
+}
+
+.final {
+  align-self: flex-start;
+  margin-top: 0.18rem;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.42rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #0A0A0A;
+  border: 1px solid #E8E5DD;
+  background: #fff;
+  padding: 0.16rem 0.4rem;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 0.7rem;
+  align-items: center;
+  padding: 0.2rem 0;
+}
+
+.teams {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(0.7rem, 1.3vw, 0.95rem);
+  letter-spacing: -0.02em;
+  color: #0A0A0A;
+  line-height: 1.05;
+}
+
+.role {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.4rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4A4A4A;
+  margin-top: 0.08rem;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  color: #0A0A0A;
+  line-height: 1;
+}
+
+.score span {
+  font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+}
+
+.score em {
+  font-style: normal;
+  font-weight: 300;
+  font-size: clamp(0.95rem, 1.9vw, 1.45rem);
+  color: #9A9A9A;
+  line-height: 0.6;
+  margin: -0.05em 0;
+}
+
+.attendees {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.4rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #4A4A4A;
+  padding-top: 0.3rem;
+  border-top: 1px solid #E8E5DD;
+}
+
+.sets {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.sets thead th {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.4rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #4A4A4A;
+  padding: 0.18rem 0;
+  text-align: center;
+  border-bottom: 1px solid #E8E5DD;
+}
+
+.sets thead th:first-child { width: 1.3rem; }
+
+.sets tbody th {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.42rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #0A0A0A;
+  text-align: left;
+  padding: 0.12rem 0;
+}
+
+.sets tbody td {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(0.65rem, 1.15vw, 0.9rem);
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #0A0A0A;
+  padding: 0.05rem 0;
+}
+
+.sets td.empty {
+  color: #B5B0A6;
+  font-weight: 300;
+}
