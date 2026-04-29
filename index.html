@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>purpl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* index page-specific styles */
+    .home {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.75rem;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    form {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .field, .btn {
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--ink);
+      background: transparent;
+      border: 1px solid var(--line);
+      padding: 0.55rem 0.85rem;
+      border-radius: 2px;
+      outline: none;
+      transition: border-color 160ms ease, background-color 160ms ease;
+    }
+
+    .field {
+      width: 16rem;
+      letter-spacing: 0.01em;
+    }
+
+    .field::placeholder { color: var(--ink-faint); }
+    .field:focus { border-color: var(--ink); }
+
+    .btn {
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--ink);
+    }
+
+    .btn:active { background: rgba(255, 255, 255, 0.14); }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem 1rem 2.5rem;
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      font-weight: 300;
+      letter-spacing: 0.01em;
+    }
+
+    .status {
+      min-height: 1.1em;
+      font-size: 0.78rem;
+      color: var(--ink-soft);
+      letter-spacing: 0.02em;
+      margin-top: 0.4rem;
+      text-align: center;
+    }
+
+    @media (max-width: 480px) {
+      form { flex-direction: column; gap: 0.5rem; }
+      .field { width: min(80vw, 18rem); }
+      .btn { width: min(80vw, 18rem); }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="grain" class="noise-overlay" aria-hidden="true"></canvas>
+  <header class="topnav">
+    <a class="link-quiet topnav__brand" href="index.html" aria-label="Purpl home">home</a>
+    <nav aria-label="Primary">
+      <a class="link-quiet" href="about.html">about us</a>
+      <a class="link-quiet" href="work.html">our work</a>
+      <a class="link-quiet" href="#contact">contact</a>
+    </nav>
+  </header>
+  <main class="home">
+    <h1 class="title title--display">purpl.solutions</h1>
+    <div>
+      <form id="notify" autocomplete="off" novalidate>
+        <input
+          class="field"
+          type="email"
+          name="email"
+          placeholder="your@email.com"
+          aria-label="Email address"
+          required
+        />
+        <button class="btn" type="submit">notify me</button>
+      </form>
+      <div class="status" id="status" aria-live="polite"></div>
+    </div>
+  </main>
+  <footer>We're under construction. Please check back for an update soon.</footer>
+
+  <script src="grain.js"></script>
+  <script>
+    const form = document.getElementById("notify");
+    const status = document.getElementById("status");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const email = form.email.value.trim();
+      const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!ok) {
+        status.textContent = "please enter a valid email";
+        return;
+      }
+      status.textContent = "thanks, we'll be in touch.";
+      form.reset();
+    });
+  </script>
+</body>
+</html>

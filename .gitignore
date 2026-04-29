@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Claude Code local user settings (project-specific machine config, not portable)
+.claude/
+
+# Editor / OS
+.vscode/
+.idea/
+*.swp
+
+# Node (in case we add tooling later)
+node_modules/
+.env
+.env.local
