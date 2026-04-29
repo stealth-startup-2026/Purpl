@@ -4,10 +4,7 @@ import { useState } from "react";
 import { Title } from "@/components/Title";
 import { Folder } from "./Folder";
 import { WorkRow } from "./WorkRow";
-import { CaatPreview } from "./CaatPreview";
-import { MoupPreview } from "./MoupPreview";
-import { VolleytubePreview } from "./VolleytubePreview";
-import { ProvolleyPreview } from "./ProvolleyPreview";
+import { projects } from "./projects";
 import styles from "./WorkSection.module.css";
 import { cn } from "@/lib/utils";
 
@@ -47,32 +44,16 @@ export function WorkSection() {
         aria-label="Project list"
         className={cn(styles.list, "w-full max-w-5xl border-t border-[var(--color-line-soft)]")}
       >
-        <WorkRow
-          preview={<CaatPreview />}
-          brand="caat"
-          category="webapp · in-house"
-          description="A college application platform where students track every deadline, essay, scholarship, and document, all in one place."
-        />
-        <WorkRow
-          preview={<MoupPreview />}
-          brand="moup"
-          category="webapp · in-house"
-          description="Movies Ordered Using Pairwise. A film ranking app that replaces broken star ratings with head-to-head comparisons — pick this or that, and build a perfectly ordered list of your favourites."
-        />
-        <WorkRow
-          preview={<VolleytubePreview />}
-          brand="volleytube"
-          category="app · in-house"
-          tag="coming soon"
-          description="A community sports app for Sydney volleyball: match results, video clips, and player profiles across the PVL, SVL, and YSVL leagues."
-        />
-        <WorkRow
-          preview={<ProvolleyPreview />}
-          brand="ProVolley"
-          category="website · client work"
-          tag="coming soon"
-          description="One of the most reputable clubs in the Premier Volleyball League and Sydney Volleyball League."
-        />
+        {projects.map((p) => (
+          <WorkRow
+            key={p.id}
+            preview={p.preview}
+            brand={p.brand}
+            category={p.category}
+            tag={p.tag}
+            description={p.description}
+          />
+        ))}
       </section>
     </main>
   );
