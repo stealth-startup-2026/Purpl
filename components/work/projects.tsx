@@ -27,7 +27,7 @@ export const projects: Project[] = [
     brand: "moup",
     category: "webapp · in-house",
     description:
-      "Movies Ordered Using Pairwise. A film ranking app that replaces broken star ratings with head-to-head comparisons — pick this or that, and build a perfectly ordered list of your favourites.",
+      "Movies Ordered Using Pairwise. A film ranking app that replaces broken star ratings with head-to-head comparisons. Pick this or that, and build a perfectly ordered list of your favourites.",
     preview: <MoupPreview />,
   },
   {
