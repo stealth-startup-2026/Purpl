@@ -2,8 +2,8 @@
 
 /* Purpl design tokens. Used across every page; matches the original styles.css. */
 @theme {
-  --color-bg: #2a1f3d;
-  --color-bg-deep: #1f1730;
+  --color-bg: #310c5d;
+  --color-bg-deep: #1e0838;
   --color-ink: #ffffff;
   --color-ink-soft: rgba(255, 255, 255, 0.55);
   --color-ink-faint: rgba(255, 255, 255, 0.32);
@@ -21,12 +21,15 @@
 
 html {
   background-color: var(--color-bg-deep);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
 }
 
 body {
   color: var(--color-ink);
   background:
-    radial-gradient(ellipse at 50% 40%, #33264a 0%, var(--color-bg) 45%, var(--color-bg-deep) 100%)
+    radial-gradient(ellipse at 50% 40%, #3f1570 0%, var(--color-bg) 45%, var(--color-bg-deep) 100%)
     var(--color-bg-deep);
   background-attachment: fixed;
   min-height: 100vh;

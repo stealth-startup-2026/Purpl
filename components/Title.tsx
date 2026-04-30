@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 type Variant = "display" | "section";
 
 const sizeFor: Record<Variant, string> = {
-  display: "text-[clamp(2.4rem,6.5vw,4.5rem)]",
+  display: "text-[clamp(2rem,5.5vw,4.5rem)]",
   section: "text-[clamp(1.4rem,2.6vw,2rem)]",
 };
 
