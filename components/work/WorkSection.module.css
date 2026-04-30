@@ -16,8 +16,13 @@
 
 .list > article {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(var(--item-start-y, -28px));
+  transition: opacity 0.5s ease-out, transform 0.6s ease-out;
+}
+
+.collapsed {
+  height: 0;
+  overflow: hidden;
 }
 
 .spilled .list {
@@ -29,7 +34,3 @@
   opacity: 1;
   transform: none;
 }
-
-.spilled .list > article:nth-child(1) { transition-delay: 0.05s; }
-.spilled .list > article:nth-child(2) { transition-delay: 0.20s; }
-.spilled .list > article:nth-child(3) { transition-delay: 0.35s; }

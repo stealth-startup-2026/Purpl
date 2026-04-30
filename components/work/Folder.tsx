@@ -6,10 +6,6 @@ interface FolderProps {
   onClick: () => void;
 }
 
-/**
- * Click-to-open folder. Port of reactbits.dev/components/folder, themed for Purpl
- * (white folder body + lavender back, scaled up).
- */
 export function Folder({ open, onClick }: FolderProps) {
   return (
     <button
