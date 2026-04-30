@@ -1,26 +1,18 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface WorkRowProps {
-  /** Visual preview tile. Each project supplies its own. */
   preview: ReactNode;
-  /** Brand / project name. */
   brand: string;
-  /** Category line beside brand, e.g. "webapp · in-house". */
   category: string;
-  /** Optional small status pill (e.g. "coming soon", "live"). */
   tag?: string;
-  /** Short description. */
   description: string;
+  style?: CSSProperties;
 }
 
-/**
- * Generic work row. The preview is fully owned by the project component
- * so each project keeps its own visual identity.
- */
-export function WorkRow({ preview, brand, category, tag, description }: WorkRowProps) {
+export function WorkRow({ preview, brand, category, tag, description, style }: WorkRowProps) {
   return (
-    <article
+    <article style={style}
       className={cn(
         "grid items-center gap-14 px-6 py-13 border-b border-[var(--color-line-soft)]",
         "[grid-template-columns:minmax(0,1.05fr)_minmax(0,1fr)]",
