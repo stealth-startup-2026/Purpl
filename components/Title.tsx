@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 type Variant = "display" | "section";
 
 const sizeFor: Record<Variant, string> = {
-  display: "text-[clamp(2rem,5.5vw,4.5rem)]",
-  section: "text-[clamp(1.4rem,2.6vw,2rem)]",
+  display: "text-[2rem] md:text-[3rem]",
+  section: "text-[1.4rem] md:text-[2rem]",
 };
 
 interface TitleProps<T extends ElementType> {
