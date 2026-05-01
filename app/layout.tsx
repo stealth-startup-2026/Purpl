@@ -50,6 +50,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "purpl.solutions",
   description: "Purpl is a Sydney-based dev studio. We build for the web and turn ideas into implementation, fast.",
+  icons: {
+    icon: "/brand/purpl_grain_transparent.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
