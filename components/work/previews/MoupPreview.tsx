@@ -4,19 +4,16 @@ import base from "./preview-base.module.css";
 
 export function MoupPreview() {
   return (
-    <a
-      className={cn(base.tile, base.tileLink)}
-      href="https://moup.app"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Visit moup at moup.app"
-    >
+    <div className={cn(base.tile)}>
       <Image
         src="/moup-hero.png"
         alt="moup app screenshot"
-        fill
-        style={{ objectFit: "cover", objectPosition: "top left" }}
+        width={1332}
+        height={888}
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        priority
+        className="absolute inset-0 h-full w-full object-cover object-top"
       />
-    </a>
+    </div>
   );
 }

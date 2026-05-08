@@ -1,12 +1,18 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { cn } from "@/lib/utils";
+
+interface GrainOverlayProps {
+  className?: string;
+}
 
 /**
  * Animated noise overlay (port of reactbits.dev/animations/noise).
- * Renders a fixed full-viewport canvas behind interactive content.
+ * Defaults to a fixed full-viewport canvas; pass `className` to scope it
+ * to a contained surface (e.g. inside a modal panel).
  */
-export function GrainOverlay() {
+export function GrainOverlay({ className }: GrainOverlayProps) {
   const ref = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -59,7 +65,10 @@ export function GrainOverlay() {
     <canvas
       ref={ref}
       aria-hidden="true"
-      className="fixed inset-0 w-screen h-screen pointer-events-none z-[1]"
+      className={cn(
+        "pointer-events-none",
+        className ?? "fixed inset-0 w-screen h-screen z-[1]",
+      )}
       style={{ imageRendering: "pixelated" }}
     />
   );

@@ -2,18 +2,9 @@ import { cn } from "@/lib/utils";
 import base from "./preview-base.module.css";
 import styles from "./CaatPreview.module.css";
 
-/**
- * Preview tile for caat (mycaat.com). Real link, opens the site in a new tab.
- */
 export function CaatPreview() {
   return (
-    <a
-      className={cn(base.tile, base.tileLink, styles.tile)}
-      href="https://www.mycaat.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Visit caat at mycaat.com"
-    >
+    <div className={cn(base.tile, styles.tile)}>
       <div className={styles.hero}>
         <div className={styles.left}>
           <span className={styles.badge}>YOUR FUTURE, CURATED</span>
@@ -92,6 +83,6 @@ export function CaatPreview() {
           </div>
         </div>
       </div>
-    </a>
+    </div>
   );
 }

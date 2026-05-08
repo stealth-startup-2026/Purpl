@@ -8,11 +8,7 @@ import styles from "./VolleytubePreview.module.css";
  */
 export function VolleytubePreview() {
   return (
-    <div
-      className={cn(base.tile, base.tileStatic, base.comingSoon, styles.tile)}
-      aria-label="volleytube, coming soon"
-      tabIndex={0}
-    >
+    <div className={cn(base.tile, styles.tile)} aria-hidden="true">
       <div className={styles.preview}>
         <div className={styles.head}>
           <span className={styles.kicker}>PVL · PREMIER MEN</span>
