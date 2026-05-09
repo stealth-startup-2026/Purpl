@@ -3,6 +3,7 @@ import { CaatPreview } from "./previews/CaatPreview";
 import { MoupPreview } from "./previews/MoupPreview";
 import { VolleytubePreview } from "./previews/VolleytubePreview";
 import { ProvolleyPreview } from "./previews/ProvolleyPreview";
+import { LunchDossierPreview } from "./previews/LunchDossierPreview";
 
 export interface GalleryItem {
   id: string;
@@ -56,6 +57,7 @@ const caatPreview = <CaatPreview />;
 const moupPreview = <MoupPreview />;
 const volleytubePreview = <VolleytubePreview />;
 const provolleyPreview = <ProvolleyPreview />;
+const lunchDossierPreview = <LunchDossierPreview />;
 
 export const projects: Project[] = [
   {
@@ -115,5 +117,19 @@ export const projects: Project[] = [
     ],
     preview: provolleyPreview,
     gallery: placeholderGallery(provolleyPreview),
+  },
+  {
+    id: "lunch-dossier",
+    brand: "the lunch dossier",
+    category: "webapp · in-house",
+    tag: "coming soon",
+    description:
+      "A small dossier for the Friday-lunch ritual: rotate who picks, run quick votes, and keep an honest archive of where your team has eaten.",
+    detail: [
+      "[detail paragraph 1 — write a longer story about the lunch dossier here]",
+      "[detail paragraph 2 — what we built, how it came together, what's next]",
+    ],
+    preview: lunchDossierPreview,
+    gallery: placeholderGallery(lunchDossierPreview),
   },
 ];
