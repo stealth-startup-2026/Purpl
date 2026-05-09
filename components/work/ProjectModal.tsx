@@ -174,14 +174,31 @@ export function ProjectModal({ project, onClose }: Props) {
                   aria-label={`view ${item.alt}`}
                   aria-current={i === activeIdx ? "true" : undefined}
                   className={cn(
-                    "relative flex aspect-[16/10] items-center justify-center overflow-hidden rounded-md border bg-gradient-to-br from-[#4a3a6c] to-[#2a1f3d] outline-none transition-all duration-200",
+                    "relative aspect-[16/10] overflow-hidden rounded-md border bg-gradient-to-br from-[#4a3a6c] to-[#2a1f3d] outline-none transition-all duration-200",
                     i === activeIdx
                       ? "border-white/70 opacity-100"
-                      : "border-[var(--color-line-soft)] opacity-55 hover:opacity-100 focus-visible:opacity-100 focus-visible:border-white/40",
+                      : "border-[var(--color-line-soft)] opacity-65 hover:opacity-100 focus-visible:opacity-100 focus-visible:border-white/40",
                   )}
                   style={{ transitionTimingFunction: EASE }}
                 >
-                  <span className="text-[0.6rem] uppercase tracking-[0.22em] font-light text-white/55">
+                  {/* Scaled-down preview filling the thumbnail. The inner
+                     wrapper is 5x the thumbnail size and then scaled to 20%,
+                     so the preview renders at near-natural fidelity (text,
+                     borders, mockups stay crisp) while visually fitting the
+                     thumbnail. pointer-events disabled so the button still
+                     captures clicks. */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-0 top-0 origin-top-left"
+                    style={{
+                      width: "500%",
+                      height: "500%",
+                      transform: "scale(0.2)",
+                    }}
+                  >
+                    {item.node}
+                  </div>
+                  <span className="absolute bottom-1.5 left-1.5 z-10 inline-flex rounded-[3px] bg-black/55 px-1.5 py-0.5 text-[0.55rem] uppercase tracking-[0.22em] font-light text-white/85 backdrop-blur-sm">
                     {item.id}
                   </span>
                 </button>
