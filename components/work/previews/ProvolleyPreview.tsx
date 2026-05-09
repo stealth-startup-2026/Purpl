@@ -10,11 +10,7 @@ import styles from "./ProvolleyPreview.module.css";
  */
 export function ProvolleyPreview() {
   return (
-    <div
-      className={cn(base.tile, base.tileStatic, base.comingSoon, styles.tile)}
-      aria-label="ProVolley Academy, coming soon"
-      tabIndex={0}
-    >
+    <div className={cn(base.tile, styles.tile)} aria-hidden="true">
       <Image
         src="/provolley.png"
         alt="ProVolley Academy site, hero section"
