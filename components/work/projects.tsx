@@ -4,6 +4,7 @@ import { MoupPreview } from "./previews/MoupPreview";
 import { VolleytubePreview } from "./previews/VolleytubePreview";
 import { ProvolleyPreview } from "./previews/ProvolleyPreview";
 import { LunchDossierPreview } from "./previews/LunchDossierPreview";
+import { ImagePreview } from "./previews/ImagePreview";
 
 export interface GalleryItem {
   id: string;
@@ -73,7 +74,45 @@ export const projects: Project[] = [
     preview: caatPreview,
     liveUrl: "https://www.mycaat.com",
     liveLabel: "mycaat.com",
-    gallery: placeholderGallery(caatPreview),
+    gallery: [
+      { id: "01", alt: "main preview", node: caatPreview },
+      {
+        id: "02",
+        alt: "dashboard with widget grid",
+        node: (
+          <ImagePreview
+            src="/projects/caat/dashboard.png"
+            alt="caat dashboard with application readiness, to-do list, and widget grid"
+            width={1247}
+            height={701}
+          />
+        ),
+      },
+      {
+        id: "03",
+        alt: "essay workshop with prompts and tips",
+        node: (
+          <ImagePreview
+            src="/projects/caat/essay-workshop.png"
+            alt="caat essay workshop with prompts sidebar and response editor"
+            width={1112}
+            height={626}
+          />
+        ),
+      },
+      {
+        id: "04",
+        alt: "resume builder with live preview",
+        node: (
+          <ImagePreview
+            src="/projects/caat/resume-builder.png"
+            alt="caat resume builder with section editor and live A4 preview"
+            width={1264}
+            height={711}
+          />
+        ),
+      },
+    ],
   },
   {
     id: "moup",
