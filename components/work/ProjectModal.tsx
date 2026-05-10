@@ -207,15 +207,6 @@ export function ProjectModal({ project, onClose }: Props) {
           </div>
 
           <div className="flex flex-col gap-7">
-            <div className="flex flex-col gap-4 text-[1rem] font-light leading-[1.7] text-white/80">
-              {(renderProject.detail && renderProject.detail.length > 0
-                ? renderProject.detail
-                : [renderProject.description]
-              ).map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-
             {renderProject.liveUrl ? (
               <a
                 href={renderProject.liveUrl}
@@ -235,6 +226,15 @@ export function ProjectModal({ project, onClose }: Props) {
                 not live yet
               </span>
             )}
+
+            <div className="flex flex-col gap-4 text-[1rem] font-light leading-[1.7] text-white/80">
+              {(renderProject.detail && renderProject.detail.length > 0
+                ? renderProject.detail
+                : [renderProject.description]
+              ).map((para, i) => (
+                <p key={i}>{para}</p>
+              ))}
+            </div>
           </div>
         </div>
       </div>

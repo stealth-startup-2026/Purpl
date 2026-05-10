@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Title } from "@/components/Title";
 import { Folder } from "./Folder";
 import { WorkRow } from "./WorkRow";
@@ -9,14 +9,35 @@ import { projects, type Project } from "./projects";
 import styles from "./WorkSection.module.css";
 import { cn } from "@/lib/utils";
 
+type Filter = "all" | "in-house" | "client";
+
+const FILTERS: { id: Filter; label: string }[] = [
+  { id: "all", label: "all" },
+  { id: "in-house", label: "in-house" },
+  { id: "client", label: "client" },
+];
+
+function matchesFilter(category: string, filter: Filter): boolean {
+  if (filter === "all") return true;
+  if (filter === "in-house") return category.includes("in-house");
+  if (filter === "client") return category.includes("client");
+  return true;
+}
+
 export function WorkSection() {
   const [open, setOpen] = useState(false);
   const [spilled, setSpilled] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [filter, setFilter] = useState<Filter>("all");
   const listRef = useRef<HTMLElement>(null);
   const [itemOffsets, setItemOffsets] = useState<number[]>([]);
   const collapseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const filteredProjects = useMemo(
+    () => projects.filter((p) => matchesFilter(p.category, filter)),
+    [filter],
+  );
 
   useEffect(() => {
     const list = listRef.current;
@@ -51,6 +72,44 @@ export function WorkSection() {
         <Folder open={open} onClick={onClick} />
       </div>
 
+      {/* Minimal filter toggle. Only visible once the list is open so it
+          doesn't hover beneath the closed folder. */}
+      {!collapsed && (
+        <div
+          role="tablist"
+          aria-label="Filter projects"
+          className="mb-6 flex items-center gap-7 text-[0.85rem] font-light tracking-[0.06em] lowercase max-sm:gap-5"
+        >
+          {FILTERS.map((f) => {
+            const active = filter === f.id;
+            return (
+              <button
+                key={f.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => setFilter(f.id)}
+                className={cn(
+                  "relative pb-1 outline-none transition-opacity duration-150",
+                  active
+                    ? "text-white opacity-100"
+                    : "text-[var(--color-ink-soft)] opacity-65 hover:opacity-100 focus-visible:opacity-100",
+                )}
+              >
+                {f.label}
+                <span
+                  aria-hidden="true"
+                  className={cn(
+                    "absolute -bottom-0.5 left-0 h-px w-full origin-left bg-white transition-transform duration-200",
+                    active ? "scale-x-100" : "scale-x-0",
+                  )}
+                />
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       <section
         ref={listRef}
         id="work-list"
@@ -61,29 +120,35 @@ export function WorkSection() {
           "w-full max-w-5xl border-t border-[var(--color-line-soft)]",
         )}
       >
-        {projects.map((p, i) => {
-          const reverseIndex = projects.length - 1 - i;
-          const step = projects.length > 1 ? 0.5 / (projects.length - 1) : 0;
-          const delay = `${reverseIndex * step}s`;
-          const startY = itemOffsets[i] !== undefined ? `-${itemOffsets[i] / 1.5}px` : "-28px";
-          return (
-            <WorkRow
-              key={p.id}
-              preview={p.preview}
-              brand={p.brand}
-              category={p.category}
-              tag={p.tag}
-              description={p.description}
-              onOpen={() => setActiveProject(p)}
-              style={
-                {
-                  "--item-start-y": startY,
-                  transitionDelay: spilled ? delay : "0s",
-                } as React.CSSProperties
-              }
-            />
-          );
-        })}
+        {filteredProjects.length === 0 ? (
+          <p className="py-12 text-center text-[0.9rem] font-light tracking-[0.04em] text-[var(--color-ink-soft)]">
+            no projects in this category yet.
+          </p>
+        ) : (
+          filteredProjects.map((p, i) => {
+            const reverseIndex = filteredProjects.length - 1 - i;
+            const step = filteredProjects.length > 1 ? 0.5 / (filteredProjects.length - 1) : 0;
+            const delay = `${reverseIndex * step}s`;
+            const startY = itemOffsets[i] !== undefined ? `-${itemOffsets[i] / 1.5}px` : "-28px";
+            return (
+              <WorkRow
+                key={p.id}
+                preview={p.preview}
+                brand={p.brand}
+                category={p.category}
+                tag={p.tag}
+                description={p.description}
+                onOpen={() => setActiveProject(p)}
+                style={
+                  {
+                    "--item-start-y": startY,
+                    transitionDelay: spilled ? delay : "0s",
+                  } as React.CSSProperties
+                }
+              />
+            );
+          })
+        )}
       </section>
 
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />

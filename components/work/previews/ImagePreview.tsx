@@ -12,21 +12,33 @@ export function ImagePreview({
   alt,
   width,
   height,
+  background = "#ffffff",
 }: {
   src: string;
   alt: string;
   width: number;
   height: number;
+  /**
+   * Fill colour shown around the screenshot when its aspect doesn't match
+   * the 16:10 tile. Defaults to white so app screenshots with white page
+   * backgrounds blend seamlessly. Override with a colour matching the
+   * screenshot's edge for non-white themes.
+   */
+  background?: string;
 }) {
   return (
-    <div className={cn(base.tile)}>
+    <div className={cn(base.tile)} style={{ background }}>
       <Image
         src={src}
         alt={alt}
         width={width}
         height={height}
         sizes="(min-width: 1024px) 50vw, 100vw"
-        className="absolute inset-0 h-full w-full object-cover object-top"
+        // object-contain so the full screenshot is always visible. The
+        // surrounding background colour matches the screenshot's edge so
+        // the contain "bars" disappear visually, making the screenshot
+        // appear to fill the entire tile.
+        className="absolute inset-0 h-full w-full object-contain"
       />
     </div>
   );
