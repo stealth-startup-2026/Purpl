@@ -37,30 +37,6 @@ export interface Project {
   gallery: GalleryItem[];
 }
 
-function PlaceholderImage({ index }: { index: number }) {
-  return (
-    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#4a3a6c] to-[#2a1f3d]">
-      <span className="text-[0.7rem] uppercase tracking-[0.22em] font-light text-white/30">
-        image {String(index).padStart(2, "0")}
-      </span>
-    </div>
-  );
-}
-
-function placeholderGallery(hero: ReactNode, count = 4): GalleryItem[] {
-  const items: GalleryItem[] = [
-    { id: "01", alt: "main preview", node: hero },
-  ];
-  for (let i = 2; i <= count; i++) {
-    items.push({
-      id: String(i).padStart(2, "0"),
-      alt: `placeholder image ${i}`,
-      node: <PlaceholderImage index={i} />,
-    });
-  }
-  return items;
-}
-
 function ComingSoonPlaceholder() {
   return (
     <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#4a3a6c] to-[#2a1f3d]">
