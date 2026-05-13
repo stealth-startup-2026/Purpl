@@ -8,8 +8,8 @@ export function LunchDossierPreview() {
       <Image
         src="/projects/lunch-dossier.png"
         alt="The Lunch Dossier app screenshot"
-        width={1387}
-        height={811}
+        width={1500}
+        height={938}
         sizes="(min-width: 1024px) 50vw, 100vw"
         className="absolute inset-0 h-full w-full object-cover object-top"
       />
