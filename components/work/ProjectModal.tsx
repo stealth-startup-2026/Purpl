@@ -207,25 +207,42 @@ export function ProjectModal({ project, onClose }: Props) {
           </div>
 
           <div className="flex flex-col gap-7">
-            {renderProject.liveUrl ? (
-              <a
-                href={renderProject.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 self-start border-b border-white/30 pb-1 text-[0.95rem] font-light tracking-[0.04em] text-white outline-none transition-colors hover:border-white focus-visible:border-white"
-              >
-                {renderProject.liveLabel ?? renderProject.liveUrl}
-                <ArrowUpRight
-                  size={16}
-                  strokeWidth={1.5}
-                  className="transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
-                />
-              </a>
-            ) : (
-              <span className="self-start rounded-sm border border-[var(--color-line-soft)] px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.22em] font-medium text-[var(--color-ink-faint)]">
-                not live yet
-              </span>
-            )}
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5">
+              {renderProject.liveUrl ? (
+                <a
+                  href={renderProject.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center gap-2 border-b border-white/30 pb-1 text-[0.95rem] font-light tracking-[0.04em] text-white outline-none transition-colors hover:border-white focus-visible:border-white"
+                >
+                  {renderProject.liveLabel ?? renderProject.liveUrl}
+                  <ArrowUpRight
+                    size={16}
+                    strokeWidth={1.5}
+                    className="transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
+                  />
+                </a>
+              ) : (
+                <span className="rounded-sm border border-[var(--color-line-soft)] px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.22em] font-medium text-[var(--color-ink-faint)]">
+                  not live yet
+                </span>
+              )}
+
+              {renderProject.legalLinks && renderProject.legalLinks.length > 0 && (
+                <ul className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.78rem] uppercase tracking-[0.18em] font-light text-[var(--color-ink-faint)]">
+                  {renderProject.legalLinks.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        className="transition-colors hover:text-white/85 focus-visible:text-white/85 outline-none"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
 
             <div className="flex flex-col gap-4 text-[1rem] font-light leading-[1.7] text-white/80">
               {(renderProject.detail && renderProject.detail.length > 0
