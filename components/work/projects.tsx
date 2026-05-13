@@ -27,6 +27,13 @@ export interface Project {
   preview: ReactNode;
   liveUrl?: string;
   liveLabel?: string;
+  /**
+   * Auxiliary doc links (privacy policy, terms, support page) shown in the
+   * modal's right-hand panel beneath the live URL pill. Used for pre-launch
+   * apps that need publicly-hosted legal URLs for App Store submission
+   * before the app itself ships.
+   */
+  legalLinks?: { label: string; href: string }[];
   gallery: GalleryItem[];
 }
 
@@ -206,6 +213,11 @@ export const projects: Project[] = [
       "The full story lands here once VolleyTube is live.",
     ],
     preview: volleytubePreview,
+    legalLinks: [
+      { label: "Privacy Policy", href: "/volleytube/privacy" },
+      { label: "Terms of Service", href: "/volleytube/terms" },
+      { label: "Support", href: "/volleytube/support" },
+    ],
     gallery: comingSoonGallery(volleytubePreview),
   },
   {
