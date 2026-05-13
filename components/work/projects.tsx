@@ -81,6 +81,11 @@ export const projects: Project[] = [
     preview: caatPreview,
     liveUrl: "https://www.mycaat.com",
     liveLabel: "mycaat.com",
+    legalLinks: [
+      { label: "Privacy Policy", href: "https://www.mycaat.com/privacy" },
+      { label: "Terms of Service", href: "https://www.mycaat.com/terms" },
+      { label: "Support", href: "https://www.mycaat.com/contact" },
+    ],
     gallery: [
       { id: "01", alt: "main preview", node: caatPreview },
       {
