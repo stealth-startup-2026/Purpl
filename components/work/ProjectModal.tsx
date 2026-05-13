@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { X, ArrowUpRight } from "lucide-react";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { cn } from "@/lib/utils";
@@ -230,16 +231,29 @@ export function ProjectModal({ project, onClose }: Props) {
 
               {renderProject.legalLinks && renderProject.legalLinks.length > 0 && (
                 <ul className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.78rem] uppercase tracking-[0.18em] font-light text-[var(--color-ink-faint)]">
-                  {renderProject.legalLinks.map((link) => (
-                    <li key={link.href}>
-                      <a
-                        href={link.href}
-                        className="transition-colors hover:text-white/85 focus-visible:text-white/85 outline-none"
-                      >
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
+                  {renderProject.legalLinks.map((link) => {
+                    const isExternal = /^https?:\/\//.test(link.href);
+                    const className =
+                      "transition-colors hover:text-white/85 focus-visible:text-white/85 outline-none";
+                    return (
+                      <li key={link.href}>
+                        {isExternal ? (
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={className}
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <Link href={link.href} className={className}>
+                            {link.label}
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
                 </ul>
               )}
             </div>
