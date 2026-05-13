@@ -55,7 +55,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+  modal,
+}: {
+  children: React.ReactNode;
+  modal: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body
@@ -64,6 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <GrainOverlay />
         {children}
+        {modal}
       </body>
     </html>
   );

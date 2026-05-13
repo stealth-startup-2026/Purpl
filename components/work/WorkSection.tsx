@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Title } from "@/components/Title";
 import { Folder } from "./Folder";
 import { WorkRow } from "./WorkRow";
-import { ProjectModal } from "./ProjectModal";
-import { projects, type Project } from "./projects";
+import { projects } from "./projects";
 import styles from "./WorkSection.module.css";
 import { cn } from "@/lib/utils";
 
@@ -25,10 +25,10 @@ function matchesFilter(category: string, filter: Filter): boolean {
 }
 
 export function WorkSection() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [spilled, setSpilled] = useState(false);
   const [collapsed, setCollapsed] = useState(true);
-  const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [filter, setFilter] = useState<Filter>("all");
   const listRef = useRef<HTMLElement>(null);
   const [itemOffsets, setItemOffsets] = useState<number[]>([]);
@@ -138,7 +138,7 @@ export function WorkSection() {
                 category={p.category}
                 tag={p.tag}
                 description={p.description}
-                onOpen={() => setActiveProject(p)}
+                onOpen={() => router.push(`/${p.id}`)}
                 style={
                   {
                     "--item-start-y": startY,
@@ -151,7 +151,6 @@ export function WorkSection() {
         )}
       </section>
 
-      <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
     </main>
   );
 }

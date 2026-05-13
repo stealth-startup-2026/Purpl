@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { TopNav } from "@/components/TopNav";
 import { Title } from "@/components/Title";
+import { BackLink } from "@/components/legal/BackLink";
 
 /**
  * Shared shell for hosted legal docs (privacy, terms, support pages that
@@ -22,7 +23,10 @@ export function LegalDocument({
   return (
     <>
       <TopNav />
-      <main className="relative z-[2] flex flex-1 flex-col items-center px-8 pt-16 pb-24 max-sm:px-6 max-sm:pt-10 max-sm:pb-16">
+      <div className="relative z-[2] px-10 pt-5 max-sm:px-5 max-sm:pt-3">
+        <BackLink />
+      </div>
+      <main className="relative z-[2] flex flex-1 flex-col items-center px-8 pt-10 pb-24 max-sm:px-6 max-sm:pt-8 max-sm:pb-16">
         <div className="w-full max-w-3xl">
           <div className="flex flex-col items-center gap-3 text-center">
             <span className="text-[0.7rem] uppercase tracking-[0.22em] font-light text-[var(--color-ink-faint)]">
