@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LegalDocument } from "@/components/legal/LegalDocument";
 
 export const metadata = {
@@ -164,7 +165,7 @@ export default function VolleytubeTermsPage() {
       <p style={{ fontStyle: "italic", color: "var(--color-ink-faint)" }}>
         By tapping &ldquo;Create account&rdquo; in the app you confirm that you&rsquo;ve
         read and agreed to these terms and the{" "}
-        <a href="/volleytube/privacy">Privacy Policy</a>.
+        <Link href="/volleytube/privacy">Privacy Policy</Link>.
       </p>
     </LegalDocument>
   );

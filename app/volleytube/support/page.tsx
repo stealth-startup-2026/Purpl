@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { LegalDocument } from "@/components/legal/LegalDocument";
 
 export const metadata = {
@@ -76,7 +77,7 @@ export default function VolleytubeSupportPage() {
 
       <h3>Where can I see what data you collect?</h3>
       <p>
-        Full disclosure in our <a href="/volleytube/privacy">Privacy Policy</a>. Short
+        Full disclosure in our <Link href="/volleytube/privacy">Privacy Policy</Link>. Short
         version: email, profile fields you fill in, comments and clips you post, match
         interactions, and a push token. No location, no tracking, no ads.
       </p>
