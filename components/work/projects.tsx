@@ -228,6 +228,11 @@ export const projects: Project[] = [
     preview: lunchDossierPreview,
     liveUrl: "https://the-lunch-dossier.vercel.app",
     liveLabel: "the-lunch-dossier.vercel.app",
+    legalLinks: [
+      { label: "Privacy Policy", href: "https://the-lunch-dossier.vercel.app/privacy" },
+      { label: "Terms of Service", href: "https://the-lunch-dossier.vercel.app/terms" },
+      { label: "Support", href: "https://the-lunch-dossier.vercel.app/support" },
+    ],
     gallery: [
       { id: "01", alt: "main preview", node: lunchDossierPreview },
       {
