@@ -244,8 +244,8 @@ export const projects: Project[] = [
           <ImagePreview
             src="/projects/lunch-dossier/main.png"
             alt="lunch dossier front page with masthead, cycle stats, and within-the-radius list"
-            width={1506}
-            height={941}
+            width={1500}
+            height={938}
             background="#F0E9D8"
           />
         ),
@@ -257,8 +257,8 @@ export const projects: Project[] = [
           <ImagePreview
             src="/projects/lunch-dossier/standing-orders.png"
             alt="lunch dossier standing orders page with masthead, lunch days, rotation cadence, and members & invitations"
-            width={1473}
-            height={921}
+            width={1500}
+            height={938}
             background="#F0E9D8"
           />
         ),
@@ -270,8 +270,8 @@ export const projects: Project[] = [
           <ImagePreview
             src="/projects/lunch-dossier/the-selection.png"
             alt="lunch dossier the selection page with roulette draw, cuisine filters, and ranked candidate list"
-            width={1488}
-            height={930}
+            width={1500}
+            height={938}
             background="#F0E9D8"
           />
         ),
