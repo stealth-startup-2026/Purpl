@@ -2,7 +2,6 @@
 
 import { use } from "react";
 import { useRouter } from "next/navigation";
-import { notFound } from "next/navigation";
 import { projects } from "@/components/work/projects";
 import { ProjectModal } from "@/components/work/ProjectModal";
 
@@ -15,6 +14,13 @@ import { ProjectModal } from "@/components/work/ProjectModal";
  *
  * Direct visits to `/<project-id>` (reload, bookmark, App Store link) bypass
  * this interception and hit `app/[project]/page.tsx` as a real page.
+ *
+ * `[project]` is a single-segment wildcard, so it also matches the static
+ * sibling routes `/about`, `/contact`, `/work`. For those we have to render
+ * `null` (NOT `notFound()`) so the modal slot stays empty and the children
+ * slot's real page is the only thing the user sees. Calling `notFound()`
+ * here would paint the root not-found UI on top of the genuine page, which
+ * is exactly the regression that hit prod.
  */
 export default function InterceptedProjectModalPage({
   params,
@@ -26,7 +32,7 @@ export default function InterceptedProjectModalPage({
   const project = projects.find((p) => p.id === projectId);
 
   if (!project) {
-    notFound();
+    return null;
   }
 
   // Close → pop back to the work list. The modal's exit transition runs as
