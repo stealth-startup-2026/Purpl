@@ -1,19 +1,22 @@
 import { createClient } from "@supabase/supabase-js";
 
 /**
- * Server-side Supabase client for Purpl.
+ * Server-side client for the VolleyTube Supabase project.
  *
- * Used only inside server actions — the URL and publishable key never reach
- * the browser. The publishable key is insert-only on the `waitlist` table,
- * enforced by Row-Level Security, so it cannot read or edit existing signups.
+ * Env vars are namespaced `VOLLEYTUBE_` so Purpl can hold credentials for
+ * other backends later without collision. Used only inside server actions —
+ * the URL and publishable key never reach the browser. The publishable key
+ * is insert-only on the `waitlist` table, enforced by Row-Level Security, so
+ * it cannot read or edit existing signups.
  */
-export function getSupabaseClient() {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY;
+export function getVolleytubeSupabase() {
+  const url = process.env.VOLLEYTUBE_SUPABASE_URL;
+  const key = process.env.VOLLEYTUBE_SUPABASE_PUBLISHABLE_KEY;
 
   if (!url || !key) {
     throw new Error(
-      "Missing Supabase env vars — set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY in .env.local.",
+      "Missing VolleyTube Supabase env vars — set VOLLEYTUBE_SUPABASE_URL and " +
+        "VOLLEYTUBE_SUPABASE_PUBLISHABLE_KEY in .env.local.",
     );
   }
 

@@ -1,13 +1,13 @@
 "use server";
 
-import { getSupabaseClient } from "@/lib/supabase";
+import { getVolleytubeSupabase } from "@/lib/supabase";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export type WaitlistResult = { ok: true } | { ok: false; error: string };
 
 /**
- * Stores a VolleyTube waitlist signup in Purpl's Supabase `waitlist` table.
+ * Stores a VolleyTube waitlist signup in the VolleyTube Supabase `waitlist` table.
  * A duplicate email is treated as success — no scary error for someone who
  * signs up twice. Reads are never performed; the list is dashboard-only.
  */
@@ -24,7 +24,7 @@ export async function joinWaitlist(input: {
   }
 
   try {
-    const supabase = getSupabaseClient();
+    const supabase = getVolleytubeSupabase();
     const { error } = await supabase
       .from("waitlist")
       .insert({ email, project: "volleytube" });

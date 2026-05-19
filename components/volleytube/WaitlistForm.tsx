@@ -11,7 +11,7 @@ type Status = "idle" | "error" | "submitting" | "success";
 
 /**
  * VolleyTube pre-launch email capture. Posts to the `joinWaitlist` server
- * action, which stores the address in Purpl's Supabase `waitlist` table.
+ * action, which stores the address in the VolleyTube Supabase `waitlist` table.
  */
 export function WaitlistForm() {
   const [email, setEmail] = useState("");
