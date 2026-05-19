@@ -46,11 +46,8 @@ export function WaitlistForm() {
         role="status"
         className="flex items-center gap-3 rounded-md border border-[var(--color-line-soft)] bg-white/[0.03] px-5 py-4"
       >
-        <span
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full"
-          style={{ backgroundColor: "var(--color-vt-red)" }}
-        >
-          <Check size={15} strokeWidth={2.5} className="text-white" />
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white">
+          <Check size={14} strokeWidth={2.25} className="text-white" />
         </span>
         <p className="text-[0.95rem] font-light leading-snug text-white/85">
           You&rsquo;re on the list. We&rsquo;ll email you the moment VolleyTube goes live.
