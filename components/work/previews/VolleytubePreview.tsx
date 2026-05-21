@@ -19,18 +19,18 @@ export function VolleytubePreview() {
         <div className={styles.body}>
           <div className={styles.teams}>
             <div>
-              <div className={styles.name}>PROVOLLEY ACADEMY Prems Men</div>
+              <div className={styles.name}>EASTSIDE EAGLES Prems Men</div>
               <div className={styles.role}>HOME</div>
             </div>
             <div>
-              <div className={styles.name}>SYDNEY UNITED X WESTSIDE</div>
+              <div className={styles.name}>WESTERN TIGERS Prems Men</div>
               <div className={styles.role}>AWAY</div>
             </div>
           </div>
           <div className={styles.score}>
-            <span>0</span>
-            <em>&ndash;</em>
             <span>3</span>
+            <em>&ndash;</em>
+            <span>2</span>
           </div>
         </div>
 
@@ -49,20 +49,20 @@ export function VolleytubePreview() {
           </thead>
           <tbody>
             <tr>
-              <th>PAP</th>
-              <td>18</td>
-              <td>16</td>
-              <td>19</td>
-              <td className={styles.empty}>&ndash;</td>
-              <td className={styles.empty}>&ndash;</td>
+              <th>EAG</th>
+              <td>25</td>
+              <td>22</td>
+              <td>25</td>
+              <td>23</td>
+              <td>15</td>
             </tr>
             <tr>
-              <th>SUX</th>
+              <th>TIG</th>
+              <td>23</td>
               <td>25</td>
+              <td>21</td>
               <td>25</td>
-              <td>25</td>
-              <td className={styles.empty}>&ndash;</td>
-              <td className={styles.empty}>&ndash;</td>
+              <td>13</td>
             </tr>
           </tbody>
         </table>
