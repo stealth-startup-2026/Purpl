@@ -14,11 +14,11 @@ export function CaseStudiesSection() {
 
   return (
     <main className="relative z-[2] flex flex-1 flex-col items-center px-8 pt-16 pb-24">
-      <div className="mb-16 flex flex-col items-center gap-16 max-sm:mb-10 max-sm:gap-10">
+      <div className="mb-20 flex flex-col items-center gap-20 max-sm:mb-12 max-sm:gap-12">
         <div
           className={cn(
-            "transition-all duration-300",
-            open && "pointer-events-none -translate-y-2 opacity-0",
+            "transition-opacity duration-[400ms] ease",
+            open && "pointer-events-none opacity-0",
           )}
         >
           <Title variant="display">our case studies</Title>
