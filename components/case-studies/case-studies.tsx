@@ -54,7 +54,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     preview: <CaatPreview />,
     demoVideoId: "ESIc6o3kMpk",
-    demoCaption: "the caat product demo, two minutes start to finish.",
+    demoCaption: "the caat product demo.",
     problem: {
       kicker: "the problem",
       heading: "students think in schools. most tools don't.",
@@ -64,7 +64,7 @@ export const caseStudies: CaseStudy[] = [
       ],
     },
     quote: {
-      text: "international students shouldn't need a project manager just to apply to college.",
+      text: "international students shouldn't need a paid agent just to apply to college.",
       by: "the founder, on why caat exists",
     },
     build: {
