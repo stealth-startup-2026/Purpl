@@ -41,6 +41,9 @@ export function TopNav() {
         <LinkQuiet href="/work" className="text-base max-sm:text-sm">
           our work
         </LinkQuiet>
+        <LinkQuiet href="/case-studies" className="text-base max-sm:text-sm">
+          case studies
+        </LinkQuiet>
         <LinkQuiet href="/contact" className="text-base max-sm:text-sm">
           contact
         </LinkQuiet>

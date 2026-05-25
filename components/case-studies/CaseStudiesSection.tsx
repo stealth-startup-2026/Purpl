@@ -1,0 +1,92 @@
+"use client";
+
+import { useState } from "react";
+import { Title } from "@/components/Title";
+import { Folder } from "@/components/work/Folder";
+import { cn } from "@/lib/utils";
+import { caseStudies, type CaseStudy } from "./case-studies";
+import { CaseStudyModal } from "./CaseStudyModal";
+import styles from "./CaseStudiesSection.module.css";
+
+export function CaseStudiesSection() {
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<CaseStudy | null>(null);
+
+  return (
+    <main className="relative z-[2] flex flex-1 flex-col items-center px-8 pt-16 pb-24">
+      <div className="mb-16 flex flex-col items-center gap-16 max-sm:mb-10 max-sm:gap-10">
+        <div
+          className={cn(
+            "transition-all duration-300",
+            open && "pointer-events-none -translate-y-2 opacity-0",
+          )}
+        >
+          <Title variant="display">our case studies</Title>
+        </div>
+        <Folder open={open} onClick={() => setOpen((o) => !o)} />
+      </div>
+
+      {open && (
+        <div className="grid w-full max-w-4xl grid-cols-2 gap-7 max-sm:grid-cols-1 max-sm:gap-6">
+          {caseStudies.map((cs, i) => (
+            <article
+              key={cs.slug}
+              className={styles.card}
+              style={{ animationDelay: `${i * 0.08}s` }}
+            >
+              <button
+                type="button"
+                disabled={cs.comingSoon}
+                onClick={() => !cs.comingSoon && setSelected(cs)}
+                aria-label={
+                  cs.comingSoon
+                    ? `${cs.brand} case study coming soon`
+                    : `read the ${cs.brand} case study`
+                }
+                className={cn(
+                  "group block w-full overflow-hidden rounded-xl border border-[var(--color-line-soft)] bg-white/[0.02] text-left outline-none transition-all duration-300",
+                  cs.comingSoon
+                    ? "cursor-default opacity-55"
+                    : "hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.04] focus-visible:border-white/40",
+                )}
+              >
+                <div className="relative aspect-[16/10] overflow-hidden border-b border-[var(--color-line-soft)]">
+                  <div
+                    aria-hidden="true"
+                    className="absolute left-0 top-0 origin-top-left"
+                    style={{ width: "200%", height: "200%", transform: "scale(0.5)" }}
+                  >
+                    {cs.preview}
+                  </div>
+                  {cs.comingSoon && (
+                    <span className="absolute right-3 top-3 rounded-sm border border-[var(--color-ink-faint)] bg-[var(--color-bg-deep)]/70 px-2 py-0.5 text-[0.58rem] font-medium uppercase tracking-[0.18em] text-[var(--color-ink-soft)] backdrop-blur-sm">
+                      coming soon
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col gap-2 px-6 py-5">
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-[1.15rem] font-medium lowercase text-white">{cs.brand}</h3>
+                    {!cs.comingSoon && (
+                      <span
+                        aria-hidden="true"
+                        className="text-[0.82rem] font-light tracking-[0.04em] text-[var(--color-ink-soft)] transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-white"
+                      >
+                        read &rarr;
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[0.9rem] font-light leading-[1.5] text-[var(--color-ink-soft)]">
+                    {cs.cardBlurb}
+                  </p>
+                </div>
+              </button>
+            </article>
+          ))}
+        </div>
+      )}
+
+      <CaseStudyModal study={selected} onClose={() => setSelected(null)} />
+    </main>
+  );
+}
