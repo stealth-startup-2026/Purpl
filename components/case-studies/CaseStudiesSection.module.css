@@ -1,20 +1,39 @@
-.card {
+/* Mirrors WorkSection.module.css so the cards spill from the folder with the
+   exact same drop-from-above, staggered transition as the work rows. */
+
+.title {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.titleHidden {
   opacity: 0;
-  transform: translateY(12px);
-  animation: rise 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
 }
 
-@keyframes rise {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.grid {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    animation: none;
-    opacity: 1;
-    transform: none;
-  }
+.grid > article {
+  opacity: 0;
+  transform: translateY(var(--item-start-y, -28px));
+  transition: opacity 0.5s ease-out, transform 0.6s ease-out;
+}
+
+.collapsed {
+  height: 0;
+  overflow: hidden;
+}
+
+.spilled .grid {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.spilled .grid > article {
+  opacity: 1;
+  transform: none;
 }

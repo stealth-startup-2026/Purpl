@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Title } from "@/components/Title";
 import { Folder } from "@/components/work/Folder";
 import { cn } from "@/lib/utils";
@@ -10,29 +10,71 @@ import styles from "./CaseStudiesSection.module.css";
 
 export function CaseStudiesSection() {
   const [open, setOpen] = useState(false);
+  const [spilled, setSpilled] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const [selected, setSelected] = useState<CaseStudy | null>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [itemOffsets, setItemOffsets] = useState<number[]>([]);
+  const collapseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Measure each card's natural top so it can start displaced upward (toward
+  // the folder) and drop into place — same trick the work list uses.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const cards = Array.from(grid.querySelectorAll("article"));
+    setItemOffsets(cards.map((el) => (el as HTMLElement).offsetTop));
+  }, []);
+
+  function onClick() {
+    const next = !open;
+    setOpen(next);
+    setSpilled(next);
+    if (next) {
+      if (collapseTimer.current) clearTimeout(collapseTimer.current);
+      setCollapsed(false);
+    } else {
+      collapseTimer.current = setTimeout(() => setCollapsed(true), 500);
+    }
+  }
 
   return (
-    <main className="relative z-[2] flex flex-1 flex-col items-center px-8 pt-16 pb-24">
+    <main
+      className={cn(
+        "relative z-[2] flex flex-1 flex-col items-center px-8 pt-16 pb-24",
+        spilled && styles.spilled,
+      )}
+    >
       <div className="mb-20 flex flex-col items-center gap-20 max-sm:mb-12 max-sm:gap-12">
-        <div
-          className={cn(
-            "transition-opacity duration-[400ms] ease",
-            open && "pointer-events-none opacity-0",
-          )}
-        >
+        <div className={cn(styles.title, open && styles.titleHidden)}>
           <Title variant="display">our case studies</Title>
         </div>
-        <Folder open={open} onClick={() => setOpen((o) => !o)} />
+        <Folder open={open} onClick={onClick} />
       </div>
 
-      {open && (
-        <div className="grid w-full max-w-4xl grid-cols-2 gap-7 max-sm:grid-cols-1 max-sm:gap-6">
-          {caseStudies.map((cs, i) => (
+      <div
+        ref={gridRef}
+        className={cn(
+          styles.grid,
+          collapsed && styles.collapsed,
+          "grid w-full max-w-4xl grid-cols-2 gap-7 max-sm:grid-cols-1 max-sm:gap-6",
+        )}
+      >
+        {caseStudies.map((cs, i) => {
+          const reverseIndex = caseStudies.length - 1 - i;
+          const step = caseStudies.length > 1 ? 0.5 / (caseStudies.length - 1) : 0;
+          const delay = `${reverseIndex * step}s`;
+          const startY =
+            itemOffsets[i] !== undefined ? `-${itemOffsets[i] / 1.5}px` : "-28px";
+          return (
             <article
               key={cs.slug}
-              className={styles.card}
-              style={{ animationDelay: `${i * 0.08}s` }}
+              style={
+                {
+                  "--item-start-y": startY,
+                  transitionDelay: spilled ? delay : "0s",
+                } as React.CSSProperties
+              }
             >
               <button
                 type="button"
@@ -82,9 +124,9 @@ export function CaseStudiesSection() {
                 </div>
               </button>
             </article>
-          ))}
-        </div>
-      )}
+          );
+        })}
+      </div>
 
       <CaseStudyModal study={selected} onClose={() => setSelected(null)} />
     </main>
