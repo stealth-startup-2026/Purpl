@@ -2,7 +2,7 @@ import Link from "next/link";
 import { TopNav } from "@/components/TopNav";
 import { Title } from "@/components/Title";
 import { DotGrid } from "@/components/DotGrid";
-import { VolleytubePreview } from "@/components/work/previews/VolleytubePreview";
+import { VolleytubeAppIcon } from "@/components/volleytube/AppIcon";
 
 export default function HomePage() {
   return (
@@ -36,25 +36,16 @@ export default function HomePage() {
           aria-label="Latest news"
           className="flex flex-col items-center gap-5 pt-16 max-sm:pt-12"
         >
-          <span className="text-[0.72rem] tracking-[0.16em] font-light text-[var(--color-ink-faint)]">
+          <span className="text-[0.85rem] tracking-[0.16em] font-light text-[var(--color-ink-faint)]">
             latest news
           </span>
+          {/* Logo and title on one horizontal line, pointing at the waitlist. */}
           <Link
             href="/volleytube/waitlist"
-            className="group pointer-events-auto flex flex-col items-center gap-3.5 outline-none"
+            className="group pointer-events-auto flex flex-row items-center gap-3.5 outline-none transition-transform duration-300 ease-out hover:-translate-y-1 focus-visible:-translate-y-1"
           >
-            {/* Render the preview at 2x then scale to 0.5 so the match card
-               reads as a faithful miniature — same trick as the work modal. */}
-            <div className="relative aspect-[16/10] w-[300px] max-sm:w-[240px] transition-transform duration-300 ease-out group-hover:-translate-y-1 group-focus-visible:-translate-y-1">
-              <div
-                aria-hidden="true"
-                className="absolute left-0 top-0 origin-top-left"
-                style={{ width: "200%", height: "200%", transform: "scale(0.5)" }}
-              >
-                <VolleytubePreview />
-              </div>
-            </div>
-            <span className="inline-flex items-center gap-1.5 text-[0.95rem] font-light tracking-[0.02em] text-[var(--color-ink-soft)] transition-colors group-hover:text-white group-focus-visible:text-white">
+            <VolleytubeAppIcon className="w-14 max-sm:w-12" />
+            <span className="inline-flex items-center gap-2 text-[1.5rem] max-sm:text-[1.3rem] font-light tracking-[0.01em] text-[var(--color-ink-soft)] transition-colors group-hover:text-white group-focus-visible:text-white">
               volleytube waitlist
               <span aria-hidden="true" className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5">
                 →

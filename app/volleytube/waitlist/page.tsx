@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { TopNav } from "@/components/TopNav";
-import { VolleytubePreview } from "@/components/work/previews/VolleytubePreview";
+import { VolleytubeAppIcon } from "@/components/volleytube/AppIcon";
+import { VolleytubeAppScreens } from "@/components/volleytube/AppScreens";
 import { WaitlistForm } from "@/components/volleytube/WaitlistForm";
 import { cn } from "@/lib/utils";
 import styles from "./waitlist.module.css";
@@ -40,6 +41,18 @@ export default function VolleytubeWaitlistPage() {
           {/* ---- Hero ---- */}
           <section className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-20">
             <div className="flex flex-col">
+              <div
+                className={cn("mb-8 flex items-center gap-3.5", styles.reveal)}
+                style={{ animationDelay: "0.02s" }}
+              >
+                <VolleytubeAppIcon className="w-14" />
+                <span
+                  className="text-[0.78rem] font-medium tracking-[0.22em] text-[var(--color-ink-faint)]"
+                  style={mono}
+                >
+                  VOLLEYTUBE
+                </span>
+              </div>
               <h1
                 className={cn(
                   "text-[2.2rem] leading-[1.05] tracking-[-0.01em] text-white md:text-[3.4rem]",
@@ -86,9 +99,7 @@ export default function VolleytubeWaitlistPage() {
                     "radial-gradient(ellipse at 55% 42%, rgba(168,32,26,0.34), transparent 70%)",
                 }}
               />
-              <div className="transition-transform duration-500 ease-out lg:-rotate-[1.5deg] lg:hover:rotate-0">
-                <VolleytubePreview />
-              </div>
+              <VolleytubeAppScreens className="px-2" />
             </div>
           </section>
 

@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import { CaatPreview } from "./previews/CaatPreview";
 import { MoupPreview } from "./previews/MoupPreview";
-import { VolleytubePreview } from "./previews/VolleytubePreview";
 import { ProvolleyPreview } from "./previews/ProvolleyPreview";
 import { LunchDossierPreview } from "./previews/LunchDossierPreview";
 import { ImagePreview } from "./previews/ImagePreview";
+import { PhoneShowcase, VolleytubeThumb } from "../volleytube/PhoneShowcase";
 
 export interface GalleryItem {
   id: string;
@@ -63,9 +63,28 @@ function comingSoonGallery(hero: ReactNode, count = 4): GalleryItem[] {
 
 const caatPreview = <CaatPreview />;
 const moupPreview = <MoupPreview />;
-const volleytubePreview = <VolleytubePreview />;
 const provolleyPreview = <ProvolleyPreview />;
 const lunchDossierPreview = <LunchDossierPreview />;
+
+// Real VolleyTube app screens (device-framed PNGs), grouped into the gallery
+// in themed pairs/trios.
+const vtScreens = {
+  home: { src: "/volleytube/screens/home.png", alt: "VolleyTube home screen with the day's matches" },
+  leagues: { src: "/volleytube/screens/leagues.png", alt: "VolleyTube results browsed by league" },
+  pvlMen: { src: "/volleytube/screens/results.png", alt: "VolleyTube PVL Premier Men results" },
+  videos: { src: "/volleytube/screens/videos.png", alt: "VolleyTube videos feed" },
+  matchDetail: { src: "/volleytube/screens/match-detail.png", alt: "VolleyTube match detail with set-by-set scores" },
+  matchVideos: { src: "/volleytube/screens/match-videos.png", alt: "VolleyTube clips attached to a match" },
+  videoComments: { src: "/volleytube/screens/video-comments.png", alt: "VolleyTube video with comments" },
+  ladder: { src: "/volleytube/screens/ladder.png", alt: "VolleyTube league ladder" },
+  search: { src: "/volleytube/screens/search.png", alt: "VolleyTube search" },
+  saved: { src: "/volleytube/screens/saved.png", alt: "VolleyTube saved items" },
+} as const;
+
+// Work-row thumbnail leads with the App Store icon next to two screens.
+const volleytubePreview = (
+  <VolleytubeThumb phones={[vtScreens.home, vtScreens.pvlMen]} />
+);
 
 export const projects: Project[] = [
   {
@@ -199,7 +218,40 @@ export const projects: Project[] = [
       { label: "Terms of Service", href: "/volleytube/terms" },
       { label: "Support", href: "/volleytube/support" },
     ],
-    gallery: comingSoonGallery(volleytubePreview),
+    gallery: [
+      {
+        id: "01",
+        alt: "home, results, and PVL Premier Men",
+        node: (
+          <PhoneShowcase
+            phones={[vtScreens.home, vtScreens.leagues, vtScreens.pvlMen]}
+          />
+        ),
+      },
+      {
+        id: "02",
+        alt: "match detail and match clips",
+        node: (
+          <PhoneShowcase phones={[vtScreens.matchDetail, vtScreens.matchVideos]} />
+        ),
+      },
+      {
+        id: "03",
+        alt: "video comments and the videos feed",
+        node: (
+          <PhoneShowcase phones={[vtScreens.videoComments, vtScreens.videos]} />
+        ),
+      },
+      {
+        id: "04",
+        alt: "search, saved, and the ladder",
+        node: (
+          <PhoneShowcase
+            phones={[vtScreens.search, vtScreens.saved, vtScreens.ladder]}
+          />
+        ),
+      },
+    ],
   },
   {
     id: "provolley",
