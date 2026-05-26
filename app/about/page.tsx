@@ -22,7 +22,7 @@ export default function AboutPage() {
           <div className="text-left text-[0.95rem] md:text-[1.1rem] leading-relaxed tracking-[0.008em] font-light text-[var(--color-ink-soft)] space-y-3">
             <p>purpl solutions is a small team that believes the hardest part of building software isn&apos;t the building, it&apos;s knowing what to build. we fill the gap between knowing what&apos;s needed and knowing what&apos;s technically possible.</p>
             <p>by working closely with different businesses and clients, we find the day-to-day friction they&apos;ve stopped noticing, the workarounds they&apos;ve come to adopt, and the small inefficiencies that quietly cost them time and money.</p>
-            <p>with that knowledge, we propose and build what&apos;s whats actually useful, in whatever form makes sense. we&apos;re not tied to a stack or a single industry. we&apos;re tied to the problem in front of us, and to the people we&apos;re solving it for.</p>
+            <p>with that knowledge, we propose and build what&apos;s actually useful, in whatever form makes sense. we&apos;re not tied to a stack or a single industry. we&apos;re tied to the problem in front of us, and to the people we&apos;re solving it for.</p>
           </div>
           <div className="flex flex-col items-center gap-6 pt-8 border-t border-[var(--color-line-soft)]">
             <span className="text-[0.7rem] uppercase tracking-[0.22em] font-light text-[var(--color-ink-faint)]">
