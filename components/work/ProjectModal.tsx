@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { X, ArrowUpRight } from "lucide-react";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { cn } from "@/lib/utils";
@@ -235,22 +234,23 @@ export function ProjectModal({ project, onClose }: Props) {
                     const isExternal = /^https?:\/\//.test(link.href);
                     const className =
                       "transition-colors hover:text-white/85 focus-visible:text-white/85 outline-none";
+                    // Always a real anchor — never next/link. The modal lives in
+                    // the @modal parallel slot, and a soft navigation to an
+                    // internal legal page (e.g. /volleytube/privacy) doesn't match
+                    // the slot, so Next keeps the modal mounted on top of the doc.
+                    // A full navigation leaves the modal context and renders the
+                    // page on its own.
                     return (
                       <li key={link.href}>
-                        {isExternal ? (
-                          <a
-                            href={link.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={className}
-                          >
-                            {link.label}
-                          </a>
-                        ) : (
-                          <Link href={link.href} className={className}>
-                            {link.label}
-                          </Link>
-                        )}
+                        <a
+                          href={link.href}
+                          {...(isExternal
+                            ? { target: "_blank", rel: "noopener noreferrer" }
+                            : {})}
+                          className={className}
+                        >
+                          {link.label}
+                        </a>
                       </li>
                     );
                   })}
