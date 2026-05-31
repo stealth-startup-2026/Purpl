@@ -86,7 +86,75 @@ const volleytubePreview = (
   <VolleytubeThumb phones={[vtScreens.home, vtScreens.pvlMen]} />
 );
 
+// reppl uses real captured app screenshots (dark editor theme) for every slot.
+const REPPL_BG = "#0b0f14";
+const repplOverview = (
+  <ImagePreview
+    src="/projects/reppl/overview.png"
+    alt="reppl landing page: stop grinding, start seeing the patterns, with feature grid and pricing"
+    width={2880}
+    height={1800}
+    background={REPPL_BG}
+  />
+);
+
 export const projects: Project[] = [
+  {
+    id: "reppl",
+    brand: "reppl",
+    category: "webapp · in-house",
+    tag: "coming soon",
+    description:
+      "Coding-interview prep that teaches by pattern: animated walkthroughs, in-browser code, an AI coach that reviews your work, and spaced repetition that makes it stick.",
+    detail: [
+      "Coming soon. Still in build.",
+      "Reppl reframes interview prep around patterns instead of endless grinding. Each pattern gets an animated, step-by-step walkthrough so you see the algorithm move before you write a line. You solve in the browser in Python or JavaScript, get instant AI review on correctness and complexity, and a spaced-repetition queue resurfaces problems right before you'd forget them.",
+      "Two ways to run the AI: subscribe and we handle it, or bring your own provider key (Anthropic, OpenAI, DeepSeek, Gemini, OpenRouter). The full write-up lands here when reppl goes live.",
+    ],
+    preview: repplOverview,
+    gallery: [
+      { id: "01", alt: "reppl landing page overview", node: repplOverview },
+      {
+        id: "02",
+        alt: "today's queue with XP, streak, and badges",
+        node: (
+          <ImagePreview
+            src="/projects/reppl/today.png"
+            alt="reppl today page with daily queue, XP/level bar, streak, company filters, and badges"
+            width={2880}
+            height={1800}
+            background={REPPL_BG}
+          />
+        ),
+      },
+      {
+        id: "03",
+        alt: "in-browser code drill with AI review",
+        node: (
+          <ImagePreview
+            src="/projects/reppl/drill.png"
+            alt="reppl drill page with problem statement, in-browser code editor, run, and AI code review"
+            width={2880}
+            height={1800}
+            background={REPPL_BG}
+          />
+        ),
+      },
+      {
+        id: "04",
+        alt: "animated pattern walkthrough",
+        node: (
+          <ImagePreview
+            src="/projects/reppl/explain.png"
+            alt="reppl explain page with an AI walkthrough: core intuition and step-by-step trace"
+            width={2880}
+            height={1800}
+            background={REPPL_BG}
+          />
+        ),
+      },
+    ],
+  },
   {
     id: "caat",
     brand: "caat",
