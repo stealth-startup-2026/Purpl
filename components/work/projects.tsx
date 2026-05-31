@@ -86,44 +86,44 @@ const volleytubePreview = (
   <VolleytubeThumb phones={[vtScreens.home, vtScreens.pvlMen]} />
 );
 
-// reppl uses real captured app screenshots (dark editor theme) for every slot.
-const REPPL_BG = "#0b0f14";
-const repplOverview = (
+// terminl uses real captured app screenshots (dark editor theme) for every slot.
+const TERMINL_BG = "#0b0f14";
+const terminlOverview = (
   <ImagePreview
-    src="/projects/reppl/overview.png"
-    alt="reppl landing page: stop grinding, start seeing the patterns, with feature grid and pricing"
+    src="/projects/terminl/overview.png"
+    alt="terminl landing page: stop grinding, start seeing the patterns, with feature grid and pricing"
     width={2880}
     height={1800}
-    background={REPPL_BG}
+    background={TERMINL_BG}
   />
 );
 
 export const projects: Project[] = [
   {
-    id: "reppl",
-    brand: "reppl",
+    id: "terminl",
+    brand: "terminl",
     category: "webapp · in-house",
     tag: "coming soon",
     description:
       "Coding-interview prep that teaches by pattern: animated walkthroughs, in-browser code, an AI coach that reviews your work, and spaced repetition that makes it stick.",
     detail: [
       "Coming soon. Still in build.",
-      "Reppl reframes interview prep around patterns instead of endless grinding. Each pattern gets an animated, step-by-step walkthrough so you see the algorithm move before you write a line. You solve in the browser in Python or JavaScript, get instant AI review on correctness and complexity, and a spaced-repetition queue resurfaces problems right before you'd forget them.",
-      "Two ways to run the AI: subscribe and we handle it, or bring your own provider key (Anthropic, OpenAI, DeepSeek, Gemini, OpenRouter). The full write-up lands here when reppl goes live.",
+      "Terminl reframes interview prep around patterns instead of endless grinding. Each pattern gets an animated, step-by-step walkthrough so you see the algorithm move before you write a line. You solve in the browser in Python or JavaScript, get instant AI review on correctness and complexity, and a spaced-repetition queue resurfaces problems right before you'd forget them.",
+      "Two ways to run the AI: subscribe and we handle it, or bring your own provider key (Anthropic, OpenAI, DeepSeek, Gemini, OpenRouter). The full write-up lands here when terminl goes live.",
     ],
-    preview: repplOverview,
+    preview: terminlOverview,
     gallery: [
-      { id: "01", alt: "reppl landing page overview", node: repplOverview },
+      { id: "01", alt: "terminl landing page overview", node: terminlOverview },
       {
         id: "02",
         alt: "today's queue with XP, streak, and badges",
         node: (
           <ImagePreview
-            src="/projects/reppl/today.png"
-            alt="reppl today page with daily queue, XP/level bar, streak, company filters, and badges"
+            src="/projects/terminl/today.png"
+            alt="terminl today page with daily queue, XP/level bar, streak, company filters, and badges"
             width={2880}
             height={1800}
-            background={REPPL_BG}
+            background={TERMINL_BG}
           />
         ),
       },
@@ -132,11 +132,11 @@ export const projects: Project[] = [
         alt: "in-browser code drill with AI review",
         node: (
           <ImagePreview
-            src="/projects/reppl/drill.png"
-            alt="reppl drill page with problem statement, in-browser code editor, run, and AI code review"
+            src="/projects/terminl/drill.png"
+            alt="terminl drill page with problem statement, in-browser code editor, run, and AI code review"
             width={2880}
             height={1800}
-            background={REPPL_BG}
+            background={TERMINL_BG}
           />
         ),
       },
@@ -145,11 +145,11 @@ export const projects: Project[] = [
         alt: "animated pattern walkthrough",
         node: (
           <ImagePreview
-            src="/projects/reppl/explain.png"
-            alt="reppl explain page with an AI walkthrough: core intuition and step-by-step trace"
+            src="/projects/terminl/explain.png"
+            alt="terminl explain page with an AI walkthrough: core intuition and step-by-step trace"
             width={2880}
             height={1800}
-            background={REPPL_BG}
+            background={TERMINL_BG}
           />
         ),
       },
