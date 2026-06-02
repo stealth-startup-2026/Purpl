@@ -10,6 +10,12 @@ export interface GalleryItem {
   id: string;
   alt: string;
   node: ReactNode;
+  /**
+   * When present, this slot is a video. The modal renders a click-to-play
+   * YouTube player in the stage and a poster + play badge in the thumbnail,
+   * instead of `node`. `node` is still provided as a static fallback poster.
+   */
+  video?: { youtubeId: string; poster: string };
 }
 
 export interface Project {
@@ -174,7 +180,26 @@ export const projects: Project[] = [
       { label: "Support", href: "https://www.mycaat.com/contact" },
     ],
     gallery: [
-      { id: "01", alt: "main preview", node: caatPreview },
+      {
+        id: "01",
+        alt: "product demo video",
+        // Click-to-play YouTube walkthrough ("CAAT Product Demo"). The node is
+        // a static poster used as a fallback; the modal renders the player from
+        // `video` when this slot is active.
+        node: (
+          <ImagePreview
+            src="/projects/caat/demo-poster.jpg"
+            alt="caat product demo video"
+            width={1280}
+            height={720}
+            background="#000000"
+          />
+        ),
+        video: {
+          youtubeId: "ESIc6o3kMpk",
+          poster: "/projects/caat/demo-poster.jpg",
+        },
+      },
       {
         id: "02",
         alt: "dashboard with widget grid",

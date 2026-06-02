@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { X, ArrowUpRight } from "lucide-react";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { cn } from "@/lib/utils";
+import { YouTubeStage } from "./YouTubeStage";
 import type { Project } from "./projects";
 
 interface Props {
@@ -162,8 +164,16 @@ export function ProjectModal({ project, onClose }: Props) {
 
         <div className="grid gap-10 overflow-y-auto px-10 py-8 max-sm:px-5 max-sm:py-6 max-sm:gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-12">
           <div className="flex flex-col gap-3">
-            <div className="overflow-hidden rounded-xl aspect-[16/10]">
-              {active.node}
+            <div className="overflow-hidden rounded-xl aspect-[16/9]">
+              {active.video ? (
+                <YouTubeStage
+                  youtubeId={active.video.youtubeId}
+                  poster={active.video.poster}
+                  title={`${renderProject.brand} demo`}
+                />
+              ) : (
+                active.node
+              )}
             </div>
             <div className="grid grid-cols-4 gap-2">
               {renderProject.gallery.map((item, i) => (
@@ -174,30 +184,60 @@ export function ProjectModal({ project, onClose }: Props) {
                   aria-label={`view ${item.alt}`}
                   aria-current={i === activeIdx ? "true" : undefined}
                   className={cn(
-                    "relative aspect-[16/10] overflow-hidden rounded-md border bg-gradient-to-br from-[#4a3a6c] to-[#2a1f3d] outline-none transition-all duration-200",
+                    "relative aspect-[16/9] overflow-hidden rounded-md border bg-gradient-to-br from-[#4a3a6c] to-[#2a1f3d] outline-none transition-all duration-200",
                     i === activeIdx
                       ? "border-white/70 opacity-100"
                       : "border-[var(--color-line-soft)] opacity-65 hover:opacity-100 focus-visible:opacity-100 focus-visible:border-white/40",
                   )}
                   style={{ transitionTimingFunction: EASE }}
                 >
-                  {/* Scaled-down preview filling the thumbnail. The inner
-                     wrapper is 5x the thumbnail size and then scaled to 20%,
-                     so the preview renders at near-natural fidelity (text,
-                     borders, mockups stay crisp) while visually fitting the
-                     thumbnail. pointer-events disabled so the button still
-                     captures clicks. */}
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute left-0 top-0 origin-top-left"
-                    style={{
-                      width: "500%",
-                      height: "500%",
-                      transform: "scale(0.2)",
-                    }}
-                  >
-                    {item.node}
-                  </div>
+                  {item.video ? (
+                    // Video slot: poster image + a small glass play badge so the
+                    // thumbnail reads as "video" rather than a static shot.
+                    <>
+                      <Image
+                        src={item.video.poster}
+                        alt=""
+                        fill
+                        sizes="160px"
+                        className="object-cover"
+                      />
+                      <span aria-hidden="true" className="absolute inset-0 bg-black/15" />
+                      <span aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
+                        <span
+                          className="flex h-6 w-6 items-center justify-center rounded-full border border-white/45 bg-white/20 backdrop-blur-sm"
+                          style={{ WebkitBackdropFilter: "blur(4px)" }}
+                        >
+                          <span
+                            className="ml-[2px] block h-0 w-0"
+                            style={{
+                              borderStyle: "solid",
+                              borderWidth: "4px 0 4px 7px",
+                              borderColor: "transparent transparent transparent #fff",
+                            }}
+                          />
+                        </span>
+                      </span>
+                    </>
+                  ) : (
+                    /* Scaled-down preview filling the thumbnail. The inner
+                       wrapper is 5x the thumbnail size and then scaled to 20%,
+                       so the preview renders at near-natural fidelity (text,
+                       borders, mockups stay crisp) while visually fitting the
+                       thumbnail. pointer-events disabled so the button still
+                       captures clicks. */
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute left-0 top-0 origin-top-left"
+                      style={{
+                        width: "500%",
+                        height: "500%",
+                        transform: "scale(0.2)",
+                      }}
+                    >
+                      {item.node}
+                    </div>
+                  )}
                   <span className="absolute bottom-1.5 left-1.5 z-10 inline-flex rounded-[3px] bg-black/55 px-1.5 py-0.5 text-[0.55rem] uppercase tracking-[0.22em] font-light text-white/85 backdrop-blur-sm">
                     {item.id}
                   </span>

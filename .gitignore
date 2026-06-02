@@ -20,3 +20,5 @@ next-env.d.ts.bak
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+.superpowers/
