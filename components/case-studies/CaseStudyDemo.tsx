@@ -12,12 +12,20 @@ import { Play } from "lucide-react";
 export function CaseStudyDemo({
   videoId,
   title,
+  poster,
 }: {
   videoId: string;
   title: string;
+  /**
+   * Optional locally-hosted poster. When set it avoids the third-party
+   * i.ytimg.com request and the layout shift it can cause. Falls back to
+   * YouTube's maxres thumbnail when omitted, so existing callers are
+   * unaffected.
+   */
+  poster?: string;
 }) {
   const [activated, setActivated] = useState(false);
-  const thumb = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+  const thumb = poster ?? `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
 
   if (activated) {
     return (

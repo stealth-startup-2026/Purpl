@@ -16,6 +16,11 @@ export interface CaseStudy {
   preview: ReactNode;
   /** YouTube id for the demo facade. Omit to hide the demo band. */
   demoVideoId?: string;
+  /**
+   * Optional locally-hosted poster for the demo facade. Falls back to
+   * YouTube's thumbnail when omitted.
+   */
+  demoPoster?: string;
   demoCaption?: string;
   problem: { kicker: string; heading: string; paras: string[] };
   quote?: { text: string; by: string };
@@ -54,6 +59,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     preview: <CaatPreview />,
     demoVideoId: "ESIc6o3kMpk",
+    demoPoster: "/projects/caat/demo-poster.jpg",
     demoCaption: "the caat product demo.",
     problem: {
       kicker: "the problem",

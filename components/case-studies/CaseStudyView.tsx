@@ -44,7 +44,11 @@ export function CaseStudyView({ study }: { study: CaseStudy }) {
       {/* demo video (replaces the old screenshot frame) */}
       {study.demoVideoId && (
         <figure className="mt-12 mb-6">
-          <CaseStudyDemo videoId={study.demoVideoId} title={`${study.brand} product demo`} />
+          <CaseStudyDemo
+            videoId={study.demoVideoId}
+            poster={study.demoPoster}
+            title={`${study.brand} product demo`}
+          />
           {study.demoCaption && (
             <figcaption className="mt-3 text-[0.78rem] tracking-[0.04em] text-[var(--color-ink-faint)]">
               {study.demoCaption}
