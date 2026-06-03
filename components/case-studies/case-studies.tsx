@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { CaatPreview } from "@/components/work/previews/CaatPreview";
 import { MoupPreview } from "@/components/work/previews/MoupPreview";
 import { LunchDossierPreview } from "@/components/work/previews/LunchDossierPreview";
+import { ImagePreview } from "@/components/work/previews/ImagePreview";
 
 export interface CaseStudy {
   slug: string;
@@ -139,6 +140,29 @@ export const caseStudies: CaseStudy[] = [
       "a small dossier for the team-lunch ritual: rotate who picks, run quick votes, keep an honest archive.",
     meta: [],
     preview: <LunchDossierPreview />,
+    problem: { kicker: "", heading: "", paras: [] },
+    build: { kicker: "", heading: "", paras: [], features: [] },
+    outcome: { kicker: "", heading: "", paras: [], stats: [] },
+    ctaHeading: "",
+    comingSoon: true,
+  },
+  {
+    slug: "terminl",
+    brand: "terminl",
+    eyebrow: "case study",
+    lede: "coming soon.",
+    cardBlurb:
+      "coding-interview prep that teaches by pattern, with animated walkthroughs and an ai coach that reviews your code.",
+    meta: [],
+    preview: (
+      <ImagePreview
+        src="/projects/terminl/overview.png"
+        alt="terminl landing page: stop grinding, start seeing the patterns"
+        width={2880}
+        height={1800}
+        background="#0b0f14"
+      />
+    ),
     problem: { kicker: "", heading: "", paras: [] },
     build: { kicker: "", heading: "", paras: [], features: [] },
     outcome: { kicker: "", heading: "", paras: [], stats: [] },
