@@ -107,8 +107,14 @@ export const caseStudies: CaseStudy[] = [
         "caat indexes thousands of universities and reorganises the whole process around the way students actually work. the pieces that used to feel like separate apps now feel like one product that has your back.",
       ],
       stats: [
-        { value: "10,000+", label: "universities you can search and shortlist" },
-        { value: "5", label: "tools in one: tracker, essays, scholarships, resume, docs" },
+        {
+          value: "10,000+",
+          label: "universities you can search and shortlist",
+        },
+        {
+          value: "5",
+          label: "tools in one: tracker, essays, scholarships, resume, docs",
+        },
         { value: "1", label: "home for the entire application" },
       ],
     },
@@ -135,16 +141,81 @@ export const caseStudies: CaseStudy[] = [
     slug: "lunch-dossier",
     brand: "the lunch dossier",
     eyebrow: "case study",
-    lede: "coming soon.",
+    lede: "the daily 'so where are we eating' scramble, turned into one walkable shortlist the whole office actually trusts.",
     cardBlurb:
-      "a small dossier for the team-lunch ritual: rotate who picks, run quick votes, keep an honest archive.",
-    meta: [],
+      "the office-lunch ritual, settled: a walkable shortlist, quick votes, and an honest record of everywhere you've already been.",
+    meta: [
+      { label: "what we did", value: "product + full build" },
+      { label: "sector", value: "workplace + food" },
+      { label: "stack", value: "next.js · supabase" },
+      { label: "status", value: "live at the-lunch-dossier.vercel.app" },
+    ],
     preview: <LunchDossierPreview />,
-    problem: { kicker: "", heading: "", paras: [] },
-    build: { kicker: "", heading: "", paras: [], features: [] },
-    outcome: { kicker: "", heading: "", paras: [], stats: [] },
-    ctaHeading: "",
-    comingSoon: true,
+    problem: {
+      kicker: "the problem",
+      heading: "free lunch sounds simple. picking it every day isn't.",
+      paras: [
+        "at the job i had at the time, lunch was on the house. mostly a perk with no catch, but the same thing happened every day. someone asked where we were eating, a few names got thrown around, half were a fifteen minute walk each way, and ten minutes later we'd land on the same two spots we always did.",
+        "the constraint nobody said out loud was distance. you get maybe forty five minutes, so the only options that count are the ones you can walk to and back without eating at your desk. but that quick read on what's close and good lived in people's heads, so the nearest two places won by default and the decision quietly cost the team time every day.",
+        "i kept thinking there should be one shared place for it. not a delivery app, not a reviews site, just the office's own short list of where you can walk to and whose turn it is to pick. that's where the lunch dossier started.",
+      ],
+    },
+    quote: {
+      text: "the hard part of free lunch was never the food. it was the day it landed on you to pick, when a perk quietly turned into a chore.",
+      by: "the founder, on where the idea came from",
+    },
+    build: {
+      kicker: "what we built",
+      heading: "one shared dossier built around the office, not the app.",
+      paras: [
+        "you tell it where the office is, and everything sorts by walking distance. the list only shows places you can realistically reach and get back from, the ones you keep going to rise to the top, and the worn-out ones are easy to spot.",
+        "the daily pick gets a little structure too. each day it's one person's turn to choose, the team can put it to a vote when the choice matters, and every lunch gets logged. after a few weeks, that running log of where you've already been is what stops everyone circling back to the same three places.",
+      ],
+      features: [
+        {
+          title: "walkable by default",
+          body: "set the office address once and every place is ranked by walking distance, so the list is only ever somewhere you can reach on a lunch break.",
+        },
+        {
+          title: "whose turn is it",
+          body: "a simple rotation for who picks, so it stops landing on the same person every time.",
+        },
+        {
+          title: "quick votes",
+          body: "drop two or three options and let the table settle it in a few taps, not a five minute huddle.",
+        },
+        {
+          title: "an honest archive",
+          body: "every lunch gets logged, so you can skip the repeats and give forgotten places another look.",
+        },
+      ],
+    },
+    outcome: {
+      kicker: "the outcome",
+      heading: "the same daily question, finally answered in one place.",
+      paras: [
+        "it takes the part of free lunch that quietly cost everyone time, the where, and makes it something the whole office can see and trust. the walk-to list is right there, the rotation keeps it fair, and the decision gets easier the more you use it.",
+        "it's the kind of small, specific tool we like building at purpl: a piece of daily friction everyone had stopped noticing, made into something that just quietly works.",
+      ],
+      stats: [
+        {
+          value: "1",
+          label: "shared dossier instead of a daily debate by the door",
+        },
+        {
+          value: "~5 min",
+          label: "handed back to the team on every lunch decision",
+        },
+        {
+          value: "0",
+          label: "accidental repeat visits to the same tired spot",
+        },
+      ],
+    },
+    liveUrl: "https://the-lunch-dossier.vercel.app",
+    liveLabel: "the-lunch-dossier.vercel.app",
+    ctaHeading:
+      "got a tiny daily ritual that's quietly costing your team time?",
   },
   {
     slug: "terminl",
