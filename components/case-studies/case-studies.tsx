@@ -123,21 +123,6 @@ export const caseStudies: CaseStudy[] = [
     ctaHeading: "got something that feels this tangled?",
   },
   {
-    slug: "moup",
-    brand: "moup",
-    eyebrow: "case study",
-    lede: "coming soon.",
-    cardBlurb:
-      "a film ranking app that replaces broken star ratings with head-to-head comparisons.",
-    meta: [],
-    preview: <MoupPreview />,
-    problem: { kicker: "", heading: "", paras: [] },
-    build: { kicker: "", heading: "", paras: [], features: [] },
-    outcome: { kicker: "", heading: "", paras: [], stats: [] },
-    ctaHeading: "",
-    comingSoon: true,
-  },
-  {
     slug: "lunch-dossier",
     brand: "the lunch dossier",
     eyebrow: "case study",
@@ -216,6 +201,21 @@ export const caseStudies: CaseStudy[] = [
     liveLabel: "the-lunch-dossier.vercel.app",
     ctaHeading:
       "got a tiny daily ritual that's quietly costing your team time?",
+  },
+  {
+    slug: "moup",
+    brand: "moup",
+    eyebrow: "case study",
+    lede: "coming soon.",
+    cardBlurb:
+      "a film ranking app that replaces broken star ratings with head-to-head comparisons.",
+    meta: [],
+    preview: <MoupPreview />,
+    problem: { kicker: "", heading: "", paras: [] },
+    build: { kicker: "", heading: "", paras: [], features: [] },
+    outcome: { kicker: "", heading: "", paras: [], stats: [] },
+    ctaHeading: "",
+    comingSoon: true,
   },
   {
     slug: "terminl",
