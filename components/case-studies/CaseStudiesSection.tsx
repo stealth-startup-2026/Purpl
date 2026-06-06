@@ -86,7 +86,7 @@ export function CaseStudiesSection() {
                     : `read the ${cs.brand} case study`
                 }
                 className={cn(
-                  "group block w-full overflow-hidden rounded-xl border border-[var(--color-line-soft)] bg-white/[0.02] text-left outline-none transition-all duration-300",
+                  "group flex h-full w-full flex-col overflow-hidden rounded-xl border border-[var(--color-line-soft)] bg-white/[0.02] text-left outline-none transition-all duration-300",
                   cs.comingSoon
                     ? "cursor-default opacity-55"
                     : "hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.04] focus-visible:border-white/40",

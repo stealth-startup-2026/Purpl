@@ -2,6 +2,8 @@ import type { ReactNode } from "react";
 import { CaatPreview } from "./previews/CaatPreview";
 import { MoupPreview } from "./previews/MoupPreview";
 import { ProvolleyPreview } from "./previews/ProvolleyPreview";
+import { InnerwestPreview } from "./previews/InnerwestPreview";
+import { ProsporterPreview } from "./previews/ProsporterPreview";
 import { LunchDossierPreview } from "./previews/LunchDossierPreview";
 import { ImagePreview } from "./previews/ImagePreview";
 import { PhoneShowcase, VolleytubeThumb } from "../volleytube/PhoneShowcase";
@@ -70,6 +72,8 @@ function comingSoonGallery(hero: ReactNode, count = 4): GalleryItem[] {
 const caatPreview = <CaatPreview />;
 const moupPreview = <MoupPreview />;
 const provolleyPreview = <ProvolleyPreview />;
+const innerwestPreview = <InnerwestPreview />;
+const prosporterPreview = <ProsporterPreview />;
 const lunchDossierPreview = <LunchDossierPreview />;
 
 // Real VolleyTube app screens (device-framed PNGs), grouped into the gallery
@@ -359,6 +363,34 @@ export const projects: Project[] = [
     ],
     preview: provolleyPreview,
     gallery: comingSoonGallery(provolleyPreview),
+  },
+  {
+    id: "innerwest",
+    brand: "Inner West Volley",
+    category: "website · client work",
+    tag: "coming soon",
+    description:
+      "Sydney's Inner West volleyball club, inclusive indoor and beach volleyball for juniors through to seniors.",
+    detail: [
+      "Coming soon. Currently in build with Inner West Volleyball Club.",
+      "The full write-up lands here when the site goes live.",
+    ],
+    preview: innerwestPreview,
+    gallery: comingSoonGallery(innerwestPreview),
+  },
+  {
+    id: "prosporter",
+    brand: "ProSporter",
+    category: "online store · client work",
+    tag: "coming soon",
+    description:
+      "An Australian online volleyball store, indoor and beach apparel and gear for players of all levels.",
+    detail: [
+      "Coming soon. Currently in build with ProSporter Australia.",
+      "The full write-up lands here when the site goes live.",
+    ],
+    preview: prosporterPreview,
+    gallery: comingSoonGallery(prosporterPreview),
   },
   {
     id: "lunch-dossier",
