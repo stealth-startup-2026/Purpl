@@ -302,14 +302,16 @@ export const projects: Project[] = [
     id: "volleytube",
     brand: "volleytube",
     category: "app · in-house",
-    tag: "coming soon",
     description:
       "A community sports app for Sydney volleyball: match results, video clips, and player profiles across the PVL, SVL, and YSVL leagues.",
     detail: [
-      "Coming soon. Still in build.",
-      "The full story lands here once VolleyTube is live.",
+      "Sydney volleyball has always had a scattered results problem. Scores from PVL, SVL, and YSVL matches live on the Volleyball NSW website, which works fine for standings but nothing social builds up around it. No clips, no comments, no way to follow players or see what's happening in other leagues without hunting for it.",
+      "VolleyTube pulls live results directly from Volleyball NSW, set by set, as matches finish across the weekend. Around that data sits everything social: comments on matches and videos, short clips uploaded courtside to each game's clips tab, full-match recordings shared as YouTube links, player profiles with positions and reach stats, and a home feed that surfaces your next match and activity from people you follow.",
+      "If you're rostered for a Premier Men's match Saturday night, it'll be in your feed. If you want to see what happened in SVL Reserve Women while you were playing, it's a tap away. Built by Sydney volleyball players, free on iOS.",
     ],
     preview: volleytubePreview,
+    liveUrl: "https://apps.apple.com/au/app/volleytube/id6773233438",
+    liveLabel: "Download on the App Store",
     legalLinks: [
       { label: "Privacy Policy", href: "/volleytube/privacy" },
       { label: "Terms of Service", href: "/volleytube/terms" },

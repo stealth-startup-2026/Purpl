@@ -31,7 +31,7 @@ export default function HomePage() {
           </Link>
         </div>
 
-        {/* Latest news: a quiet preview pointing at the VolleyTube waitlist page. */}
+        {/* Latest news: VolleyTube App Store launch. */}
         <section
           aria-label="Latest news"
           className="flex flex-col items-center gap-5 pt-16 max-sm:pt-12"
@@ -39,14 +39,13 @@ export default function HomePage() {
           <span className="text-[0.85rem] tracking-[0.16em] font-light text-[var(--color-ink-faint)]">
             latest news
           </span>
-          {/* Logo and title on one horizontal line, pointing at the waitlist. */}
           <Link
-            href="/volleytube/waitlist"
+            href="/volleytube"
             className="group pointer-events-auto flex flex-row items-center gap-3.5 outline-none transition-transform duration-300 ease-out hover:-translate-y-1 focus-visible:-translate-y-1"
           >
             <VolleytubeAppIcon className="w-14 max-sm:w-12" />
             <span className="inline-flex items-center gap-2 text-[1.5rem] max-sm:text-[1.3rem] font-light tracking-[0.01em] text-[var(--color-ink-soft)] transition-colors group-hover:text-white group-focus-visible:text-white">
-              volleytube waitlist
+              download volleytube on the app store now
               <span aria-hidden="true" className="inline-block transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5">
                 →
               </span>
