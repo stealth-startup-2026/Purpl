@@ -463,10 +463,10 @@ export const projects: Project[] = [
     category: "desktop · in-house",
     tag: "coming soon",
     description:
-      "Our desktop tools for the job hunt, inkd and aplyd, bundled into one license and powered by your own Claude subscription.",
+      "A bundle of native desktop productivity tools, powered by your own Claude subscription.",
     detail: [
       "Coming soon. Still in build.",
-      "purpl hq bundles our two macOS tools, inkd for sharper LinkedIn comments and aplyd for tracking job applications, behind a single license. Both run locally on your Mac and use your own Claude subscription, so there's no per-message AI bill. The full write-up lands here when purpl hq goes live.",
+      "purpl hq is a bundle of native macOS productivity tools that run locally and use your own Claude subscription, so there's no per-message AI bill. The full write-up lands here when purpl hq goes live.",
     ],
     preview: purplHqPreview,
     gallery: comingSoonGallery(purplHqPreview),
