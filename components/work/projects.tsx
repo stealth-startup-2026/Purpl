@@ -4,6 +4,7 @@ import { MoupPreview } from "./previews/MoupPreview";
 import { ProvolleyPreview } from "./previews/ProvolleyPreview";
 import { InnerwestPreview } from "./previews/InnerwestPreview";
 import { ProsporterPreview } from "./previews/ProsporterPreview";
+import { PurplHqPreview } from "./previews/PurplHqPreview";
 import { LunchDossierPreview } from "./previews/LunchDossierPreview";
 import { ImagePreview } from "./previews/ImagePreview";
 import { PhoneShowcase, VolleytubeThumb } from "../volleytube/PhoneShowcase";
@@ -74,6 +75,7 @@ const moupPreview = <MoupPreview />;
 const provolleyPreview = <ProvolleyPreview />;
 const innerwestPreview = <InnerwestPreview />;
 const prosporterPreview = <ProsporterPreview />;
+const purplHqPreview = <PurplHqPreview />;
 const lunchDossierPreview = <LunchDossierPreview />;
 
 // Real VolleyTube app screens (device-framed PNGs), grouped into the gallery
@@ -454,5 +456,19 @@ export const projects: Project[] = [
         ),
       },
     ],
+  },
+  {
+    id: "purpl-hq",
+    brand: "purpl hq",
+    category: "desktop · in-house",
+    tag: "coming soon",
+    description:
+      "Our desktop tools for the job hunt, inkd and aplyd, bundled into one license and powered by your own Claude subscription.",
+    detail: [
+      "Coming soon. Still in build.",
+      "purpl hq bundles our two macOS tools, inkd for sharper LinkedIn comments and aplyd for tracking job applications, behind a single license. Both run locally on your Mac and use your own Claude subscription, so there's no per-message AI bill. The full write-up lands here when purpl hq goes live.",
+    ],
+    preview: purplHqPreview,
+    gallery: comingSoonGallery(purplHqPreview),
   },
 ];
