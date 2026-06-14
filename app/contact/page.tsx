@@ -3,7 +3,8 @@ import { Title } from "@/components/Title";
 import { Linkedin } from "lucide-react";
 
 export const metadata = {
-  title: "contact · purpl",
+  title: "contact",
+  description: "Get in touch with purpl solutions. We're a Sydney-based software agency taking on new client projects.",
 };
 
 export default function ContactPage() {

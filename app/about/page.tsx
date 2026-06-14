@@ -3,7 +3,8 @@ import { Title } from "@/components/Title";
 import { Linkedin } from "lucide-react";
 
 export const metadata = {
-  title: "about us · purpl",
+  title: "about us",
+  description: "purpl solutions is a small Sydney-based team building custom software and web products. We work closely with clients to find and solve the problems that matter.",
 };
 
 const team = [

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito_Sans, Playfair_Display, Source_Serif_4, JetBrains_Mono, Fraunces, Inter } from "next/font/google";
 import { GrainOverlay } from "@/components/GrainOverlay";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const nunito = Nunito_Sans({
@@ -48,8 +49,25 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "purpl.solutions",
-  description: "Purpl is a Sydney-based dev studio. We build for the web and turn ideas into implementation, fast.",
+  title: {
+    default: "purpl solutions · Software Solutions Agency Sydney",
+    template: "%s · purpl solutions",
+  },
+  description: "purpl solutions is a Sydney-based software development agency. We build custom web apps, tools, and digital products — turning your ideas into working software, fast.",
+  keywords: ["software development", "web development", "software agency", "Sydney", "custom software", "web apps", "digital products", "purpl solutions"],
+  openGraph: {
+    type: "website",
+    siteName: "purpl solutions",
+    title: "purpl solutions · Software Solutions Agency Sydney",
+    description: "purpl solutions is a Sydney-based software development agency. We build custom web apps, tools, and digital products — turning your ideas into working software, fast.",
+    url: "https://purpl.solutions",
+    images: [{ url: "/brand/purpl_grain_transparent.png" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "purpl solutions · Software Solutions Agency Sydney",
+    description: "purpl solutions is a Sydney-based software development agency. We build custom web apps, tools, and digital products — turning your ideas into working software, fast.",
+  },
   icons: {
     icon: "/brand/purpl_grain_transparent.png",
   },
@@ -71,6 +89,7 @@ export default function RootLayout({
         <GrainOverlay />
         {children}
         {modal}
+        <Footer />
       </body>
     </html>
   );

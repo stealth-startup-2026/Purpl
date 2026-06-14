@@ -18,9 +18,6 @@ export default function HomePage() {
           </span>
         </Link>
       </main>
-      <footer className="relative z-[2] px-4 pt-8 pb-10 text-center text-[0.95rem] md:text-[1.1rem] font-light tracking-[0.01em] text-[var(--color-ink-soft)]">
-        a small team. taking it one project at a time.
-      </footer>
     </>
   );
 }
