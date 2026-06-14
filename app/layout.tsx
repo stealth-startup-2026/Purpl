@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito_Sans, Playfair_Display, Source_Serif_4, JetBrains_Mono, Fraunces, Inter } from "next/font/google";
 import { GrainOverlay } from "@/components/GrainOverlay";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const nunito = Nunito_Sans({
@@ -71,6 +72,7 @@ export default function RootLayout({
         <GrainOverlay />
         {children}
         {modal}
+        <Footer />
       </body>
     </html>
   );
