@@ -1,4 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "purpl solutions — software solutions and web design services",
+  description: "Purpl is a Sydney-based dev studio. We build for the web and turn ideas into implementation, fast.",
+};
 import { TopNav } from "@/components/TopNav";
 import { Title } from "@/components/Title";
 import { DotGrid } from "@/components/DotGrid";

@@ -49,10 +49,27 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "purpl.solutions",
+  metadataBase: new URL("https://purpl.solutions"),
+  title: "purpl solutions",
   description: "Purpl is a Sydney-based dev studio. We build for the web and turn ideas into implementation, fast.",
   icons: {
     icon: "/brand/purpl_grain_transparent.png",
+  },
+  openGraph: {
+    type: "website",
+    siteName: "purpl solutions",
+    title: "purpl solutions",
+    description: "Purpl is a Sydney-based dev studio. We build for the web and turn ideas into implementation, fast.",
+    url: "https://purpl.solutions",
+  },
+  twitter: {
+    card: "summary",
+    title: "purpl solutions",
+    description: "Purpl is a Sydney-based dev studio. We build for the web and turn ideas into implementation, fast.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -73,6 +90,29 @@ export default function RootLayout({
         {children}
         {modal}
         <Footer />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "purpl solutions",
+              url: "https://purpl.solutions",
+              alternateName: "purpl.au",
+              description: "Sydney-based dev studio building web and mobile apps. ABN 35 957 511 248.",
+              foundingLocation: { "@type": "Place", name: "Sydney, Australia" },
+              contactPoint: {
+                "@type": "ContactPoint",
+                email: "contact@purpl.au",
+                contactType: "customer support",
+              },
+              sameAs: [
+                "https://www.linkedin.com/company/purplsolutions",
+                "https://purpl.au",
+              ],
+            }),
+          }}
+        />
       </body>
     </html>
   );

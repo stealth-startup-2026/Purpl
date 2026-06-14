@@ -4,6 +4,7 @@ import { Linkedin } from "lucide-react";
 
 export const metadata = {
   title: "about us · purpl",
+  description: "purpl solutions is a small Sydney-based dev studio. We find the friction businesses have stopped noticing and build what's actually useful.",
 };
 
 const team = [

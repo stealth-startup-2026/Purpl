@@ -4,6 +4,7 @@ import { Linkedin } from "lucide-react";
 
 export const metadata = {
   title: "contact · purpl",
+  description: "Get in touch with purpl solutions — a Sydney-based dev studio. We're taking on new clients.",
 };
 
 export default function ContactPage() {
