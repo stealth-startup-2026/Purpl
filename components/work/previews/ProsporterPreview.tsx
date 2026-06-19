@@ -1,18 +1,24 @@
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import base from "./preview-base.module.css";
+import styles from "./ProsporterPreview.module.css";
 
 /**
  * Preview tile for ProSporter Australia (client work, coming soon).
- * No screenshot yet, so this is the default empty coming-soon placeholder,
- * identical to the other coming-soon slots. Swap in a real landing-page
- * screenshot under /public once the build is live.
+ * Uses the actual store homepage hero screenshot stored under /public.
+ * Not clickable; hover shows the "coming soon" overlay.
  */
 export function ProsporterPreview() {
   return (
-    <div className={cn(base.tile)} aria-hidden="true">
-      <span className="absolute inset-0 z-0 flex items-center justify-center text-[0.7rem] font-light tracking-[0.22em] text-white/40 uppercase">
-        coming soon
-      </span>
+    <div className={cn(base.tile, styles.tile)} aria-hidden="true">
+      <Image
+        src="/prosporter.png"
+        alt="ProSporter store homepage, hero section"
+        width={1440}
+        height={810}
+        className={styles.image}
+        priority
+      />
     </div>
   );
 }
