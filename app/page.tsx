@@ -45,8 +45,11 @@ export default function HomePage() {
           <span className="text-[0.85rem] tracking-[0.16em] font-light text-[var(--color-ink-faint)]">
             latest news
           </span>
+          {/* The only entry to the VolleyTube download page. /volleytube itself
+             is the work case-study (modal on the work list, full page on direct
+             visit); the public "download" landing lives at /volleytube/download. */}
           <Link
-            href="/volleytube"
+            href="/volleytube/download"
             className="group pointer-events-auto flex flex-row items-center gap-3.5 outline-none transition-transform duration-300 ease-out hover:-translate-y-1 focus-visible:-translate-y-1"
           >
             <VolleytubeAppIcon className="w-14 max-sm:w-12" />
