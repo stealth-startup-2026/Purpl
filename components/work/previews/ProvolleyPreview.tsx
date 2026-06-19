@@ -14,8 +14,8 @@ export function ProvolleyPreview() {
       <Image
         src="/provolley.png"
         alt="ProVolley Academy site, hero section"
-        width={1027}
-        height={642}
+        width={1280}
+        height={800}
         className={styles.image}
         priority
       />
