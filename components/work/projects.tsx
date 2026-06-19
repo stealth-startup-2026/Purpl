@@ -110,7 +110,7 @@ const terminlOverview = (
   />
 );
 
-export const projects: Project[] = [
+const projectsUnordered: Project[] = [
   {
     id: "terminl",
     brand: "terminl",
@@ -472,3 +472,21 @@ export const projects: Project[] = [
     gallery: comingSoonGallery(purplHqPreview),
   },
 ];
+
+// Display order for the "our work" gallery. Edit this list to reorder the cards;
+// the literal definitions above can stay in any order.
+const WORK_ORDER = [
+  "caat",
+  "volleytube",
+  "provolley",
+  "innerwest",
+  "prosporter",
+  "moup",
+  "terminl",
+  "lunch-dossier",
+  "purpl-hq",
+];
+
+export const projects: Project[] = [...projectsUnordered].sort(
+  (a, b) => WORK_ORDER.indexOf(a.id) - WORK_ORDER.indexOf(b.id),
+);
