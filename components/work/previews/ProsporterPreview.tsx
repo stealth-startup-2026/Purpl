@@ -14,8 +14,8 @@ export function ProsporterPreview() {
       <Image
         src="/prosporter.png"
         alt="ProSporter store homepage, hero section"
-        width={1440}
-        height={810}
+        width={1280}
+        height={800}
         className={styles.image}
         priority
       />
