@@ -6,6 +6,7 @@ import { X, ArrowUpRight } from "lucide-react";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { cn } from "@/lib/utils";
 import { YouTubeStage } from "./YouTubeStage";
+import { VideoStage } from "./VideoStage";
 import type { Project } from "./projects";
 
 interface Props {
@@ -166,16 +167,35 @@ export function ProjectModal({ project, onClose }: Props) {
           <div className="flex flex-col gap-3">
             <div className="overflow-hidden rounded-xl aspect-[16/9]">
               {active.video ? (
-                <YouTubeStage
-                  youtubeId={active.video.youtubeId}
-                  poster={active.video.poster}
-                  title={`${renderProject.brand} demo`}
-                />
+                active.video.src ? (
+                  <VideoStage
+                    src={active.video.src}
+                    poster={active.video.poster}
+                    title={`${renderProject.brand} demo`}
+                    fallbackYoutubeId={active.video.youtubeId}
+                  />
+                ) : (
+                  <YouTubeStage
+                    youtubeId={active.video.youtubeId!}
+                    poster={active.video.poster}
+                    title={`${renderProject.brand} demo`}
+                  />
+                )
               ) : (
                 active.node
               )}
             </div>
-            <div className="grid grid-cols-4 gap-2">
+            {/* Thumbnail strip. Up to 4 shots fill the row; with more (e.g. a
+               demo video pushed in front) it becomes a horizontal scroller so
+               the first ~4 stay full-size and the rest peek to signal scroll. */}
+            <div
+              className={cn(
+                "gap-2",
+                renderProject.gallery.length > 4
+                  ? "flex overflow-x-auto pb-1 [scrollbar-width:thin]"
+                  : "grid grid-cols-4",
+              )}
+            >
               {renderProject.gallery.map((item, i) => (
                 <button
                   key={item.id}
@@ -185,6 +205,8 @@ export function ProjectModal({ project, onClose }: Props) {
                   aria-current={i === activeIdx ? "true" : undefined}
                   className={cn(
                     "relative aspect-[16/9] overflow-hidden rounded-md border bg-gradient-to-br from-[#4a3a6c] to-[#2a1f3d] outline-none transition-all duration-200",
+                    renderProject.gallery.length > 4 &&
+                      "shrink-0 basis-[calc((100%-1.5rem)/4.4)]",
                     i === activeIdx
                       ? "border-white/70 opacity-100"
                       : "border-[var(--color-line-soft)] opacity-65 hover:opacity-100 focus-visible:opacity-100 focus-visible:border-white/40",

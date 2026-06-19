@@ -15,10 +15,14 @@ export interface GalleryItem {
   node: ReactNode;
   /**
    * When present, this slot is a video. The modal renders a click-to-play
-   * YouTube player in the stage and a poster + play badge in the thumbnail,
-   * instead of `node`. `node` is still provided as a static fallback poster.
+   * player in the stage and a poster + play badge in the thumbnail, instead of
+   * `node`. `node` is still provided as a static fallback poster.
+   *
+   * Provide either `youtubeId` (YouTube embed, e.g. CAAT) or `src` (a
+   * self-hosted file under /public, e.g. VolleyTube). If both are set, `src`
+   * wins.
    */
-  video?: { youtubeId: string; poster: string };
+  video?: { poster: string; youtubeId?: string; src?: string };
 }
 
 export interface Project {
@@ -322,6 +326,25 @@ const projectsUnordered: Project[] = [
     gallery: [
       {
         id: "01",
+        alt: "VolleyTube demo video",
+        // Self-hosted ~47s product demo. Stage uses VideoStage; thumbnail uses
+        // the poster + play badge. `node` is an unused static fallback.
+        node: (
+          <ImagePreview
+            src="/volleytube/demo-poster.jpg"
+            alt="VolleyTube demo video"
+            width={1920}
+            height={1080}
+            background="#000000"
+          />
+        ),
+        video: {
+          src: "/volleytube/demo.mp4",
+          poster: "/volleytube/demo-poster.jpg",
+        },
+      },
+      {
+        id: "02",
         alt: "home, results, and PVL Premier Men",
         node: (
           <PhoneShowcase
@@ -330,21 +353,21 @@ const projectsUnordered: Project[] = [
         ),
       },
       {
-        id: "02",
+        id: "03",
         alt: "match detail and match clips",
         node: (
           <PhoneShowcase phones={[vtScreens.matchDetail, vtScreens.matchVideos]} />
         ),
       },
       {
-        id: "03",
+        id: "04",
         alt: "video comments and the videos feed",
         node: (
           <PhoneShowcase phones={[vtScreens.videoComments, vtScreens.videos]} />
         ),
       },
       {
-        id: "04",
+        id: "05",
         alt: "search, saved, and the ladder",
         node: (
           <PhoneShowcase
