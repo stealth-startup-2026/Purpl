@@ -7,15 +7,13 @@ export const metadata: Metadata = {
 };
 import { TopNav } from "@/components/TopNav";
 import { Title } from "@/components/Title";
-import { DotGrid } from "@/components/DotGrid";
 import { VolleytubeAppIcon } from "@/components/volleytube/AppIcon";
 
 export default function HomePage() {
   return (
     <>
-      {/* Interactive dot-grid background — landing page only. Sits at z-0,
-         under the grain (z-1) and content (z-2+). */}
-      <DotGrid />
+      {/* the dot-grid background (interactive on "/") is provided globally by
+         SiteBackground in the root layout. */}
       <TopNav />
       {/* main is pulled up under the fixed-height nav (pt-7 + h-10 logo =
          4.25rem; 3.25rem on mobile) and spans the full viewport, so the

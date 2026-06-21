@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Nunito_Sans, Playfair_Display, Source_Serif_4, JetBrains_Mono, Fraunces, Inter } from "next/font/google";
 import { GrainOverlay } from "@/components/GrainOverlay";
+import { SiteBackground } from "@/components/SiteBackground";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 
@@ -86,6 +87,7 @@ export default function RootLayout({
         className={`${nunito.variable} ${playfair.variable} ${sourceSerif.variable} ${jetbrains.variable} ${fraunces.variable} ${inter.variable}`}
         style={{ fontFamily: "var(--font-nunito), system-ui, sans-serif" }}
       >
+        <SiteBackground />
         <GrainOverlay />
         {children}
         {modal}

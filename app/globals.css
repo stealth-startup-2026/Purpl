@@ -20,7 +20,14 @@
 }
 
 html {
-  background-color: var(--color-bg-deep);
+  /* The purple gradient lives on the root so it paints at the very back, which
+     lets the dot-grid canvas (fixed, -z-10) sit above it but still behind all
+     page content on every page. Moving it here from body fixed the dots being
+     hidden on non-home pages. */
+  background:
+    radial-gradient(ellipse at 50% 40%, #3f1570 0%, var(--color-bg) 45%, var(--color-bg-deep) 100%)
+    var(--color-bg-deep);
+  background-attachment: fixed;
   scrollbar-gutter: stable;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
@@ -28,10 +35,6 @@ html {
 
 body {
   color: var(--color-ink);
-  background:
-    radial-gradient(ellipse at 50% 40%, #3f1570 0%, var(--color-bg) 45%, var(--color-bg-deep) 100%)
-    var(--color-bg-deep);
-  background-attachment: fixed;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
