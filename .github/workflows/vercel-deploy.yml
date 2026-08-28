@@ -1,0 +1,23 @@
+# purpl deploy pipeline: every push deploys via the stealthstartup Vercel team
+# token, so commit authors never need Vercel seats. The build runs ON Vercel
+# with the project's own settings (same as the old git integration); this job
+# only uploads the source. Default branch -> production, any other branch ->
+# preview URL. Docs: helm /vault docs, "pipelines".
+name: vercel deploy
+on:
+  push:
+permissions:
+  contents: read
+concurrency:
+  group: vercel-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_6M8YRBNwQxliDLBORw75ERNb
+      VERCEL_PROJECT_ID: prj_GnrYBKxUqCh8Br90JTIfsTIzIjhj
+    steps:
+      - uses: actions/checkout@v4
+      - name: deploy (vercel builds it)
+        run: npx vercel@latest deploy --yes ${{ github.ref_name == github.event.repository.default_branch && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }}
