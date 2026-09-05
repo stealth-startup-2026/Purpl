@@ -1,8 +1,16 @@
 # purpl deploy pipeline: every push deploys via the stealthstartup Vercel team
-# token, so commit authors never need Vercel seats. The build runs ON Vercel
-# with the project's own settings (same as the old git integration); this job
-# only uploads the source. Default branch -> production, any other branch ->
-# preview URL. Docs: helm /vault docs, "pipelines".
+# token, so nobody needs a Vercel seat. The build runs ON Vercel with the
+# project's own settings; this job only uploads the source. Default branch ->
+# production, any other branch -> preview URL. Docs: helm /vault docs, "pipelines".
+#
+# Two guards, both learned the hard way on 4 Sep 2026:
+#  1. The upload carries NO git identity. Vercel blocks a deployment whose commit
+#     author is not a paid team member, and the team is deliberately one seat;
+#     a blocked deployment left `vercel deploy` waiting six hours per push and
+#     burned the month's Actions minutes. Deleting .git before the upload, and
+#     passing only the branch and message as labels, means every deploy is
+#     attributed to the token owner, whoever committed or pushed.
+#  2. timeout-minutes caps any future hang at twelve minutes, not six hours.
 name: vercel deploy
 on:
   push:
@@ -14,10 +22,20 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 12
     env:
       VERCEL_ORG_ID: team_6M8YRBNwQxliDLBORw75ERNb
       VERCEL_PROJECT_ID: prj_GnrYBKxUqCh8Br90JTIfsTIzIjhj
     steps:
       - uses: actions/checkout@v4
+      - name: drop git identity (the token owner is the author, whoever pushed)
+        run: rm -rf .git
       - name: deploy (vercel builds it)
-        run: npx vercel@latest deploy --yes ${{ github.ref_name == github.event.repository.default_branch && '--prod' || '' }} --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          HEAD_MSG: ${{ github.event.head_commit.message }}
+        run: >-
+          npx vercel@latest deploy --yes
+          ${{ github.ref_name == github.event.repository.default_branch && '--prod' || '' }}
+          --token=${{ secrets.VERCEL_TOKEN }}
+          --meta "githubCommitRef=${{ github.ref_name }}"
+          --meta "githubCommitMessage=$(printf '%s' "$HEAD_MSG" | head -n 1 | cut -c1-72)"
