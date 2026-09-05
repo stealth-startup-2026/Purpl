@@ -385,10 +385,8 @@ const projectsUnordered: Project[] = [
     category: "website · client work",
     description:
       "One of the most reputable clubs in the Premier Volleyball League and Sydney Volleyball League.",
-    detail: [
-      "ProVolley runs 16 teams across the Premier Volleyball League, the Sydney Volleyball League and the junior divisions, and their old WordPress site had fallen behind the club. We rebuilt it end to end: Next.js on Vercel, Sanity so the club edits its own pages, and the club's navy and gold carried through every screen.",
-      "The part we care about most is the live data. Ladders and results pull straight from Volleyball NSW, so every team page shows its real record and ladder position without anyone touching a spreadsheet. Trials, socials and tournaments run off one calendar, programs and camps link straight to registration, and the newsletter is wired in with double opt-in. Live at provolley.com.au since September 2026.",
-    ],
+    // Longer write-up parked in docs/copy/provolley-writeup.md.
+    detail: ["Live at provolley.com.au since September 2026."],
     preview: provolleyPreview,
     liveUrl: "https://provolley.com.au",
     liveLabel: "provolley.com.au",
