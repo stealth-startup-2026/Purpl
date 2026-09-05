@@ -4,7 +4,7 @@ const base = "https://purpl.solutions";
 
 const projectSlugs = [
   "terminl", "caat", "moup", "volleytube",
-  "provolley", "innerwest", "prosporter", "lunch-dossier", "purpl-hq",
+  "provolley", "welcome-blossom", "innerwest", "prosporter", "lunch-dossier", "purpl-hq",
 ];
 
 const caseStudySlugs = ["caat", "lunch-dossier"];

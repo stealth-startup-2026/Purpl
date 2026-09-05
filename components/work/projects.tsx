@@ -4,6 +4,7 @@ import { MoupPreview } from "./previews/MoupPreview";
 import { ProvolleyPreview } from "./previews/ProvolleyPreview";
 import { InnerwestPreview } from "./previews/InnerwestPreview";
 import { ProsporterPreview } from "./previews/ProsporterPreview";
+import { WelcomeBlossomPreview } from "./previews/WelcomeBlossomPreview";
 import { PurplHqPreview } from "./previews/PurplHqPreview";
 import { LunchDossierPreview } from "./previews/LunchDossierPreview";
 import { ImagePreview } from "./previews/ImagePreview";
@@ -79,6 +80,7 @@ const moupPreview = <MoupPreview />;
 const provolleyPreview = <ProvolleyPreview />;
 const innerwestPreview = <InnerwestPreview />;
 const prosporterPreview = <ProsporterPreview />;
+const welcomeBlossomPreview = <WelcomeBlossomPreview />;
 const purplHqPreview = <PurplHqPreview />;
 const lunchDossierPreview = <LunchDossierPreview />;
 
@@ -106,6 +108,8 @@ const volleytubePreview = (
 const TERMINL_BG = "#0b0f14";
 // ProVolley rankings section sits on the site's off-white page background.
 const PROVOLLEY_PAGE_BG = "#f8fafc";
+// Welcome Blossom pages sit on the site's warm cream background.
+const WELCOME_BLOSSOM_BG = "#fdf9f7";
 const terminlOverview = (
   <ImagePreview
     src="/projects/terminl/overview.png"
@@ -434,6 +438,59 @@ const projectsUnordered: Project[] = [
     ],
   },
   {
+    id: "welcome-blossom",
+    brand: "Welcome Blossom",
+    category: "website · client work",
+    description:
+      "A family florist on Penshurst St, Sydney: weddings, funerals, birthdays and events, with same-day delivery around St George.",
+    detail: ["Live at welcomeblossom.com.au since September 2026."],
+    preview: welcomeBlossomPreview,
+    liveUrl: "https://welcomeblossom.com.au",
+    liveLabel: "welcomeblossom.com.au",
+    gallery: [
+      { id: "01", alt: "Welcome Blossom homepage hero", node: welcomeBlossomPreview },
+      {
+        id: "02",
+        alt: "gallery of arrangements from the shop",
+        node: (
+          <ImagePreview
+            src="/projects/welcome-blossom/gallery.jpg"
+            alt="Welcome Blossom gallery page, recent arrangements from the shop in torn-paper frames"
+            width={2560}
+            height={1600}
+            background={WELCOME_BLOSSOM_BG}
+          />
+        ),
+      },
+      {
+        id: "03",
+        alt: "services page, weddings",
+        node: (
+          <ImagePreview
+            src="/projects/welcome-blossom/services.jpg"
+            alt="Welcome Blossom services page, weddings section with three arrangement photos"
+            width={2560}
+            height={1600}
+            background={WELCOME_BLOSSOM_BG}
+          />
+        ),
+      },
+      {
+        id: "04",
+        alt: "contact page with enquiry form and opening hours",
+        node: (
+          <ImagePreview
+            src="/projects/welcome-blossom/contact.jpg"
+            alt="Welcome Blossom contact page with shop details, opening hours card and the enquiry form"
+            width={2880}
+            height={1800}
+            background={WELCOME_BLOSSOM_BG}
+          />
+        ),
+      },
+    ],
+  },
+  {
     id: "innerwest",
     brand: "Inner West Volley",
     category: "website · client work",
@@ -544,6 +601,7 @@ const WORK_ORDER = [
   "caat",
   "volleytube",
   "provolley",
+  "welcome-blossom",
   "innerwest",
   "prosporter",
   "moup",
