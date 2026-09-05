@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import { joinWaitlist } from "@/app/volleytube/waitlist/actions";
 
@@ -34,6 +35,13 @@ export function WaitlistForm() {
     const result = await joinWaitlist({ email: value, trap });
     if (result.ok) {
       setStatus("success");
+      // Counted once, only after the action confirmed the signup landed.
+      // Silent without a measurement id, and it cannot throw into the state
+      // set above.
+      trackEvent("enquiry_submitted", {
+        form: "volleytube_waitlist",
+        site: window.location.hostname,
+      });
     } else {
       setError(result.error);
       setStatus("error");

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito_Sans, Playfair_Display, Source_Serif_4, JetBrains_Mono, Fraunces, Inter } from "next/font/google";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { GrainOverlay } from "@/components/GrainOverlay";
 import { SiteBackground } from "@/components/SiteBackground";
 import { Footer } from "@/components/Footer";
@@ -118,6 +119,7 @@ export default function RootLayout({
             }),
           }}
         />
+        <GoogleAnalytics />
       </body>
     </html>
   );
