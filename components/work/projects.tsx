@@ -104,6 +104,8 @@ const volleytubePreview = (
 
 // terminl uses real captured app screenshots (dark editor theme) for every slot.
 const TERMINL_BG = "#0b0f14";
+// ProVolley rankings section sits on the site's off-white page background.
+const PROVOLLEY_PAGE_BG = "#f8fafc";
 const terminlOverview = (
   <ImagePreview
     src="/projects/terminl/overview.png"
@@ -381,15 +383,57 @@ const projectsUnordered: Project[] = [
     id: "provolley",
     brand: "ProVolley",
     category: "website · client work",
-    tag: "coming soon",
     description:
       "One of the most reputable clubs in the Premier Volleyball League and Sydney Volleyball League.",
     detail: [
-      "Coming soon. Currently in build with the ProVolley club.",
-      "The full write-up lands here when the site goes live.",
+      "ProVolley runs 16 teams across the Premier Volleyball League, the Sydney Volleyball League and the junior divisions, and their old WordPress site had fallen behind the club. We rebuilt it end to end: Next.js on Vercel, Sanity so the club edits its own pages, and the club's navy and gold carried through every screen.",
+      "The part we care about most is the live data. Ladders and results pull straight from Volleyball NSW, so every team page shows its real record and ladder position without anyone touching a spreadsheet. Trials, socials and tournaments run off one calendar, programs and camps link straight to registration, and the newsletter is wired in with double opt-in. Live at provolley.com.au since September 2026.",
     ],
     preview: provolleyPreview,
-    gallery: comingSoonGallery(provolleyPreview),
+    liveUrl: "https://provolley.com.au",
+    liveLabel: "provolley.com.au",
+    gallery: [
+      { id: "01", alt: "ProVolley homepage hero", node: provolleyPreview },
+      {
+        id: "02",
+        alt: "team rankings table fed live from Volleyball NSW",
+        node: (
+          <ImagePreview
+            src="/projects/provolley/rankings.png"
+            alt="ProVolley team rankings and statistics table with played, wins, losses, win rate, points and ladder position for every team"
+            width={2560}
+            height={1600}
+            background={PROVOLLEY_PAGE_BG}
+          />
+        ),
+      },
+      {
+        id: "03",
+        alt: "events calendar with trials and socials",
+        node: (
+          <ImagePreview
+            src="/projects/provolley/calendar.png"
+            alt="ProVolley events calendar for September 2026 with colour-coded trials and Thursday mixed socials"
+            width={2880}
+            height={1800}
+            background="#ffffff"
+          />
+        ),
+      },
+      {
+        id: "04",
+        alt: "team page with live season record",
+        node: (
+          <ImagePreview
+            src="/projects/provolley/team.jpg"
+            alt="ProVolley Women's Premier team page with season record cards: 13 played, 12 wins, 92% win rate, 1st of 10 on the ladder"
+            width={2560}
+            height={1600}
+            background="#0a1f4c"
+          />
+        ),
+      },
+    ],
   },
   {
     id: "innerwest",

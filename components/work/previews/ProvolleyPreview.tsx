@@ -4,18 +4,17 @@ import base from "./preview-base.module.css";
 import styles from "./ProvolleyPreview.module.css";
 
 /**
- * Preview tile for ProVolley Academy (client work, coming soon).
- * Uses the actual landing-page screenshot stored under /public.
- * Not clickable; hover shows the "coming soon" overlay.
+ * Preview tile for ProVolley Academy (client work, live at provolley.com.au).
+ * Uses the homepage hero captured from the live site (1280x800 viewport @2x).
  */
 export function ProvolleyPreview() {
   return (
     <div className={cn(base.tile, styles.tile)} aria-hidden="true">
       <Image
-        src="/provolley.png"
+        src="/projects/provolley/home.jpg"
         alt="ProVolley Academy site, hero section"
-        width={1280}
-        height={800}
+        width={2560}
+        height={1600}
         className={styles.image}
         priority
       />
