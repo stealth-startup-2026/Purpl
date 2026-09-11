@@ -13,8 +13,8 @@ type Filter = "all" | "in-house" | "client";
 
 const FILTERS: { id: Filter; label: string }[] = [
   { id: "all", label: "all" },
-  { id: "in-house", label: "in-house" },
   { id: "client", label: "client" },
+  { id: "in-house", label: "in-house" },
 ];
 
 function matchesFilter(category: string, filter: Filter): boolean {
