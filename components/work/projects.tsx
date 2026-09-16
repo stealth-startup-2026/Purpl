@@ -49,6 +49,13 @@ export interface Project {
    */
   legalLinks?: { label: string; href: string }[];
   gallery: GalleryItem[];
+  /**
+   * Shelved: kept here in full but not shown anywhere on the site. The card,
+   * its `/<id>` page and its sitemap entry all disappear while this is true,
+   * because everything is derived from the exported `projects` list. Remove
+   * the flag to bring it back exactly as it was.
+   */
+  archived?: boolean;
 }
 
 function ComingSoonPlaceholder() {
@@ -126,6 +133,8 @@ const projectsUnordered: Project[] = [
     brand: "terminl",
     category: "webapp · in-house",
     tag: "coming soon",
+    // Shelved 16 Sep 2026 while it is still in build.
+    archived: true,
     description:
       "Coding-interview prep that teaches by pattern: animated walkthroughs, in-browser code, an AI coach that reviews your work, and spaced repetition that makes it stick.",
     detail: [
@@ -584,6 +593,8 @@ const projectsUnordered: Project[] = [
     brand: "purpl hq",
     category: "desktop · in-house",
     tag: "coming soon",
+    // Shelved 16 Sep 2026 while it is still in build.
+    archived: true,
     description:
       "A bundle of native desktop productivity tools, powered by your own Claude subscription.",
     detail: [
@@ -610,6 +621,11 @@ const WORK_ORDER = [
   "purpl-hq",
 ];
 
-export const projects: Project[] = [...projectsUnordered].sort(
-  (a, b) => WORK_ORDER.indexOf(a.id) - WORK_ORDER.indexOf(b.id),
-);
+/**
+ * Everything the site shows: the gallery, the `/<id>` pages and the sitemap all
+ * read this list, so an archived project leaves the site in one move. WORK_ORDER
+ * above keeps naming the archived ones, so un-archiving restores their position.
+ */
+export const projects: Project[] = projectsUnordered
+  .filter((p) => !p.archived)
+  .sort((a, b) => WORK_ORDER.indexOf(a.id) - WORK_ORDER.indexOf(b.id));

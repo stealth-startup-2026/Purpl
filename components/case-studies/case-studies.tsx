@@ -42,9 +42,15 @@ export interface CaseStudy {
   ctaHeading: string;
   /** Placeholder card with no write-up yet. */
   comingSoon?: boolean;
+  /**
+   * Shelved: kept here in full but not shown anywhere on the site, unlike
+   * `comingSoon`, which still shows a teaser card. Remove the flag to bring it
+   * back. See the same flag on Project in components/work/projects.tsx.
+   */
+  archived?: boolean;
 }
 
-export const caseStudies: CaseStudy[] = [
+const caseStudiesAll: CaseStudy[] = [
   {
     slug: "caat",
     brand: "caat",
@@ -220,6 +226,8 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "terminl",
     brand: "terminl",
+    // Shelved 16 Sep 2026, with the terminl project card.
+    archived: true,
     eyebrow: "case study",
     lede: "coming soon.",
     cardBlurb:
@@ -241,6 +249,9 @@ export const caseStudies: CaseStudy[] = [
     comingSoon: true,
   },
 ];
+
+/** The case studies the site shows, teasers included. Archived ones are left out. */
+export const caseStudies: CaseStudy[] = caseStudiesAll.filter((c) => !c.archived);
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
   return caseStudies.find((c) => c.slug === slug && !c.comingSoon);

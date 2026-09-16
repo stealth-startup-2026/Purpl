@@ -1,13 +1,14 @@
 import { MetadataRoute } from "next";
+import { projects } from "@/components/work/projects";
+import { publishedCaseStudies } from "@/components/case-studies/case-studies";
 
 const base = "https://purpl.solutions";
 
-const projectSlugs = [
-  "terminl", "caat", "moup", "volleytube",
-  "provolley", "welcome-blossom", "innerwest", "prosporter", "lunch-dossier", "purpl-hq",
-];
+// Both lists are derived, not typed out, so an archived project or case study
+// leaves the sitemap at the same moment it leaves the site.
+const projectSlugs = projects.map((p) => p.id);
 
-const caseStudySlugs = ["caat", "lunch-dossier"];
+const caseStudySlugs = publishedCaseStudies.map((c) => c.slug);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
