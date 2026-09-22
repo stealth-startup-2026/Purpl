@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { PurplModel } from '@/components/brand/PurplModel';
+import { ScrollCue } from '@/components/brand/ScrollCue';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function HomePage() {
       <div className={styles.viewport}>
         <PurplModel />
       </div>
+      <ScrollCue />
     </main>
   );
 }

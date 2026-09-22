@@ -124,8 +124,9 @@ export function usePurplModel() {
     const observer = new ResizeObserver(resize);
     observer.observe(container);
     resize();
-    // Equivalent to viewing the object from a little above and to its left.
-    const restingYaw = 0.2 + THREE.MathUtils.degToRad(5), restingPitch = 0.14;
+    // Drag offsets spring back to zero. Only the folder adds the angled resting pose.
+    const restingYaw = 0, restingPitch = 0;
+    const folderYaw = 0.2 + THREE.MathUtils.degToRad(5), folderPitch = 0.14;
     let yaw = restingYaw, pitch = restingPitch, yawVelocity = 0, pitchVelocity = 0;
     let drag = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
     const raycaster = new THREE.Raycaster();
@@ -220,7 +221,11 @@ export function usePurplModel() {
           paper.position.y = -0.02 + [0.52, 0.5, 0.77][i] * displayedOpen;
           paper.rotation.z = [0.2, -0.2, -0.07][i] * displayedOpen;
         });
-        model.rotation.set(pitch + (animate ? Math.sin(time * 0.5) * 0.045 : 0), yaw, 0);
+        model.rotation.set(
+          pitch + displayedMorph * (folderPitch + (animate ? Math.sin(time * 0.5) * 0.045 : 0)),
+          yaw + displayedMorph * folderYaw,
+          0,
+        );
         model.position.y = animate ? Math.sin(time * 0.8) * 0.035 : 0;
       }
       renderer.render(scene, camera);

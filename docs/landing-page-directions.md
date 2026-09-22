@@ -23,9 +23,10 @@ giving the opening a layered, cascading appearance. The front opens about
 37 degrees to keep the folder compact while exposing the sheets.
 The back's lower edge is trimmed to align with the closed front panel; its
 upper tab remains unchanged.
-The resting view is slightly above and to the left (another 5 degrees left
-from the initial angled view). Dragging rotates the
-object; releasing returns it to that view with a softly underdamped spring.
+The blob rests facing the screen directly, with no tilt or idle rotation.
+As it morphs, the folder gradually takes its view from slightly above and
+to the left (another 5 degrees left from the initial angled view). Dragging
+rotates either shape; releasing springs back to its corresponding resting pose.
 Reduced-motion users get an immediate return without the overshoot.
 
 ## Model study
