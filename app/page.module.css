@@ -1,0 +1,9 @@
+.page { position: relative; min-height: 190svh; background: #fff; color: #261c31; }
+.header { position: fixed; top: 28px; left: 36px; z-index: 5; }
+.header h1 { margin: 0; font-family: var(--font-inter), sans-serif; font-size: 35px; font-weight: 500; letter-spacing: -2px; line-height: 1.2; }
+.header a:focus-visible { outline: 2px solid #310c5d; outline-offset: 6px; }
+.viewport { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+@media (max-width: 640px) {
+  .header { top: 22px; left: 22px; }
+  .header h1 { font-size: 28px; letter-spacing: -1.6px; }
+}
