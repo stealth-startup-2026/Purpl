@@ -119,6 +119,8 @@ const PROVOLLEY_PAGE_BG = "#f8fafc";
 const WELCOME_BLOSSOM_BG = "#fdf9f7";
 // ProSporter store pages sit on white.
 const PROSPORTER_PAGE_BG = "#ffffff";
+// Inner West Volley pages sit on the site's pale blue-grey background.
+const INNERWEST_PAGE_BG = "#eef2f7";
 const terminlOverview = (
   <ImagePreview
     src="/projects/terminl/overview.png"
@@ -505,15 +507,54 @@ const projectsUnordered: Project[] = [
     id: "innerwest",
     brand: "Inner West Volley",
     category: "website · client work",
-    tag: "coming soon",
     description:
       "Sydney's Inner West volleyball club, inclusive indoor and beach volleyball for juniors through to seniors.",
-    detail: [
-      "Coming soon. Currently in build with Inner West Volleyball Club.",
-      "The full write-up lands here when the site goes live.",
-    ],
+    detail: ["Live at innerwestvolley.com.au since September 2026."],
     preview: innerwestPreview,
-    gallery: comingSoonGallery(innerwestPreview),
+    liveUrl: "https://innerwestvolley.com.au",
+    liveLabel: "innerwestvolley.com.au",
+    gallery: [
+      { id: "01", alt: "Inner West Volley homepage hero", node: innerwestPreview },
+      {
+        id: "02",
+        alt: "programs section with junior and camp cards",
+        node: (
+          <ImagePreview
+            src="/projects/innerwest/programs.jpg"
+            alt="Inner West Volley programs section: Junior Advanced Program, Junior Development Program and School Holiday Camps cards"
+            width={2560}
+            height={1600}
+            background={INNERWEST_PAGE_BG}
+          />
+        ),
+      },
+      {
+        id: "03",
+        alt: "events calendar",
+        node: (
+          <ImagePreview
+            src="/projects/innerwest/events.jpg"
+            alt="Inner West Volley events page with the club calendar and upcoming sessions"
+            width={2560}
+            height={1600}
+            background="#ffffff"
+          />
+        ),
+      },
+      {
+        id: "04",
+        alt: "teams page with season records",
+        node: (
+          <ImagePreview
+            src="/projects/innerwest/teams.jpg"
+            alt="Inner West Volley teams page with each team's season record fed from Volleyball NSW"
+            width={2560}
+            height={1600}
+            background={INNERWEST_PAGE_BG}
+          />
+        ),
+      },
+    ],
   },
   {
     id: "prosporter",

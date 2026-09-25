@@ -4,18 +4,17 @@ import base from "./preview-base.module.css";
 import styles from "./InnerwestPreview.module.css";
 
 /**
- * Preview tile for Inner West Volleyball Club (client work, coming soon).
- * Uses the actual landing-page screenshot stored under /public.
- * Not clickable; hover shows the "coming soon" overlay.
+ * Preview tile for Inner West Volley (client work, live at innerwestvolley.com.au).
+ * Uses the homepage hero captured from the live site (1280x800 viewport @2x).
  */
 export function InnerwestPreview() {
   return (
     <div className={cn(base.tile, styles.tile)} aria-hidden="true">
       <Image
-        src="/innerwest.png"
+        src="/projects/innerwest/home.jpg"
         alt="Inner West Volleyball Club site, hero section"
-        width={1280}
-        height={800}
+        width={2560}
+        height={1600}
         className={styles.image}
         priority
       />
