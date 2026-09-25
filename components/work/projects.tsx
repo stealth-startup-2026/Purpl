@@ -117,6 +117,8 @@ const TERMINL_BG = "#0b0f14";
 const PROVOLLEY_PAGE_BG = "#f8fafc";
 // Welcome Blossom pages sit on the site's warm cream background.
 const WELCOME_BLOSSOM_BG = "#fdf9f7";
+// ProSporter store pages sit on white.
+const PROSPORTER_PAGE_BG = "#ffffff";
 const terminlOverview = (
   <ImagePreview
     src="/projects/terminl/overview.png"
@@ -517,15 +519,54 @@ const projectsUnordered: Project[] = [
     id: "prosporter",
     brand: "ProSporter",
     category: "online store · client work",
-    tag: "coming soon",
     description:
       "An Australian online volleyball store, indoor and beach apparel and gear for players of all levels.",
-    detail: [
-      "Coming soon. Currently in build with ProSporter Australia.",
-      "The full write-up lands here when the site goes live.",
-    ],
+    detail: ["Live at prosporter.com.au since September 2026."],
     preview: prosporterPreview,
-    gallery: comingSoonGallery(prosporterPreview),
+    liveUrl: "https://prosporter.com.au",
+    liveLabel: "prosporter.com.au",
+    gallery: [
+      { id: "01", alt: "ProSporter store homepage hero", node: prosporterPreview },
+      {
+        id: "02",
+        alt: "shop by category tiles",
+        node: (
+          <ImagePreview
+            src="/projects/prosporter/categories.jpg"
+            alt="ProSporter shop-by-category tiles: tops, shorts and pants, hoodies and jackets, jerseys, accessories, with indoor and beach collections below"
+            width={2560}
+            height={1600}
+            background={PROSPORTER_PAGE_BG}
+          />
+        ),
+      },
+      {
+        id: "03",
+        alt: "new arrivals product grid",
+        node: (
+          <ImagePreview
+            src="/projects/prosporter/arrivals.jpg"
+            alt="ProSporter new arrivals grid with club jerseys, polos and track pants, each with category, name and price"
+            width={2560}
+            height={1600}
+            background={PROSPORTER_PAGE_BG}
+          />
+        ),
+      },
+      {
+        id: "04",
+        alt: "product page with sizes and add to bag",
+        node: (
+          <ImagePreview
+            src="/projects/prosporter/product.jpg"
+            alt="ProSporter product page for the ProVolley Women's Polo 2026/27: gallery, price, size picker and product details"
+            width={2560}
+            height={1600}
+            background={PROSPORTER_PAGE_BG}
+          />
+        ),
+      },
+    ],
   },
   {
     id: "lunch-dossier",
