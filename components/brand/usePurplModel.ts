@@ -13,7 +13,7 @@ export const finishes = {
 };
 export type Finish = keyof typeof finishes;
 
-export function usePurplModel() {
+export function usePurplModel({ lockOpenMorph = false }: { lockOpenMorph?: boolean } = {}) {
   const host = useRef<HTMLDivElement>(null);
   const settings = useRef({ finish: 'clay' as Finish, paused: false, reset: 0, morph: 0, folderOpen: false, manualMorph: false });
   const [finish, setFinish] = useState<Finish>('clay');
@@ -252,6 +252,11 @@ export function usePurplModel() {
 
   useEffect(() => {
     const onScroll = () => {
+      if (lockOpenMorph && settings.current.folderOpen) {
+        settings.current.morph = 1;
+        setMorph(1);
+        return;
+      }
       if (settings.current.manualMorph) return;
       const value = THREE.MathUtils.clamp(window.scrollY / (window.innerHeight * 0.9), 0, 1);
       settings.current.morph = value;
@@ -268,7 +273,7 @@ export function usePurplModel() {
       window.removeEventListener('wheel', resumeScroll);
       window.removeEventListener('touchmove', resumeScroll);
     };
-  }, []);
+  }, [lockOpenMorph]);
 
   return { host, settings, finish, setFinish, paused, setPaused, status, morph, setMorph, folderOpen, setFolderOpen };
 }

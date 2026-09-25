@@ -1,14 +1,18 @@
 'use client';
 
 import Image from 'next/image';
+import { useEffect, useRef } from 'react';
 import { usePurplModel } from './usePurplModel';
 import styles from './PurplModel.module.css';
 
 /** Self-contained model and interactions. The parent provides the scroll space. */
-export function PurplModel() {
-  const { host, settings, status, morph, setMorph, folderOpen, setFolderOpen } = usePurplModel();
+export function PurplModel({ onOpenChange, controls, lockOpenMorph = false }: { onOpenChange?: (open: boolean) => void; controls?: string; lockOpenMorph?: boolean }) {
+  const { host, settings, status, morph, setMorph, folderOpen, setFolderOpen } = usePurplModel({ lockOpenMorph });
   const isFolder = morph > 0.9;
   const ready = status === 'Drag to explore the shape';
+  const changeOpen = useRef(onOpenChange);
+  changeOpen.current = onOpenChange;
+  useEffect(() => { changeOpen.current?.(folderOpen); }, [folderOpen]);
 
   return (
     <div className={styles.model}>
@@ -20,6 +24,7 @@ export function PurplModel() {
         role="button"
         aria-label={isFolder ? `${folderOpen ? 'Close' : 'Open'} project folder. Drag to rotate.` : 'Purpl logo. Scroll or press Enter to form a folder. Drag to rotate.'}
         aria-expanded={isFolder ? folderOpen : undefined}
+        aria-controls={controls}
         onKeyDown={event => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();

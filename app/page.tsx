@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { PurplModel } from '@/components/brand/PurplModel';
-import { ScrollCue } from '@/components/brand/ScrollCue';
-import styles from './page.module.css';
+import { FolderPortfolio } from '@/components/brand/FolderPortfolio';
 
 export const metadata: Metadata = {
   title: 'purpl solutions',
@@ -10,15 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return (
-    <main className={styles.page} data-purpl-home>
-      <header className={styles.header}>
-        <h1><Link href="/">purpl solutions</Link></h1>
-      </header>
-      <div className={styles.viewport}>
-        <PurplModel />
-      </div>
-      <ScrollCue />
-    </main>
-  );
+  return <FolderPortfolio />;
 }

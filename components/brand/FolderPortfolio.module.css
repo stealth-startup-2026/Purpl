@@ -1,0 +1,38 @@
+.page { position: relative; background: #fff; color: #310c5d; overflow-x: clip; }
+.header { position: fixed; top: 28px; left: 36px; z-index: 5; }
+.header h1 { margin: 0; font-family: var(--font-inter), sans-serif; font-size: 35px; font-weight: 500; letter-spacing: -2px; line-height: 1.2; }
+.header a:focus-visible { outline: 2px solid #310c5d; outline-offset: 6px; }
+.intro { position: relative; z-index: 3; height: 190svh; pointer-events: none; }
+.page[data-folder-open='true'] .intro { height: 100svh; }
+.viewport { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.modelPosition { pointer-events: auto; transition: transform 700ms cubic-bezier(.22,.75,.25,1); }
+.page[data-folder-open='true'] .modelPosition { transform: translateY(-13svh) scale(.78); }
+
+/* The closed collection contributes no height or overflow. Opening it extends
+   the document in place: no scroll hijack and no second scene. */
+.spill { position: relative; z-index: 2; display: grid; grid-template-rows: 0fr; margin-top: 0; transition: grid-template-rows 600ms cubic-bezier(.22,.75,.25,1), margin-top 600ms cubic-bezier(.22,.75,.25,1); }
+.spill[data-open='true'] { grid-template-rows: 1fr; margin-top: -32svh; transition: none; }
+.spillClip { min-height: 0; overflow: clip; }
+.spill[data-open='true'] .spillClip { overflow: visible; }
+.projects { width: min(100% - 64px, 764px); margin: 0 auto; padding: 30px 24px 90px; }
+.featured { display: flex; flex-direction: column; gap: 26px; }
+.card, .row { background: #fff; border: 1px solid #e9e3ef; box-shadow: 0 18px 38px -12px #310c5d2e, 0 5px 12px -4px #310c5d1a, 0 1px 3px #310c5d08; opacity: 0; transform: translateY(calc(-65px - var(--card-index) * 85px)) scale(.92); transform-origin: 50% 0; transition: opacity 220ms, transform 400ms; }
+.card { position: relative; z-index: calc(3 - var(--card-index)); width: 100%; aspect-ratio: 1.65; border-radius: 15px; }
+.spill[data-open='true'] .card { opacity: 1; transform: none; transition: none; }
+.spill[data-open='true'] .row { opacity: 1; transform: translateY(0) scale(1); transition: opacity 550ms ease-out, transform 850ms cubic-bezier(.18,.78,.2,1); transition-delay: calc(1000ms + (var(--card-index) - 3) * 100ms); }
+.more { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; padding-top: 28px; border-top: 1px solid #eee9f2; }
+.row { height: 90px; border-radius: 11px; box-shadow: 0 10px 24px -10px #310c5d24, 0 2px 6px #310c5d0a; }
+@media (max-width: 640px) {
+  .header { top: 22px; left: 22px; }
+  .header h1 { font-size: 28px; letter-spacing: -1.6px; }
+  .page[data-folder-open='true'] .modelPosition { transform: translateY(-12svh) scale(.82); }
+  .spill[data-open='true'] { margin-top: -34svh; }
+  .projects { width: 100%; padding: 24px 22px 56px; }
+  .featured { gap: 22px; }
+  .card { aspect-ratio: 1.22; border-radius: 13px; }
+  .more { grid-template-columns: 1fr; margin-top: 32px; padding-top: 24px; gap: 12px; }
+  .row { height: 76px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .modelPosition, .spill, .card, .row, .spill[data-open='true'] .card, .spill[data-open='true'] .row { transition: none; }
+}
