@@ -562,7 +562,10 @@ const projectsUnordered: Project[] = [
     category: "online store · client work",
     description:
       "An Australian online volleyball store, indoor and beach apparel and gear for players of all levels.",
-    detail: ["Live at prosporter.com.au since September 2026."],
+    detail: [
+      "ProSporter is an Australian online volleyball store offering indoor and beach apparel and gear for players of all levels. We designed the site and migrated the existing ecommerce store from WooCommerce to Shopify.",
+      "Live at prosporter.com.au since September 2026.",
+    ],
     preview: prosporterPreview,
     liveUrl: "https://prosporter.com.au",
     liveLabel: "prosporter.com.au",
@@ -695,8 +698,8 @@ const WORK_ORDER = [
   "volleytube",
   "provolley",
   "welcome-blossom",
-  "innerwest",
   "prosporter",
+  "innerwest",
   "moup",
   "terminl",
   "lunch-dossier",
