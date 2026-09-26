@@ -39,10 +39,8 @@ export function StudioIndex({ onWork }: { onWork?: () => void }) {
     // Clear that opening artifact, without disabling deliberate copying later.
     const selection = window.getSelection();
     if (legal.current && selection?.containsNode(legal.current, true)) selection.removeAllRanges();
-    const root = document.documentElement;
-    const previousOverflow = root.style.overflow;
-    root.style.overflow = 'hidden';
-    return () => { root.style.overflow = previousOverflow; };
+    // The fixed dialog sits in the top layer. Keep document overflow unchanged
+    // so opening the menu preserves the sticky hero and its scroll progress.
   }, [open]);
 
   const close = () => dialog.current?.close();
