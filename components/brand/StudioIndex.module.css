@@ -8,8 +8,8 @@
   .trigger:hover .menuLines i { width: 100%; }
 }
 .trigger:focus-visible .menuLines i, .trigger:active .menuLines i, .trigger[aria-expanded='true'] .menuLines i { width: 100%; }
-.dialog { position: fixed; inset: 84px 28px auto auto; width: min(440px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 108px); margin: 0; padding: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border: 1px solid #eee9f2; border-radius: 20px; background: #fff; color: #310c5d; box-shadow: 0 24px 80px -28px #310c5d33, 0 4px 16px -8px #310c5d18; }
-.dialog::backdrop { background: #310c5d0a; }
+.dialog { position: fixed; inset: 84px 28px auto auto; width: min(440px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 108px); margin: 0; padding: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border: 1px solid #eee9f2; border-radius: 20px; background: #fff; color: #310c5d; box-shadow: 0 16px 48px -20px #241a3329, 0 3px 12px -5px #241a3314; }
+.dialog::backdrop { background: transparent; }
 .sheet { position: relative; isolation: isolate; padding: 20px 28px 26px; }
 .sheet::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .055; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath d='M0 0h160v160H0z' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E"); }
 .heading { display: flex; justify-content: flex-end; margin-bottom: 4px; }
@@ -18,6 +18,7 @@
 .links { display: flex; flex-direction: column; }
 .item { display: flex; align-items: center; min-height: 76px; padding: 14px 0; color: inherit; text-decoration: none; font-family: var(--font-inter), sans-serif; font-size: 38px; font-weight: 450; letter-spacing: -.065em; line-height: 1.15; transition: color 200ms ease; }
 .item:hover { color: #87669f; }
+.item[aria-disabled='true'] { color: #c6bbce; cursor: default; }
 .legal { margin: 32px 0 0; color: #8b779c; font-size: 10px; line-height: 1.5; user-select: text; -webkit-user-select: text; }
 .trigger:focus-visible, .sheet a:focus-visible, .close:focus-visible { outline: 2px solid #927ba3; outline-offset: 4px; }
 .dialog[open] { animation: unfold 340ms cubic-bezier(.2,.75,.2,1) both; }

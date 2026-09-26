@@ -43,10 +43,3 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
-/* The new portfolio starts with a genuinely white, untextured canvas. */
-html:has([data-purpl-home], [data-purpl-page]) {
-  background: #ffffff;
-  scrollbar-gutter: auto;
-  scrollbar-color: #d9d1e2 #ffffff;
-}

@@ -2,12 +2,13 @@
 
 import Link from 'next/link';
 import { X } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './StudioIndex.module.css';
 
-export function StudioIndex({ onWork }: { onWork: () => void }) {
+export function StudioIndex({ onWork }: { onWork?: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const menuLines = useRef<HTMLSpanElement>(null);
+  const legal = useRef<HTMLParagraphElement>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -32,8 +33,12 @@ export function StudioIndex({ onWork }: { onWork: () => void }) {
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!open) return;
+    // Dialog autofocus can select the only selectable text in the sheet.
+    // Clear that opening artifact, without disabling deliberate copying later.
+    const selection = window.getSelection();
+    if (legal.current && selection?.containsNode(legal.current, true)) selection.removeAllRanges();
     const root = document.documentElement;
     const previousOverflow = root.style.overflow;
     root.style.overflow = 'hidden';
@@ -74,20 +79,20 @@ export function StudioIndex({ onWork }: { onWork: () => void }) {
             </button>
           </div>
           <nav aria-label="Main navigation" className={styles.links}>
-            <a href="#folder-projects" className={styles.item} onClick={event => { event.preventDefault(); close(); onWork(); }}>
+            <Link href={onWork ? '#folder-projects' : '/#folder-projects'} className={styles.item} onClick={event => { close(); if (onWork) { event.preventDefault(); onWork(); } }}>
               our work
-            </a>
+            </Link>
             <Link href="/about" className={styles.item} onClick={close}>
               about us
             </Link>
-            <Link href="/case-studies" className={styles.item} onClick={close}>
+            <span className={styles.item} aria-disabled="true">
               case studies
-            </Link>
+            </span>
             <Link href="/contact" className={styles.item} onClick={close}>
               contact
             </Link>
           </nav>
-          <p className={styles.legal}>purpl solutions | ABN 35 957 511 248</p>
+          <p ref={legal} className={styles.legal}>purpl solutions | ABN 35 957 511 248</p>
         </div>
       </dialog>
     </>

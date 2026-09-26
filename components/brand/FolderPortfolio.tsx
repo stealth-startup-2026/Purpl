@@ -5,8 +5,7 @@ import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } fr
 import { projects } from '@/components/work/projects';
 import { PurplModel } from './PurplModel';
 import { ScrollCue } from './ScrollCue';
-import { StudioIndex } from './StudioIndex';
-import { ElasticWordmark } from './ElasticWordmark';
+import { BottomFade, PortfolioHeader } from './PortfolioChrome';
 import styles from './FolderPortfolio.module.css';
 
 const featuredProjects = projects.slice(0, 3);
@@ -15,6 +14,15 @@ const moreProjects = projects.slice(3);
 export function FolderPortfolio() {
   const [open, setOpen] = useState(false);
   const [openRequest, setOpenRequest] = useState(0);
+  const [heroReset, setHeroReset] = useState(0);
+  useLayoutEffect(() => {
+    if (window.location.hash !== '#folder-projects') {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
+    window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'instant' });
+    setOpenRequest(1);
+  }, []);
   const page = useRef<HTMLElement>(null);
   const folderBottom = useRef(0.72);
   const updateFolderBottom = useCallback((ratio: number) => {
@@ -46,6 +54,10 @@ export function FolderPortfolio() {
     });
     scrollAnchor.current = null;
   }, [open]);
+
+  useLayoutEffect(() => {
+    if (heroReset) window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [heroReset]);
 
   useLayoutEffect(() => {
     if (!open || !viewport.current || !modelPosition.current || !featured.current) return;
@@ -94,10 +106,15 @@ export function FolderPortfolio() {
 
   return (
     <main ref={page} className={styles.page} data-purpl-home data-folder-open={open}>
-      <header className={styles.header}>
-        <h1><ElasticWordmark /></h1>
-      </header>
-      <StudioIndex onWork={() => {
+      <PortfolioHeader home onHome={() => {
+        // Reset just the hero, retaining the shared header and normal client routing.
+        scrollAnchor.current = null;
+        openRef.current = false;
+        setOpen(false);
+        setOpenRequest(0);
+        setHeroReset(value => value + 1);
+        window.history.replaceState(window.history.state, '', '/');
+      }} onWork={() => {
         window.scrollTo({ top: openRef.current ? 0 : window.innerHeight * 0.9, behavior: 'instant' });
         setOpenRequest(value => value + 1);
       }} />
@@ -105,7 +122,7 @@ export function FolderPortfolio() {
       <div ref={intro} className={styles.intro}>
         <div ref={viewport} className={styles.viewport}>
           <div ref={modelPosition} className={styles.modelPosition}>
-            <PurplModel onOpenChange={changeOpen} onFolderBottomChange={updateFolderBottom} controls="folder-projects" lockOpenMorph showHint openRequest={openRequest} />
+            <PurplModel key={heroReset} onOpenChange={changeOpen} onFolderBottomChange={updateFolderBottom} controls="folder-projects" lockOpenMorph showHint openRequest={openRequest} />
           </div>
         </div>
       </div>
@@ -162,7 +179,7 @@ export function FolderPortfolio() {
           </section>
         </div>
       </div>
-      <div className={styles.bottomFade} aria-hidden="true" />
+      <BottomFade />
       {!open && <ScrollCue />}
     </main>
   );

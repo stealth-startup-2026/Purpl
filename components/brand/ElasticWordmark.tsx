@@ -5,7 +5,7 @@ import { useEffect, useRef, type CSSProperties } from 'react';
 import styles from './ElasticWordmark.module.css';
 
 /** Real text with a shallow CSS-3D extrusion; no extra WebGL renderer. */
-export function ElasticWordmark() {
+export function ElasticWordmark({ onHome }: { onHome?: () => void }) {
   const link = useRef<HTMLAnchorElement>(null);
   const shape = useRef<HTMLSpanElement>(null);
   const suppressClick = useRef(false);
@@ -140,6 +140,11 @@ export function ElasticWordmark() {
         if (suppressClick.current && event.detail !== 0) {
           event.preventDefault();
           event.stopPropagation();
+          return;
+        }
+        if (onHome && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) {
+          event.preventDefault();
+          onHome();
         }
       }}
     >

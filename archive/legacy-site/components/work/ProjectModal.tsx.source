@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { X, ArrowUpRight } from "lucide-react";
+import { GrainOverlay } from "@/components/GrainOverlay";
 import { cn } from "@/lib/utils";
 import { YouTubeStage } from "./YouTubeStage";
 import { VideoStage } from "./VideoStage";
 import type { Project } from "./projects";
-import styles from "./ProjectModal.module.css";
 
 interface Props {
   project: Project | null;
@@ -58,9 +58,7 @@ export function ProjectModal({ project, onClose }: Props) {
     previousFocus.current = document.activeElement as HTMLElement | null;
     const focusTimer = window.setTimeout(() => closeBtnRef.current?.focus(), ENTER_MS);
     const prevOverflow = document.body.style.overflow;
-    const prevRootOverflow = document.documentElement.style.overflow;
     document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
 
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
@@ -70,7 +68,7 @@ export function ProjectModal({ project, onClose }: Props) {
       }
       if (e.key === "Tab" && dialogRef.current) {
         const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), iframe, video[controls], [tabindex]:not([tabindex="-1"])',
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
         );
         if (focusables.length === 0) return;
         const first = focusables[0];
@@ -90,7 +88,6 @@ export function ProjectModal({ project, onClose }: Props) {
       window.clearTimeout(focusTimer);
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
-      document.documentElement.style.overflow = prevRootOverflow;
       previousFocus.current?.focus();
     };
   }, [renderProject, visible, onClose]);
@@ -102,8 +99,11 @@ export function ProjectModal({ project, onClose }: Props) {
     <div
       onClick={onClose}
       aria-hidden={!visible}
-      className={styles.overlay}
+      className="fixed inset-0 z-[80] flex items-center justify-center p-6 max-sm:p-3"
       style={{
+        backgroundColor: "rgba(8, 5, 20, 0.72)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
         opacity: visible ? 1 : 0,
         transition: `opacity ${visible ? ENTER_MS : EXIT_MS}ms ${EASE}`,
       }}
@@ -114,25 +114,39 @@ export function ProjectModal({ project, onClose }: Props) {
         aria-modal="true"
         aria-labelledby="project-modal-title"
         onClick={(e) => e.stopPropagation()}
-        className={styles.panel}
+        className={cn(
+          "relative isolate flex w-full max-w-7xl max-h-[94vh] flex-col overflow-hidden rounded-2xl border border-[var(--color-line-soft)]",
+          "shadow-[0_30px_80px_rgba(0,0,0,0.6)]",
+        )}
         style={{
           opacity: visible ? 1 : 0,
-          transform: visible ? "translateY(0)" : "translateY(14px)",
+          transform: visible ? "translateY(0) scale(1)" : "translateY(8px) scale(0.97)",
           transition: `opacity ${visible ? ENTER_MS : EXIT_MS}ms ${EASE}, transform ${visible ? ENTER_MS : EXIT_MS}ms ${EASE}`,
         }}
       >
-        <header className={styles.header}>
+        {/* Signature surface: same radial + grain as the page */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse at 50% 30%, #3f1570 0%, var(--color-bg) 55%, var(--color-bg-deep) 100%)",
+          }}
+        />
+        <GrainOverlay className="absolute inset-0 -z-10 h-full w-full" />
+
+        <header className="flex items-start justify-between gap-6 border-b border-[var(--color-line-soft)] px-10 pt-7 pb-6 max-sm:px-5 max-sm:pt-5 max-sm:pb-4">
           <div className="flex flex-col gap-1.5 min-w-0">
             <h2
               id="project-modal-title"
-              className={styles.title}
+              className="text-[1.6rem] md:text-[2rem] font-light tracking-[var(--tracking-title)] text-white truncate"
             >
               {renderProject.brand}
             </h2>
-            <div className={styles.meta}>
+            <div className="text-[0.78rem] tracking-[0.06em] lowercase text-[var(--color-ink-soft)]">
               {renderProject.category}
               {renderProject.tag ? (
-                <span className={styles.tag}>
+                <span className="ml-2.5 inline-block rounded-sm border border-[var(--color-ink-faint)] px-2 py-0.5 align-middle text-[0.6rem] font-medium uppercase tracking-[0.16em] text-[var(--color-ink-soft)]">
                   {renderProject.tag}
                 </span>
               ) : null}
@@ -142,16 +156,16 @@ export function ProjectModal({ project, onClose }: Props) {
             ref={closeBtnRef}
             type="button"
             onClick={onClose}
-            aria-label="Close project"
-            className={styles.close}
+            aria-label="close"
+            className="flex shrink-0 items-center justify-center w-11 h-11 rounded-full border border-[var(--color-line-soft)] text-[var(--color-ink-soft)] outline-none transition-all hover:text-white hover:border-white/60 focus-visible:text-white focus-visible:border-white/60"
           >
             <X size={18} strokeWidth={1.5} />
           </button>
         </header>
 
-        <div className={styles.body}>
-          <div className={styles.gallery}>
-            <div className={styles.stage} key={active.id}>
+        <div className="grid gap-10 overflow-y-auto px-10 py-8 max-sm:px-5 max-sm:py-6 max-sm:gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-12">
+          <div className="flex flex-col gap-3">
+            <div className="overflow-hidden rounded-xl aspect-[16/9]">
               {active.video ? (
                 active.video.src ? (
                   <VideoStage
@@ -190,12 +204,12 @@ export function ProjectModal({ project, onClose }: Props) {
                   aria-label={`view ${item.alt}`}
                   aria-current={i === activeIdx ? "true" : undefined}
                   className={cn(
-                    styles.thumbnail,
+                    "relative aspect-[16/9] overflow-hidden rounded-md border bg-gradient-to-br from-[#4a3a6c] to-[#2a1f3d] outline-none transition-all duration-200",
                     renderProject.gallery.length > 4 &&
                       "shrink-0 basis-[calc((100%-1.5rem)/4.4)]",
                     i === activeIdx
-                      ? styles.selected
-                      : styles.unselected,
+                      ? "border-white/70 opacity-100"
+                      : "border-[var(--color-line-soft)] opacity-65 hover:opacity-100 focus-visible:opacity-100 focus-visible:border-white/40",
                   )}
                   style={{ transitionTimingFunction: EASE }}
                 >
@@ -261,7 +275,7 @@ export function ProjectModal({ project, onClose }: Props) {
                   href={renderProject.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn("group", styles.liveLink)}
+                  className="group inline-flex items-center gap-2 border-b border-white/30 pb-1 text-[0.95rem] font-light tracking-[0.04em] text-white outline-none transition-colors hover:border-white focus-visible:border-white"
                 >
                   {renderProject.liveLabel ?? renderProject.liveUrl}
                   <ArrowUpRight
@@ -271,16 +285,17 @@ export function ProjectModal({ project, onClose }: Props) {
                   />
                 </a>
               ) : (
-                <span className={styles.tag}>
+                <span className="rounded-sm border border-[var(--color-line-soft)] px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.22em] font-medium text-[var(--color-ink-faint)]">
                   not live yet
                 </span>
               )}
 
               {renderProject.legalLinks && renderProject.legalLinks.length > 0 && (
-                <ul className={styles.legalLinks}>
+                <ul className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[0.78rem] uppercase tracking-[0.18em] font-light text-[var(--color-ink-faint)]">
                   {renderProject.legalLinks.map((link) => {
                     const isExternal = /^https?:\/\//.test(link.href);
-                    const className = styles.legalLink;
+                    const className =
+                      "transition-colors hover:text-white/85 focus-visible:text-white/85 outline-none";
                     // Always a real anchor — never next/link. The modal lives in
                     // the @modal parallel slot, and a soft navigation to an
                     // internal legal page (e.g. /volleytube/privacy) doesn't match
@@ -305,7 +320,7 @@ export function ProjectModal({ project, onClose }: Props) {
               )}
             </div>
 
-            <div className={styles.description}>
+            <div className="flex flex-col gap-4 text-[1rem] font-light leading-[1.7] text-white/80">
               {(renderProject.detail && renderProject.detail.length > 0
                 ? renderProject.detail
                 : [renderProject.description]
