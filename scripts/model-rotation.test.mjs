@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { modelCoastDuration, modelFlickVelocity, modelReleaseVelocity, modelReturnStrength, stepModelRotation } from '../components/brand/modelRotation.ts';
+import { modelCoastDuration, modelFlickVelocity, modelReleaseVelocity, modelReturnStrength, modelScrollMoved, stepModelRotation } from '../components/brand/modelRotation.ts';
 
 test('dragging follows with weight rather than jumping to the pointer target', () => {
   const result = stepModelRotation(0, 0, 1, 1 / 60, true);
@@ -118,16 +118,17 @@ test('a flick before the first animation frame can still seed momentum', () => {
   assert.equal(modelReleaseVelocity(0, 0), 0);
 });
 
-test('a normal throw keeps substantial momentum for at least 1.5 seconds', () => {
+test('a normal throw keeps momentum through the shorter coast and still settles', () => {
   const coast = modelCoastDuration(5);
+  assert.equal(coast, 1.05);
   let state = { angle: 0, velocity: 5 };
-  for (let i = 1; i <= 90; i++) {
+  for (let i = 1; i <= 54; i++) {
     state = stepModelRotation(state.angle, state.velocity, 0, 1 / 60, false, modelReturnStrength(i / 60, coast));
   }
-  assert.ok(state.angle > 5);
-  assert.ok(state.velocity > 2);
-  assert.equal(modelReturnStrength(1.5, coast), 0);
-  for (let i = 91; i <= 360; i++) {
+  assert.ok(state.angle > 3.4);
+  assert.ok(state.velocity > 3);
+  assert.equal(modelReturnStrength(0.9, coast), 0);
+  for (let i = 55; i <= 360; i++) {
     state = stepModelRotation(state.angle, state.velocity, 0, 1 / 60, false, modelReturnStrength(i / 60, coast));
   }
   assert.ok(Math.abs(state.angle) < 0.001);
@@ -137,5 +138,29 @@ test('a normal throw keeps substantial momentum for at least 1.5 seconds', () =>
 test('small movements do not gain an artificial coasting delay', () => {
   assert.equal(modelCoastDuration(0), 0);
   assert.equal(modelCoastDuration(0.4), 0);
-  assert.equal(modelCoastDuration(100), 2.2);
+  assert.equal(modelCoastDuration(100), 1.32);
+});
+
+test('real vertical scrolling interrupts a coast in either direction', () => {
+  assert.equal(modelScrollMoved(100, 104, 800), true);
+  assert.equal(modelScrollMoved(104, 100, 800), true);
+});
+
+test('stationary pointer gestures, subpixel jitter, and boundary bounce do not count as scrolling', () => {
+  assert.equal(modelScrollMoved(100, 100, 800), false);
+  assert.equal(modelScrollMoved(100, 101.5, 800), false);
+  assert.equal(modelScrollMoved(0, -40, 800), false);
+  assert.equal(modelScrollMoved(800, 850, 800), false);
+  assert.equal(modelScrollMoved(0, 40, 0), false);
+});
+
+test('scroll interruption engages the return without waiting out the remaining coast', () => {
+  const coast = modelCoastDuration(5);
+  assert.equal(modelReturnStrength(0.1, coast), 0);
+  const strength = modelReturnStrength(0.25, 0);
+  assert.ok(strength > 0.3);
+  const free = stepModelRotation(1, 5, 0, 1 / 60, false, 0);
+  const returning = stepModelRotation(1, 5, 0, 1 / 60, false, strength);
+  assert.ok(returning.velocity < free.velocity);
+  assert.ok(Math.abs(returning.angle - 1) < 0.1, 'scroll should not snap to the resting angle');
 });

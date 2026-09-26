@@ -2,21 +2,21 @@
   position: fixed;
   z-index: 5;
   left: 50%;
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  bottom: calc(clamp(24px, 4svh, 44px) + env(safe-area-inset-bottom, 0px));
   transform: translateX(-50%);
   display: grid;
   place-items: center;
-  width: 68px;
-  height: 56px;
+  width: 88px;
+  height: 70px;
   padding: 0;
   border: 0;
   background: transparent;
-  color: #94879f;
+  color: #77618b;
   cursor: pointer;
   opacity: 1;
   transition: opacity 450ms ease, color 200ms ease;
 }
-.label { font-size: 14px; line-height: 1; letter-spacing: .06em; }
+.label { font-family: var(--font-inter), sans-serif; font-size: 18px; line-height: 1; letter-spacing: .05em; }
 .cue svg { animation: nudge 3.8s ease-in-out 1.2s infinite; }
 .cue:hover { color: #310c5d; }
 .cue:focus-visible { outline: 1px solid #94879f; outline-offset: 2px; border-radius: 50%; }
@@ -25,6 +25,10 @@
 @keyframes nudge {
   0%, 55%, 85%, 100% { transform: translateY(0); }
   70% { transform: translateY(4px); }
+}
+@media (max-height: 500px) {
+  .cue { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); height: 56px; }
+  .label { font-size: 17px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .cue { transition: none; }

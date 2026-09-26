@@ -44,5 +44,12 @@ export function modelReturnStrength(releasedFor: number, coastDuration: number) 
 }
 
 export function modelCoastDuration(speed: number) {
-  return speed > 0.5 ? 1.3 + Math.min(0.9, speed * 0.09) : 0;
+  return speed > 0.5 ? (1.3 + Math.min(0.9, speed * 0.09)) * 0.6 : 0;
+}
+
+/** Ignore subpixel jitter and elastic overscroll outside the real page range. */
+export function modelScrollMoved(from: number, to: number, maxScroll: number) {
+  const limit = Math.max(0, maxScroll);
+  const clamp = (position: number) => Math.max(0, Math.min(limit, position));
+  return Math.abs(clamp(to) - clamp(from)) >= 3;
 }

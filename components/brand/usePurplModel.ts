@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { readHeroScrollRange } from './heroScroll';
-import { modelCoastDuration, modelFlickVelocity, modelReleaseVelocity, modelReturnStrength, stepModelRotation, type RotationSample } from './modelRotation';
+import { modelCoastDuration, modelFlickVelocity, modelReleaseVelocity, modelReturnStrength, modelScrollMoved, stepModelRotation, type RotationSample } from './modelRotation';
 
 export const finishes = {
   clay: { label: 'Matte clay', color: '#310c5d', roughness: 1, metalness: 0, transmission: 0, clearcoat: 0, specularIntensity: 0.08 },
@@ -178,6 +178,7 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     let targetYaw = restingYaw, targetPitch = restingPitch;
     const dragSamples: RotationSample[] = [];
     let releasedFor = Infinity, coastDuration = 0, returnAligned = true;
+    let scrollOrigin = window.scrollY, scrollReturning = false;
     let drag = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
     let pointer: number | null = null;
     let moved = false;
@@ -187,6 +188,8 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       pointer = event.pointerId;
       moved = false;
       drag = true; lastX = event.clientX; lastY = event.clientY;
+      scrollOrigin = window.scrollY;
+      scrollReturning = false;
       yawVelocity = 0; pitchVelocity = 0;
       targetYaw = yaw; targetPitch = pitch;
       dragSamples.length = 0;
@@ -222,6 +225,7 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       coastDuration = modelCoastDuration(speed);
       releasedFor = 0;
       returnAligned = false;
+      scrollOrigin = window.scrollY;
       if (!isClick || event.type !== 'pointerup' || !model || displayedMorph < 0.9) return;
       const rect = container.getBoundingClientRect();
       raycaster.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1), camera);
@@ -235,6 +239,20 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     container.addEventListener('pointerup', up);
     container.addEventListener('pointercancel', up);
     container.addEventListener('lostpointercapture', up);
+    const returnOnScroll = () => {
+      const position = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (!modelScrollMoved(scrollOrigin, position, maxScroll)) return;
+      scrollOrigin = position;
+      if (drag || scrollReturning) return;
+      scrollReturning = true;
+      coastDuration = 0;
+      // Engage the return without snapping the angle or zeroing its velocity.
+      // Subsequent scroll events don't repeatedly restart or strengthen it.
+      releasedFor = Math.max(releasedFor, 0.25);
+      returnAligned = false;
+    };
+    window.addEventListener('scroll', returnOnScroll, { passive: true });
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let lastFinish: Finish = 'clay', lastReset = 0, time = 0, previous = 0, displayedMorph = 0, displayedOpen = 0;
     const hitBox = new THREE.Box3(), point = new THREE.Vector3();
@@ -355,6 +373,7 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       container.removeEventListener('pointerup', up);
       container.removeEventListener('pointercancel', up);
       container.removeEventListener('lostpointercapture', up);
+      window.removeEventListener('scroll', returnOnScroll);
       if (model) disposeModel(model);
       else disposeModel(details);
       material.dispose();

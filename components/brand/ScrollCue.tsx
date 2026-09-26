@@ -40,8 +40,8 @@ export function ScrollCue() {
       })}
     >
       <span className={styles.label}>scroll</span>
-      <svg width="20" height="24" viewBox="0 0 18 22" fill="none" aria-hidden="true">
-        <path d="M9 4v13m-5-5 5 5 5-5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+      <svg width="28" height="32" viewBox="0 0 18 22" fill="none" aria-hidden="true">
+        <path d="M9 4v13m-5-5 5 5 5-5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </button>
   );
