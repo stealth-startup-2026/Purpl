@@ -2,14 +2,11 @@
 
 import { usePathname } from "next/navigation";
 import { DotGrid } from "@/components/DotGrid";
+import { GrainOverlay } from "@/components/GrainOverlay";
 
-/**
- * The dot-grid background for the whole site. The landing page ("/") gets the
- * full interactive version (cursor highlight + click-to-draw); every other page
- * gets the same dots, calm and non-interactive, sitting behind all content.
- * Rendered once in the root layout.
- */
+/** Keep the original background and grain only on legacy routes. */
 export function SiteBackground() {
   const pathname = usePathname();
-  return <DotGrid interactive={pathname === "/"} />;
+  if (["/", "/about", "/contact"].includes(pathname)) return null;
+  return <><DotGrid interactive={false} /><GrainOverlay /></>;
 }

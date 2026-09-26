@@ -1,0 +1,13 @@
+.header { position: fixed; inset: 0 0 auto; height: 164px; padding: 28px 36px 0; z-index: 5; isolation: isolate; pointer-events: none; }
+.bottomFade { position: fixed; inset: auto 0 0; height: 104px; z-index: 4; isolation: isolate; pointer-events: none; transform: rotate(180deg); }
+.header::before, .header::after, .bottomFade::before, .bottomFade::after { content: ''; position: absolute; inset: 0; pointer-events: none; }
+.header::before, .bottomFade::before { z-index: 0; background: linear-gradient(to bottom, #fff 0%, #fff 24%, #fffffffb 32%, #fffffff0 40%, #ffffffd6 48%, #ffffffb0 56%, #ffffff80 64%, #ffffff4f 72%, #ffffff29 80%, #ffffff0f 88%, #ffffff04 94%, #fff0 100%); }
+.header::after, .bottomFade::after { z-index: 1; opacity: .07; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23310c5d' filter='url(%23grain)' d='M0 0h160v160H0z'/%3E%3C/svg%3E"); background-size: 160px 160px; mask-image: linear-gradient(to bottom, transparent 12%, #0000000a 24%, #00000029 36%, #00000052 48%, #00000066 58%, #00000052 68%, #00000029 80%, #0000000a 90%, transparent 100%); }
+.wordmark { position: relative; z-index: 2; margin: 0; color: #310c5d; font-family: var(--font-inter), sans-serif; font-size: 35px; font-weight: 500; letter-spacing: -2px; line-height: 1.2; }
+.header a { pointer-events: auto; }
+.header a:focus-visible { outline: 2px solid #310c5d; outline-offset: 6px; }
+@media (max-width: 640px) {
+  .header { height: 138px; padding: 22px 22px 0; }
+  .bottomFade { height: 80px; }
+  .wordmark { font-size: 28px; letter-spacing: -1.6px; }
+}

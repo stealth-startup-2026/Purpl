@@ -1,3 +1,4 @@
+// Unpublished route source, preserved until case studies are ready.
 import { TopNav } from "@/components/TopNav";
 import { CaseStudiesSection } from "@/components/case-studies/CaseStudiesSection";
 

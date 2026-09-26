@@ -1,0 +1,32 @@
+.cue {
+  position: fixed;
+  z-index: 5;
+  left: 50%;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #94879f;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 450ms ease, color 200ms ease;
+}
+.label { font-size: 13px; line-height: 1; letter-spacing: .06em; }
+.cue svg { animation: nudge 3.8s ease-in-out 1.2s infinite; }
+.cue:hover { color: #310c5d; }
+.cue:focus-visible { outline: 1px solid #94879f; outline-offset: 2px; border-radius: 50%; }
+.cue[data-visible='false'] { opacity: 0; pointer-events: none; }
+.cue[data-visible='false'] svg { animation-play-state: paused; }
+@keyframes nudge {
+  0%, 55%, 85%, 100% { transform: translateY(0); }
+  70% { transform: translateY(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cue { transition: none; }
+  .cue svg { animation: none; }
+}
