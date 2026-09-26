@@ -4,18 +4,17 @@ import base from "./preview-base.module.css";
 import styles from "./ProsporterPreview.module.css";
 
 /**
- * Preview tile for ProSporter Australia (client work, coming soon).
- * Uses the actual store homepage hero screenshot stored under /public.
- * Not clickable; hover shows the "coming soon" overlay.
+ * Preview tile for ProSporter (client work, live at prosporter.com.au).
+ * Uses the homepage hero captured from the live site (1280x800 viewport @2x).
  */
 export function ProsporterPreview() {
   return (
     <div className={cn(base.tile, styles.tile)} aria-hidden="true">
       <Image
-        src="/prosporter.png"
+        src="/projects/prosporter/home.jpg"
         alt="ProSporter store homepage, hero section"
-        width={1280}
-        height={800}
+        width={2560}
+        height={1600}
         className={styles.image}
         priority
       />
