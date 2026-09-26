@@ -6,8 +6,8 @@ import { usePurplModel } from './usePurplModel';
 import styles from './PurplModel.module.css';
 
 /** Self-contained model and interactions. The parent provides the scroll space. */
-export function PurplModel({ onOpenChange, controls, lockOpenMorph = false }: { onOpenChange?: (open: boolean) => void; controls?: string; lockOpenMorph?: boolean }) {
-  const { host, settings, status, morph, setMorph, folderOpen, setFolderOpen } = usePurplModel({ lockOpenMorph });
+export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockOpenMorph = false }: { onOpenChange?: (open: boolean) => void; onFolderBottomChange?: (ratio: number) => void; controls?: string; lockOpenMorph?: boolean }) {
+  const { host, settings, status, morph, setMorph, folderOpen, setFolderOpen } = usePurplModel({ lockOpenMorph, onFolderBottomChange });
   const isFolder = morph > 0.9;
   const ready = status === 'Drag to explore the shape';
   const changeOpen = useRef(onOpenChange);
@@ -43,7 +43,9 @@ export function PurplModel({ onOpenChange, controls, lockOpenMorph = false }: { 
             setFolderOpen(false);
           }
         }}
-      />
+      >
+        <div className={styles.hitArea} aria-hidden="true" />
+      </div>
     </div>
   );
 }

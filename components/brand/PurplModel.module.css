@@ -1,5 +1,7 @@
 .model { position: relative; width: min(76vw, 620px); height: min(76svh, 620px); }
-.canvas { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; outline: none; -webkit-tap-highlight-color: transparent; }
+.canvas { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; outline: none; -webkit-tap-highlight-color: transparent; pointer-events: none; }
+.hitArea { position: absolute; inset: 0; pointer-events: auto; }
+.canvas[aria-expanded='true'] .hitArea { bottom: calc((.5 - var(--folder-bottom-offset, .22)) * 100% - 8px); }
 .canvas:active { cursor: grabbing; }
 .canvas:focus-visible { outline: 1px solid #9f86b6; outline-offset: 8px; border-radius: 24px; }
 .canvas canvas { display: block; }

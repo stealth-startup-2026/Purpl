@@ -2,13 +2,22 @@
 
 import Link from 'next/link';
 import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { projects } from '@/components/work/projects';
 import { PurplModel } from './PurplModel';
 import { ScrollCue } from './ScrollCue';
 import styles from './FolderPortfolio.module.css';
 
-/** Blank layout study. Real project data stays in components/work/projects.tsx. */
+const featuredProjects = projects.slice(0, 3);
+const moreProjects = projects.slice(3);
+
 export function FolderPortfolio() {
   const [open, setOpen] = useState(false);
+  const page = useRef<HTMLElement>(null);
+  const folderBottom = useRef(0.72);
+  const updateFolderBottom = useCallback((ratio: number) => {
+    folderBottom.current = ratio;
+    page.current?.style.setProperty('--folder-bottom-offset', String(ratio - 0.5));
+  }, []);
   const openRef = useRef(false);
   const intro = useRef<HTMLDivElement>(null);
   const viewport = useRef<HTMLDivElement>(null);
@@ -44,17 +53,32 @@ export function FolderPortfolio() {
     // All three real cards start at the same point behind the folder's lower
     // edge. Measure final list positions so this also works on narrow screens.
     const sourceY = scene.top + window.scrollY + scene.height * (mobile ? 0.38 : 0.37)
-      + modelPosition.current.offsetHeight * (mobile ? 0.82 : 0.78) * 0.12;
-    const animations = Array.from(featured.current.children).map((card, index) => {
-      const target = card.getBoundingClientRect();
+      + modelPosition.current.offsetHeight * (mobile ? 0.82 : 0.78) * (folderBottom.current - 0.5) - 16;
+    const cards = Array.from(featured.current.children);
+    const targets = cards.map(card => card.getBoundingClientRect());
+    const firstCardDistance = Math.max(1, targets[0].top + window.scrollY - sourceY);
+    const smoothStep = (value: number) => value * value * (3 - 2 * value);
+    const animations = cards.map((card, index) => {
+      const target = targets[index];
       const startY = sourceY - (target.top + window.scrollY);
-      const angle = [-4, 3, -2][index];
-      return card.animate([
-        { transform: `translateY(${startY}px) scale(.44) rotate(${angle}deg)`, opacity: 0, offset: 0 },
-        { transform: `translateY(${startY + 24}px) scale(.47) rotate(${angle}deg)`, opacity: 1, offset: 0.13 },
-        { transform: 'translateY(8px) scale(1.008) rotate(0deg)', opacity: 1, offset: 0.86 },
-        { transform: 'translateY(0) scale(1) rotate(0deg)', opacity: 1, offset: 1 },
-      ], { duration: 1250 + index * 90, delay: 260 + index * 230, easing: 'cubic-bezier(.22,.7,.22,1)', fill: 'backwards' });
+      const travelDistance = Math.max(1, -startY);
+      // One continuous descent, with gentle acceleration and deceleration.
+      // Longer flights get more time; every card stays at its final size.
+      const duration = 1250 + Math.max(0, travelDistance - firstCardDistance) * 0.65;
+      const frames = Array.from({ length: 61 }, (_, frame) => {
+        const time = frame / 60;
+        const progress = smoothStep(time);
+        // Straighten each sheet over the same distance from the folder.
+        const straighten = smoothStep(Math.min(1, progress * travelDistance / firstCardDistance));
+        return {
+          transform: `translateY(${startY * (1 - progress)}px) rotate(${-4 * (1 - straighten)}deg)`,
+          opacity: Math.min(1, time * duration / 160),
+          offset: time,
+        };
+      });
+      return card.animate(frames, {
+        duration, delay: 260 + index * 230, easing: 'linear', fill: 'backwards',
+      });
     });
     // Resizing should immediately settle the cards into their responsive layout.
     const settle = () => animations.forEach(animation => animation.finish());
@@ -66,7 +90,7 @@ export function FolderPortfolio() {
   }, [open]);
 
   return (
-    <main className={styles.page} data-purpl-home data-folder-open={open}>
+    <main ref={page} className={styles.page} data-purpl-home data-folder-open={open}>
       <header className={styles.header}>
         <h1><Link href="/">purpl solutions</Link></h1>
       </header>
@@ -74,27 +98,64 @@ export function FolderPortfolio() {
       <div ref={intro} className={styles.intro}>
         <div ref={viewport} className={styles.viewport}>
           <div ref={modelPosition} className={styles.modelPosition}>
-            <PurplModel onOpenChange={changeOpen} controls="folder-projects" lockOpenMorph />
+            <PurplModel onOpenChange={changeOpen} onFolderBottomChange={updateFolderBottom} controls="folder-projects" lockOpenMorph />
           </div>
         </div>
       </div>
 
       <div className={styles.spill} data-open={open} inert={!open} aria-hidden={!open}>
         <div className={styles.spillClip}>
-          <section id="folder-projects" className={styles.projects} aria-label="Project layout">
-            <div ref={featured} className={styles.featured} role="list" aria-label="Three featured projects">
-              {[0, 1, 2].map(index => (
-                <div key={index} role="listitem" aria-label={`Featured project ${index + 1}, empty card`} className={styles.card} style={{ '--card-index': index } as CSSProperties} />
+          <section id="folder-projects" className={styles.projects} aria-label="Our work">
+            <div ref={featured} className={styles.featured} aria-label="Featured projects">
+              {featuredProjects.map((project, index) => (
+                <Link
+                  key={project.id}
+                  href={`/${project.id}`}
+                  aria-label={`View ${project.brand} project`}
+                  className={styles.card}
+                  style={{ '--card-index': index } as CSSProperties}
+                >
+                  <div className={styles.artwork}>{project.preview}</div>
+                  <div className={styles.cardCopy}>
+                    <div className={styles.cardMeta}>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <span>{project.category}</span>
+                      {project.tag && <span className={styles.tag}>{project.tag}</span>}
+                    </div>
+                    <div className={styles.cardHeading}>
+                      <h2>{project.brand}</h2>
+                      <span aria-hidden="true">↗</span>
+                    </div>
+                    <p>{project.description}</p>
+                  </div>
+                </Link>
               ))}
             </div>
-            <div className={styles.more} role="list" aria-label="More projects">
-              {[0, 1, 2, 3].map(index => (
-                <div key={index} role="listitem" aria-label={`Additional project ${index + 1}, empty row`} className={styles.row} style={{ '--card-index': index + 3 } as CSSProperties} />
+            <div className={styles.more} aria-label="More projects">
+              <p className={styles.moreLabel}>More from the folder</p>
+              {moreProjects.map((project, index) => (
+                <Link
+                  key={project.id}
+                  href={`/${project.id}`}
+                  aria-label={`View ${project.brand} project`}
+                  className={styles.row}
+                  style={{ '--card-index': index + 3 } as CSSProperties}
+                >
+                  <span className={styles.rowNumber}>{String(index + 4).padStart(2, '0')}</span>
+                  <span className={styles.rowPreview}>{project.preview}</span>
+                  <span className={styles.rowCopy}>
+                    <strong>{project.brand}</strong>
+                    <small>{project.category}</small>
+                  </span>
+                  {project.tag && <span className={styles.rowTag}>{project.tag}</span>}
+                  <span className={styles.rowArrow} aria-hidden="true">↗</span>
+                </Link>
               ))}
             </div>
           </section>
         </div>
       </div>
+      <div className={styles.bottomFade} aria-hidden="true" />
       {!open && <ScrollCue />}
     </main>
   );

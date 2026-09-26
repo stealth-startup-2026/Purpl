@@ -13,8 +13,10 @@ export const finishes = {
 };
 export type Finish = keyof typeof finishes;
 
-export function usePurplModel({ lockOpenMorph = false }: { lockOpenMorph?: boolean } = {}) {
+export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: { lockOpenMorph?: boolean; onFolderBottomChange?: (ratio: number) => void } = {}) {
   const host = useRef<HTMLDivElement>(null);
+  const folderBottomCallback = useRef(onFolderBottomChange);
+  folderBottomCallback.current = onFolderBottomChange;
   const settings = useRef({ finish: 'clay' as Finish, paused: false, reset: 0, morph: 0, folderOpen: false, manualMorph: false });
   const [finish, setFinish] = useState<Finish>('clay');
   const [paused, setPaused] = useState(false);
@@ -93,40 +95,75 @@ export function usePurplModel({ lockOpenMorph = false }: { lockOpenMorph?: boole
     cover.position.y = 0.65;
     coverHinge.add(cover);
     details.add(coverHinge);
+    const folderYaw = 0.2 + THREE.MathUtils.degToRad(5), folderPitch = 0.14;
+    const folderRestRotation = new THREE.Euler(folderPitch, folderYaw, 0);
+    const folderRestPoints: THREE.Vector3[] = [];
+    // Project the actual open folder geometry at its resting angle. Ignore drag
+    // and idle motion so the surrounding page never shifts while it is handled.
+    cover.updateMatrix();
+    const coverPositions = cover.geometry.attributes.position;
+    for (let i = 0; i < coverPositions.count; i++) {
+      folderRestPoints.push(new THREE.Vector3().fromBufferAttribute(coverPositions, i)
+        .applyMatrix4(cover.matrix).applyAxisAngle(new THREE.Vector3(1, 0, 0), 0.65)
+        .add(coverHinge.position).applyEuler(folderRestRotation));
+    }
     const disposeModel = (object: THREE.Object3D) => object.traverse(child => {
       if (child instanceof THREE.Mesh) child.geometry.dispose();
     });
     new GLTFLoader().load('/models/purpl-pebble.glb', gltf => {
+      gltf.scene.updateMatrixWorld(true);
       gltf.scene.traverse(child => {
         if (child instanceof THREE.Mesh) {
           const original = Array.isArray(child.material) ? child.material : [child.material];
           original.forEach(m => m.dispose());
           child.material = material;
+          const folderPositions = child.geometry.morphAttributes.position?.[0];
+          if (folderPositions) {
+            const base = new THREE.Vector3();
+            for (let i = 0; i < folderPositions.count; i++) {
+              const point = new THREE.Vector3().fromBufferAttribute(folderPositions, i);
+              if (child.geometry.morphTargetsRelative) {
+                point.add(base.fromBufferAttribute(child.geometry.attributes.position, i));
+              }
+              folderRestPoints.push(point.applyMatrix4(child.matrixWorld).applyEuler(folderRestRotation));
+            }
+          }
         }
       });
       if (disposed) { disposeModel(gltf.scene); return; }
       model = gltf.scene;
       model.add(details);
       scene.add(model);
+      resize();
       setStatus('Drag to explore the shape');
     }, undefined, () => {
       if (!disposed) setStatus('The model could not load. Refresh to try again.');
     });
 
     const resize = () => {
-      const { width, height } = container.getBoundingClientRect();
+      // Layout dimensions exclude the parent's animated CSS scale.
+      const width = container.clientWidth, height = container.clientHeight;
       if (!width || !height) return;
       renderer.setSize(width, height);
       camera.aspect = width / height;
       camera.position.z = camera.aspect < 1 ? 4.7 / camera.aspect : 4.7;
       camera.updateProjectionMatrix();
+      camera.updateMatrixWorld();
+      if (folderBottomCallback.current) {
+        const projected = new THREE.Vector3();
+        let bottom = 0.5;
+        for (const point of folderRestPoints) {
+          projected.copy(point).project(camera);
+          bottom = Math.max(bottom, (1 - projected.y) / 2);
+        }
+        folderBottomCallback.current(bottom);
+      }
     };
     const observer = new ResizeObserver(resize);
     observer.observe(container);
     resize();
     // Drag offsets spring back to zero. Only the folder adds the angled resting pose.
     const restingYaw = 0, restingPitch = 0;
-    const folderYaw = 0.2 + THREE.MathUtils.degToRad(5), folderPitch = 0.14;
     let yaw = restingYaw, pitch = restingPitch, yawVelocity = 0, pitchVelocity = 0;
     let drag = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
     const raycaster = new THREE.Raycaster();
