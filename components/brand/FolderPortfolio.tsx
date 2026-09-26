@@ -5,6 +5,8 @@ import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } fr
 import { projects } from '@/components/work/projects';
 import { PurplModel } from './PurplModel';
 import { ScrollCue } from './ScrollCue';
+import { StudioIndex } from './StudioIndex';
+import { ElasticWordmark } from './ElasticWordmark';
 import styles from './FolderPortfolio.module.css';
 
 const featuredProjects = projects.slice(0, 3);
@@ -12,6 +14,7 @@ const moreProjects = projects.slice(3);
 
 export function FolderPortfolio() {
   const [open, setOpen] = useState(false);
+  const [openRequest, setOpenRequest] = useState(0);
   const page = useRef<HTMLElement>(null);
   const folderBottom = useRef(0.72);
   const updateFolderBottom = useCallback((ratio: number) => {
@@ -92,13 +95,17 @@ export function FolderPortfolio() {
   return (
     <main ref={page} className={styles.page} data-purpl-home data-folder-open={open}>
       <header className={styles.header}>
-        <h1><Link href="/">purpl solutions</Link></h1>
+        <h1><ElasticWordmark /></h1>
       </header>
+      <StudioIndex onWork={() => {
+        window.scrollTo({ top: openRef.current ? 0 : window.innerHeight * 0.9, behavior: 'instant' });
+        setOpenRequest(value => value + 1);
+      }} />
 
       <div ref={intro} className={styles.intro}>
         <div ref={viewport} className={styles.viewport}>
           <div ref={modelPosition} className={styles.modelPosition}>
-            <PurplModel onOpenChange={changeOpen} onFolderBottomChange={updateFolderBottom} controls="folder-projects" lockOpenMorph />
+            <PurplModel onOpenChange={changeOpen} onFolderBottomChange={updateFolderBottom} controls="folder-projects" lockOpenMorph showHint openRequest={openRequest} />
           </div>
         </div>
       </div>

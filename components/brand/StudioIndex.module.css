@@ -1,0 +1,42 @@
+.trigger { position: fixed; top: 27px; right: 30px; z-index: 6; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: #310c5d; cursor: pointer; }
+.menuLines { position: relative; width: 32px; height: calc(var(--bar-step, 10px) * 2 + var(--bar-height, 3px)); }
+.trigger, .sheet { user-select: none; -webkit-user-select: none; }
+.menuLines i { position: absolute; right: 0; top: 0; display: block; height: var(--bar-height, 3px); width: 100%; border-radius: 2px; background: currentColor; transition: width 240ms cubic-bezier(.22,.75,.25,1); }
+.menuLines i:nth-child(2) { top: var(--bar-step, 10px); width: 75%; transition-delay: 25ms; }
+.menuLines i:nth-child(3) { top: calc(var(--bar-step, 10px) * 2); width: 50%; transition-delay: 50ms; }
+@media (hover: hover) {
+  .trigger:hover .menuLines i { width: 100%; }
+}
+.trigger:focus-visible .menuLines i, .trigger:active .menuLines i, .trigger[aria-expanded='true'] .menuLines i { width: 100%; }
+.dialog { position: fixed; inset: 84px 28px auto auto; width: min(440px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 108px); margin: 0; padding: 0; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border: 1px solid #eee9f2; border-radius: 20px; background: #fff; color: #310c5d; box-shadow: 0 24px 80px -28px #310c5d33, 0 4px 16px -8px #310c5d18; }
+.dialog::backdrop { background: #310c5d0a; }
+.sheet { position: relative; isolation: isolate; padding: 20px 28px 26px; }
+.sheet::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .055; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath d='M0 0h160v160H0z' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E"); }
+.heading { display: flex; justify-content: flex-end; margin-bottom: 4px; }
+.close { display: grid; place-items: center; width: 44px; height: 44px; margin-right: -12px; border: 0; border-radius: 50%; background: transparent; color: #80688f; cursor: pointer; }
+.close:hover { background: #310c5d06; color: #310c5d; }
+.links { display: flex; flex-direction: column; }
+.item { display: flex; align-items: center; min-height: 76px; padding: 14px 0; color: inherit; text-decoration: none; font-family: var(--font-inter), sans-serif; font-size: 38px; font-weight: 450; letter-spacing: -.065em; line-height: 1.15; transition: color 200ms ease; }
+.item:hover { color: #87669f; }
+.legal { margin: 32px 0 0; color: #8b779c; font-size: 10px; line-height: 1.5; user-select: text; -webkit-user-select: text; }
+.trigger:focus-visible, .sheet a:focus-visible, .close:focus-visible { outline: 2px solid #927ba3; outline-offset: 4px; }
+.dialog[open] { animation: unfold 340ms cubic-bezier(.2,.75,.2,1) both; }
+.dialog[open]::backdrop { animation: appear 250ms ease both; }
+.dialog[open] .item { animation: unfold 360ms cubic-bezier(.2,.75,.2,1) both; }
+.dialog[open] .item:nth-child(1) { animation-delay: 70ms; }
+.dialog[open] .item:nth-child(2) { animation-delay: 120ms; }
+.dialog[open] .item:nth-child(3) { animation-delay: 170ms; }
+.dialog[open] .item:nth-child(4) { animation-delay: 220ms; }
+@keyframes unfold { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 640px) {
+  .trigger { top: 17px; right: 14px; }
+  .menuLines { width: 28px; }
+  .dialog { inset: 78px 16px auto; width: auto; max-height: calc(100dvh - 94px - env(safe-area-inset-bottom, 0px)); border-radius: 17px; }
+  .sheet { padding: 16px 22px 24px; }
+  .item { min-height: 70px; font-size: clamp(30px, 8.5vw, 36px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open], .dialog[open]::backdrop, .dialog[open] .item { animation: none; }
+  .item, .menuLines i { transition: none; }
+}

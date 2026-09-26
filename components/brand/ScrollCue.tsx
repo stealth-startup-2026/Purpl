@@ -34,6 +34,7 @@ export function ScrollCue() {
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
       })}
     >
+      <span className={styles.label}>scroll</span>
       <svg width="18" height="22" viewBox="0 0 18 22" fill="none" aria-hidden="true">
         <path d="M9 4v13m-5-5 5 5 5-5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
       </svg>

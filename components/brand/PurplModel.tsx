@@ -1,18 +1,28 @@
 'use client';
 
 import Image from 'next/image';
+import { Pointer } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { usePurplModel } from './usePurplModel';
 import styles from './PurplModel.module.css';
 
 /** Self-contained model and interactions. The parent provides the scroll space. */
-export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockOpenMorph = false }: { onOpenChange?: (open: boolean) => void; onFolderBottomChange?: (ratio: number) => void; controls?: string; lockOpenMorph?: boolean }) {
+export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockOpenMorph = false, showHint = false, openRequest = 0 }: { onOpenChange?: (open: boolean) => void; onFolderBottomChange?: (ratio: number) => void; controls?: string; lockOpenMorph?: boolean; showHint?: boolean; openRequest?: number }) {
   const { host, settings, status, morph, setMorph, folderOpen, setFolderOpen } = usePurplModel({ lockOpenMorph, onFolderBottomChange });
   const isFolder = morph > 0.9;
   const ready = status === 'Drag to explore the shape';
+  const hintVisible = ready && isFolder && !folderOpen;
   const changeOpen = useRef(onOpenChange);
   changeOpen.current = onOpenChange;
   useEffect(() => { changeOpen.current?.(folderOpen); }, [folderOpen]);
+  useEffect(() => {
+    if (!openRequest) return;
+    settings.current.manualMorph = true;
+    settings.current.morph = 1;
+    settings.current.folderOpen = true;
+    setMorph(1);
+    setFolderOpen(true);
+  }, [openRequest, settings, setMorph, setFolderOpen]);
 
   return (
     <div className={styles.model}>
@@ -46,6 +56,25 @@ export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockO
       >
         <div className={styles.hitArea} aria-hidden="true" />
       </div>
+      {showHint && (
+        <button
+          type="button"
+          className={styles.hint}
+          data-visible={hintVisible}
+          aria-hidden={!hintVisible}
+          aria-label="Open folder to view our work"
+          aria-controls={controls}
+          disabled={!hintVisible}
+          tabIndex={hintVisible ? 0 : -1}
+          onClick={() => {
+            settings.current.folderOpen = true;
+            setFolderOpen(true);
+          }}
+        >
+          <span>open to explore</span>
+          <Pointer size={18} strokeWidth={1.25} aria-hidden="true" />
+        </button>
+      )}
     </div>
   );
 }
