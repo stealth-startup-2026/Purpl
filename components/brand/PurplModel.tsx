@@ -111,7 +111,7 @@ export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockO
           }}
         >
           <span>open to explore</span>
-          <Pointer size={18} strokeWidth={1.25} aria-hidden="true" />
+          <Pointer size={20} strokeWidth={1.4} aria-hidden="true" />
         </button>
       )}
     </div>

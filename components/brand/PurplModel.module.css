@@ -13,7 +13,7 @@
 /* Compensate for the PNG's transparent border: its visible 590px silhouette
    needs ~1.217x scale to match the blob at the current 34° camera framing. */
 .fallback { object-fit: contain; pointer-events: none; transform: scale(1.217); transform-origin: center; }
-.hint { position: absolute; top: calc((.5 + var(--folder-bottom-offset, .22)) * 100% + 20px); left: 50%; transform: translateX(-50%); min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #94879f; font: inherit; font-size: 12px; letter-spacing: .04em; white-space: nowrap; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 350ms ease, color 200ms ease; }
+.hint { position: absolute; top: calc((.5 + var(--folder-bottom-offset, .22)) * 100% + 20px); left: 50%; transform: translateX(-50%); min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #77618b; font: inherit; font-family: var(--font-inter), sans-serif; font-size: 13px; letter-spacing: .04em; white-space: nowrap; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 350ms ease, color 200ms ease; }
 .hint { display: flex; flex-direction: column; align-items: center; gap: 8px; padding-top: 8px; padding-bottom: 8px; }
 .hint[data-visible='true'] { opacity: 1; pointer-events: auto; }
 .hint:hover { color: #310c5d; }
