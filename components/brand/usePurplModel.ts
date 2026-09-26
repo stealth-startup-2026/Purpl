@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { readHeroScrollRange } from './heroScroll';
-import { stepModelRotation } from './modelRotation';
+import { modelCoastDuration, modelFlickVelocity, modelReleaseVelocity, modelReturnStrength, stepModelRotation, type RotationSample } from './modelRotation';
 
 export const finishes = {
   clay: { label: 'Matte clay', color: '#310c5d', roughness: 1, metalness: 0, transmission: 0, clearcoat: 0, specularIntensity: 0.08 },
@@ -176,6 +176,8 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     const restingYaw = 0, restingPitch = 0;
     let yaw = restingYaw, pitch = restingPitch, yawVelocity = 0, pitchVelocity = 0;
     let targetYaw = restingYaw, targetPitch = restingPitch;
+    const dragSamples: RotationSample[] = [];
+    let releasedFor = Infinity, coastDuration = 0, returnAligned = true;
     let drag = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
     let pointer: number | null = null;
     let moved = false;
@@ -187,6 +189,8 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       drag = true; lastX = event.clientX; lastY = event.clientY;
       yawVelocity = 0; pitchVelocity = 0;
       targetYaw = yaw; targetPitch = pitch;
+      dragSamples.length = 0;
+      dragSamples.push({ x: event.clientX, y: event.clientY, time: event.timeStamp });
       downX = event.clientX; downY = event.clientY;
       container.setPointerCapture(event.pointerId);
     };
@@ -195,6 +199,8 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       moved ||= Math.hypot(event.clientX - downX, event.clientY - downY) >= 7;
       targetYaw += (event.clientX - lastX) * 0.014;
       targetPitch += (event.clientY - lastY) * 0.014;
+      dragSamples.push({ x: event.clientX, y: event.clientY, time: event.timeStamp });
+      while (dragSamples.length > 2 && dragSamples[1].time < event.timeStamp - 100) dragSamples.shift();
       lastX = event.clientX; lastY = event.clientY;
     };
     const up = (event: PointerEvent) => {
@@ -205,13 +211,17 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       pointer = null;
       drag = false;
       if (container.hasPointerCapture(event.pointerId)) container.releasePointerCapture(event.pointerId);
-      // Return by the shortest arc after any full turns during dragging.
-      yaw = restingYaw + THREE.MathUtils.euclideanModulo(yaw - restingYaw + Math.PI, Math.PI * 2) - Math.PI;
-      pitch = restingPitch + THREE.MathUtils.euclideanModulo(pitch - restingPitch + Math.PI, Math.PI * 2) - Math.PI;
-      // Preserve the velocity built while following the hand. Limit strong
-      // flicks so the return remains controlled rather than spinning endlessly.
-      yawVelocity = event.type === 'pointerup' ? THREE.MathUtils.clamp(yawVelocity, -12, 12) : 0;
-      pitchVelocity = event.type === 'pointerup' ? THREE.MathUtils.clamp(pitchVelocity, -12, 12) : 0;
+      const releasedDrag = event.type === 'pointerup' && !isClick;
+      const flick = releasedDrag
+        ? modelFlickVelocity(dragSamples, event.timeStamp) : { yaw: 0, pitch: 0 };
+      // A stale hand sample must never erase momentum the mesh still has.
+      // Taps and cancelled gestures still stop cleanly, without a throw.
+      yawVelocity = releasedDrag ? modelReleaseVelocity(yawVelocity, flick.yaw) : 0;
+      pitchVelocity = releasedDrag ? modelReleaseVelocity(pitchVelocity, flick.pitch) : 0;
+      const speed = Math.hypot(yawVelocity, pitchVelocity);
+      coastDuration = modelCoastDuration(speed);
+      releasedFor = 0;
+      returnAligned = false;
       if (!isClick || event.type !== 'pointerup' || !model || displayedMorph < 0.9) return;
       const rect = container.getBoundingClientRect();
       raycaster.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1), camera);
@@ -280,14 +290,24 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
         lastReset = settings.current.reset; yaw = restingYaw; pitch = restingPitch;
         targetYaw = restingYaw; targetPitch = restingPitch;
         yawVelocity = 0; pitchVelocity = 0; time = 0;
+        releasedFor = Infinity; coastDuration = 0; returnAligned = true;
       }
       if (motion.matches) {
         yaw = drag ? targetYaw : restingYaw;
         pitch = drag ? targetPitch : restingPitch;
         yawVelocity = 0; pitchVelocity = 0;
       } else {
-        const nextYaw = stepModelRotation(yaw, yawVelocity, drag ? targetYaw : restingYaw, delta, drag);
-        const nextPitch = stepModelRotation(pitch, pitchVelocity, drag ? targetPitch : restingPitch, delta, drag);
+        if (!drag) releasedFor += delta;
+        const returnStrength = modelReturnStrength(releasedFor, coastDuration);
+        if (!drag && !returnAligned && returnStrength > 0) {
+          // Choose the nearest equivalent resting angle only after coasting,
+          // so full turns don't make the model unwind on its way home.
+          yaw = restingYaw + THREE.MathUtils.euclideanModulo(yaw - restingYaw + Math.PI, Math.PI * 2) - Math.PI;
+          pitch = restingPitch + THREE.MathUtils.euclideanModulo(pitch - restingPitch + Math.PI, Math.PI * 2) - Math.PI;
+          returnAligned = true;
+        }
+        const nextYaw = stepModelRotation(yaw, yawVelocity, drag ? targetYaw : restingYaw, delta, drag, returnStrength);
+        const nextPitch = stepModelRotation(pitch, pitchVelocity, drag ? targetPitch : restingPitch, delta, drag, returnStrength);
         yaw = nextYaw.angle; yawVelocity = nextYaw.velocity;
         pitch = nextPitch.angle; pitchVelocity = nextPitch.velocity;
       }
