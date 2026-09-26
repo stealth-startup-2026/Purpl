@@ -12,6 +12,7 @@ export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockO
   const isFolder = morph > 0.9;
   const ready = status === 'Drag to explore the shape';
   const hintVisible = ready && isFolder && !folderOpen;
+  const dragHint = useRef<HTMLSpanElement>(null);
   const changeOpen = useRef(onOpenChange);
   changeOpen.current = onOpenChange;
   useEffect(() => { changeOpen.current?.(folderOpen); }, [folderOpen]);
@@ -23,6 +24,43 @@ export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockO
     setMorph(1);
     setFolderOpen(true);
   }, [openRequest, settings, setMorph, setFolderOpen]);
+
+  useEffect(() => {
+    const surface = host.current;
+    const label = dragHint.current;
+    if (!surface || !label) return;
+    const desktopPointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const hide = () => { label.dataset.visible = 'false'; };
+    const follow = (event: PointerEvent) => {
+      if (!ready || isFolder || folderOpen || !desktopPointer.matches
+        || event.pointerType !== 'mouse' || event.buttons !== 0) {
+        hide();
+        return;
+      }
+      const bounds = surface.getBoundingClientRect();
+      // Write only the label's transform, without rendering React on every move.
+      label.style.transform = `translate3d(${event.clientX - bounds.left + 16}px, ${event.clientY - bounds.top + 20}px, 0)`;
+      label.dataset.visible = 'true';
+    };
+    hide();
+    surface.addEventListener('pointerenter', follow);
+    surface.addEventListener('pointermove', follow);
+    surface.addEventListener('pointerleave', hide);
+    surface.addEventListener('pointerdown', hide);
+    window.addEventListener('scroll', hide, { passive: true });
+    window.addEventListener('blur', hide);
+    desktopPointer.addEventListener('change', hide);
+    return () => {
+      hide();
+      surface.removeEventListener('pointerenter', follow);
+      surface.removeEventListener('pointermove', follow);
+      surface.removeEventListener('pointerleave', hide);
+      surface.removeEventListener('pointerdown', hide);
+      window.removeEventListener('scroll', hide);
+      window.removeEventListener('blur', hide);
+      desktopPointer.removeEventListener('change', hide);
+    };
+  }, [host, ready, isFolder, folderOpen]);
 
   return (
     <div className={styles.model}>
@@ -55,6 +93,7 @@ export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockO
         }}
       >
         <div className={styles.hitArea} data-model-hit-area aria-hidden="true" />
+        <span ref={dragHint} className={styles.dragHint} aria-hidden="true">drag me</span>
       </div>
       {showHint && (
         <button

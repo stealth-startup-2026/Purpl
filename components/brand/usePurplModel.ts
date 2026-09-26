@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { readHeroScrollRange } from './heroScroll';
+import { stepModelRotation } from './modelRotation';
 
 export const finishes = {
   clay: { label: 'Matte clay', color: '#310c5d', roughness: 1, metalness: 0, transmission: 0, clearcoat: 0, specularIntensity: 0.08 },
@@ -174,6 +175,7 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     // Drag offsets spring back to zero. Only the folder adds the angled resting pose.
     const restingYaw = 0, restingPitch = 0;
     let yaw = restingYaw, pitch = restingPitch, yawVelocity = 0, pitchVelocity = 0;
+    let targetYaw = restingYaw, targetPitch = restingPitch;
     let drag = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
     let pointer: number | null = null;
     let moved = false;
@@ -184,18 +186,21 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       moved = false;
       drag = true; lastX = event.clientX; lastY = event.clientY;
       yawVelocity = 0; pitchVelocity = 0;
+      targetYaw = yaw; targetPitch = pitch;
       downX = event.clientX; downY = event.clientY;
       container.setPointerCapture(event.pointerId);
     };
     const move = (event: PointerEvent) => {
       if (!drag || event.pointerId !== pointer) return;
       moved ||= Math.hypot(event.clientX - downX, event.clientY - downY) >= 7;
-      yaw += (event.clientX - lastX) * 0.009;
-      pitch += (event.clientY - lastY) * 0.009;
+      targetYaw += (event.clientX - lastX) * 0.014;
+      targetPitch += (event.clientY - lastY) * 0.014;
       lastX = event.clientX; lastY = event.clientY;
     };
     const up = (event: PointerEvent) => {
       if (event.pointerId !== pointer) return;
+      if (event.type === 'lostpointercapture'
+        && (event.target !== container || container.hasPointerCapture(event.pointerId))) return;
       const isClick = drag && !moved && Math.hypot(event.clientX - downX, event.clientY - downY) < 7;
       pointer = null;
       drag = false;
@@ -203,6 +208,10 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       // Return by the shortest arc after any full turns during dragging.
       yaw = restingYaw + THREE.MathUtils.euclideanModulo(yaw - restingYaw + Math.PI, Math.PI * 2) - Math.PI;
       pitch = restingPitch + THREE.MathUtils.euclideanModulo(pitch - restingPitch + Math.PI, Math.PI * 2) - Math.PI;
+      // Preserve the velocity built while following the hand. Limit strong
+      // flicks so the return remains controlled rather than spinning endlessly.
+      yawVelocity = event.type === 'pointerup' ? THREE.MathUtils.clamp(yawVelocity, -12, 12) : 0;
+      pitchVelocity = event.type === 'pointerup' ? THREE.MathUtils.clamp(pitchVelocity, -12, 12) : 0;
       if (!isClick || event.type !== 'pointerup' || !model || displayedMorph < 0.9) return;
       const rect = container.getBoundingClientRect();
       raycaster.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1), camera);
@@ -269,22 +278,18 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       }
       if (lastReset !== settings.current.reset) {
         lastReset = settings.current.reset; yaw = restingYaw; pitch = restingPitch;
+        targetYaw = restingYaw; targetPitch = restingPitch;
         yawVelocity = 0; pitchVelocity = 0; time = 0;
       }
-      if (!drag) {
-        if (motion.matches) {
-          yaw = restingYaw; pitch = restingPitch; yawVelocity = 0; pitchVelocity = 0;
-        } else {
-          // Small integration steps keep the elastic return stable at different frame rates.
-          const steps = Math.max(1, Math.ceil(delta / (1 / 120)));
-          const step = delta / steps;
-          for (let i = 0; i < steps; i++) {
-            yawVelocity += ((restingYaw - yaw) * 180 - yawVelocity * 18) * step;
-            pitchVelocity += ((restingPitch - pitch) * 180 - pitchVelocity * 18) * step;
-            yaw += yawVelocity * step;
-            pitch += pitchVelocity * step;
-          }
-        }
+      if (motion.matches) {
+        yaw = drag ? targetYaw : restingYaw;
+        pitch = drag ? targetPitch : restingPitch;
+        yawVelocity = 0; pitchVelocity = 0;
+      } else {
+        const nextYaw = stepModelRotation(yaw, yawVelocity, drag ? targetYaw : restingYaw, delta, drag);
+        const nextPitch = stepModelRotation(pitch, pitchVelocity, drag ? targetPitch : restingPitch, delta, drag);
+        yaw = nextYaw.angle; yawVelocity = nextYaw.velocity;
+        pitch = nextPitch.angle; pitchVelocity = nextPitch.velocity;
       }
       const animate = !motion.matches && !settings.current.paused;
       if (animate) time += delta;

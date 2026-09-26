@@ -1,5 +1,5 @@
-.link { display: inline-block; position: relative; perspective: 800px; color: inherit; text-decoration: none; touch-action: pinch-zoom; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
-.flat { display: block; opacity: 1; }
+.link { display: inline-block; position: relative; perspective: 800px; color: inherit; text-decoration: none; touch-action: pinch-zoom; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; }
+.flat { display: block; opacity: 1; pointer-events: none; }
 .volume { position: absolute; inset: 0; opacity: 0; pointer-events: none; perspective: 800px; }
 .shape { display: block; position: relative; transform-style: preserve-3d; transform-origin: center; pointer-events: none; }
 .face { position: relative; display: block; color: #310c5d; }
@@ -13,6 +13,9 @@
 .link[data-settling='true'] .volume { opacity: 0; }
 .link[data-settling='true'] .flat, .link[data-settling='true'] .volume { transition: opacity 240ms ease; }
 .link[data-dragging='true'] { cursor: grabbing; }
+@media (hover: hover) and (pointer: fine) {
+  .link { cursor: grab; }
+}
 @media (prefers-reduced-motion: reduce) {
   .link[data-settling='true'] .flat, .link[data-settling='true'] .volume { transition: none; }
 }

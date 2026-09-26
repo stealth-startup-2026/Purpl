@@ -6,8 +6,8 @@
   transform: translateX(-50%);
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 52px;
+  width: 68px;
+  height: 56px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -16,7 +16,7 @@
   opacity: 1;
   transition: opacity 450ms ease, color 200ms ease;
 }
-.label { font-size: 13px; line-height: 1; letter-spacing: .06em; }
+.label { font-size: 14px; line-height: 1; letter-spacing: .06em; }
 .cue svg { animation: nudge 3.8s ease-in-out 1.2s infinite; }
 .cue:hover { color: #310c5d; }
 .cue:focus-visible { outline: 1px solid #94879f; outline-offset: 2px; border-radius: 50%; }

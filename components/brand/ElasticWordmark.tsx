@@ -85,6 +85,9 @@ export function ElasticWordmark({ onHome }: { onHome?: () => void }) {
       startY = lastY = event.clientY;
       yawVelocity = pitchVelocity = 0;
       suppressClick.current = false;
+      // Touch starts with implicit capture on the hit element. Own the pointer
+      // immediately, before a capture transfer can interrupt the first move.
+      target.setPointerCapture(event.pointerId);
     };
     const move = (event: PointerEvent) => {
       if (event.pointerId !== pointer) return;
@@ -96,7 +99,6 @@ export function ElasticWordmark({ onHome }: { onHome?: () => void }) {
         suppressClick.current = true;
         target.dataset.active = 'true';
         target.dataset.dragging = 'true';
-        target.setPointerCapture(event.pointerId);
       }
       yaw += (event.clientX - lastX) * 0.014;
       pitch -= (event.clientY - lastY) * 0.014;
@@ -105,12 +107,17 @@ export function ElasticWordmark({ onHome }: { onHome?: () => void }) {
       requestPaint();
     };
     const up = (event: PointerEvent) => { if (event.pointerId === pointer) release(); };
+    const lostCapture = (event: PointerEvent) => {
+      // A descendant losing implicit touch capture bubbles through the link;
+      // that is not the link losing its own active gesture.
+      if (event.target === target && !target.hasPointerCapture(event.pointerId)) up(event);
+    };
     const hide = () => {
       if (document.hidden) { release(); rest(); }
     };
     target.addEventListener('pointerdown', down);
     target.addEventListener('pointermove', move);
-    target.addEventListener('lostpointercapture', up);
+    target.addEventListener('lostpointercapture', lostCapture);
     window.addEventListener('pointerup', up);
     window.addEventListener('pointercancel', up);
     window.addEventListener('blur', release);
@@ -118,7 +125,7 @@ export function ElasticWordmark({ onHome }: { onHome?: () => void }) {
     return () => {
       target.removeEventListener('pointerdown', down);
       target.removeEventListener('pointermove', move);
-      target.removeEventListener('lostpointercapture', up);
+      target.removeEventListener('lostpointercapture', lostCapture);
       window.removeEventListener('pointerup', up);
       window.removeEventListener('pointercancel', up);
       window.removeEventListener('blur', release);
@@ -134,10 +141,14 @@ export function ElasticWordmark({ onHome }: { onHome?: () => void }) {
       href="/"
       className={styles.link}
       aria-label="purpl solutions — home"
+      draggable={false}
       onDragStart={event => event.preventDefault()}
+      onKeyDown={event => {
+        if (event.key === 'Enter') suppressClick.current = false;
+      }}
       onClick={event => {
         // Keep ordinary clicks / keyboard activation as Home; never navigate on a drag.
-        if (suppressClick.current && event.detail !== 0) {
+        if (suppressClick.current) {
           event.preventDefault();
           event.stopPropagation();
           return;
