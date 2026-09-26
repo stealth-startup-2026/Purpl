@@ -6,6 +6,8 @@ import { projects } from '@/components/work/projects';
 import { PurplModel } from './PurplModel';
 import { ScrollCue } from './ScrollCue';
 import { BottomFade, PortfolioHeader } from './PortfolioChrome';
+import { heroScrollEnd } from './heroScroll';
+import { useHeroViewport } from './useHeroViewport';
 import styles from './FolderPortfolio.module.css';
 
 const featuredProjects = projects.slice(0, 3);
@@ -15,15 +17,16 @@ export function FolderPortfolio() {
   const [open, setOpen] = useState(false);
   const [openRequest, setOpenRequest] = useState(0);
   const [heroReset, setHeroReset] = useState(0);
+  const page = useRef<HTMLElement>(null);
+  useHeroViewport(page);
   useLayoutEffect(() => {
     if (window.location.hash !== '#folder-projects') {
       window.scrollTo({ top: 0, behavior: 'instant' });
       return;
     }
-    window.scrollTo({ top: window.innerHeight * 0.9, behavior: 'instant' });
+    window.scrollTo({ top: heroScrollEnd(), behavior: 'instant' });
     setOpenRequest(1);
   }, []);
-  const page = useRef<HTMLElement>(null);
   const folderBottom = useRef(0.72);
   const updateFolderBottom = useCallback((ratio: number) => {
     folderBottom.current = ratio;
@@ -115,12 +118,12 @@ export function FolderPortfolio() {
         setHeroReset(value => value + 1);
         window.history.replaceState(window.history.state, '', '/');
       }} onWork={() => {
-        window.scrollTo({ top: openRef.current ? 0 : window.innerHeight * 0.9, behavior: 'instant' });
+        window.scrollTo({ top: openRef.current ? 0 : heroScrollEnd(), behavior: 'instant' });
         setOpenRequest(value => value + 1);
       }} />
 
-      <div ref={intro} className={styles.intro}>
-        <div ref={viewport} className={styles.viewport}>
+      <div ref={intro} className={styles.intro} data-hero-intro>
+        <div ref={viewport} className={styles.viewport} data-hero-viewport>
           <div ref={modelPosition} className={styles.modelPosition}>
             <PurplModel key={heroReset} onOpenChange={changeOpen} onFolderBottomChange={updateFolderBottom} controls="folder-projects" lockOpenMorph showHint openRequest={openRequest} />
           </div>

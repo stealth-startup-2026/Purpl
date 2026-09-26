@@ -54,7 +54,7 @@ export function PurplModel({ onOpenChange, onFolderBottomChange, controls, lockO
           }
         }}
       >
-        <div className={styles.hitArea} aria-hidden="true" />
+        <div className={styles.hitArea} data-model-hit-area aria-hidden="true" />
       </div>
       {showHint && (
         <button

@@ -1,14 +1,14 @@
-.page { --model-height: min(76svh, 620px); --open-model-scale: .78; --open-model-shift: 13svh; --folder-bottom-offset: .22; --project-gap: 52px; --project-top-padding: 30px; --open-folder-bottom: calc(50svh - var(--open-model-shift) + var(--model-height) * var(--open-model-scale) * var(--folder-bottom-offset)); position: relative; background: #fff; color: #310c5d; overflow-x: clip; }
-.intro { position: relative; z-index: 3; height: 190svh; pointer-events: none; }
-.page[data-folder-open='true'] .intro { height: 100svh; }
-.viewport { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; overflow: hidden; }
+.page { --hero-viewport-height: 100dvh; --model-height: min(76svh, 620px); --open-model-scale: .78; --open-model-shift: calc(var(--hero-viewport-height) * .13); --folder-bottom-offset: .22; --project-gap: 52px; --project-top-padding: 30px; --open-folder-bottom: calc(var(--hero-viewport-height) * .5 - var(--open-model-shift) + var(--model-height) * var(--open-model-scale) * var(--folder-bottom-offset)); position: relative; width: 100%; min-width: 0; background: #fff; color: #310c5d; overflow-x: clip; }
+.intro { position: relative; z-index: 3; height: calc(var(--hero-viewport-height) + 90svh); pointer-events: none; }
+.page[data-folder-open='true'] .intro { height: var(--hero-viewport-height); }
+.viewport { position: sticky; top: 0; width: 100%; height: var(--hero-viewport-height); display: grid; place-items: center; overflow: clip; }
 .modelPosition { pointer-events: none; transition: transform 700ms cubic-bezier(.22,.75,.25,1); }
 .page[data-folder-open='true'] .modelPosition { transform: translateY(calc(-1 * var(--open-model-shift))) scale(var(--open-model-scale)); }
 
 /* The closed collection contributes no height or overflow. Opening it extends
    the document in place: no scroll hijack and no second scene. */
 .spill { position: relative; z-index: 2; display: grid; grid-template-rows: 0fr; margin-top: 0; transition: grid-template-rows 600ms cubic-bezier(.22,.75,.25,1), margin-top 600ms cubic-bezier(.22,.75,.25,1); }
-.spill[data-open='true'] { grid-template-rows: 1fr; margin-top: calc(var(--open-folder-bottom) + var(--project-gap) - 100svh - var(--project-top-padding)); transition: none; }
+.spill[data-open='true'] { grid-template-rows: 1fr; margin-top: calc(var(--open-folder-bottom) + var(--project-gap) - var(--hero-viewport-height) - var(--project-top-padding)); transition: none; }
 .spillClip { min-height: 0; overflow: clip; }
 .spill[data-open='true'] .spillClip { overflow: visible; }
 .projects { width: min(100% - 64px, 764px); margin: 0 auto; padding: var(--project-top-padding) 24px 112px; }
@@ -45,7 +45,7 @@
 .rowArrow { font-size: 1.1rem; transition: transform 220ms; }
 .row:hover .rowArrow { transform: translate(2px,-2px); }
 @media (max-width: 640px) {
-  .page { --model-height: min(90vw, 64svh); --open-model-scale: .82; --open-model-shift: 12svh; --project-gap: 44px; --project-top-padding: 24px; }
+  .page { --model-height: min(90vw, 64svh); --open-model-scale: .82; --open-model-shift: calc(var(--hero-viewport-height) * .12); --project-gap: 44px; --project-top-padding: 24px; }
   .projects { width: 100%; padding: var(--project-top-padding) 22px 88px; }
   .featured { gap: 22px; }
   .card { padding: 9px 9px 0; border-radius: 14px; }

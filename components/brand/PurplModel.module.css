@@ -1,7 +1,8 @@
 .model { position: relative; width: min(76vw, 620px); height: min(76svh, 620px); }
-.canvas { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; outline: none; -webkit-tap-highlight-color: transparent; pointer-events: none; }
-.hitArea { position: absolute; inset: 0; pointer-events: auto; }
-.canvas[aria-expanded='true'] .hitArea { bottom: calc((.5 - var(--folder-bottom-offset, .22)) * 100% - 8px); }
+.canvas { position: absolute; inset: 0; cursor: grab; outline: none; -webkit-tap-highlight-color: transparent; pointer-events: none; }
+/* Only the projected model bounds own one-finger gestures. The surrounding
+   canvas remains transparent to native page scrolling; pinch zoom stays available. */
+.hitArea { position: absolute; inset: 15%; pointer-events: auto; touch-action: pinch-zoom; user-select: none; -webkit-user-select: none; }
 .canvas:active { cursor: grabbing; }
 .canvas:focus-visible { outline: 1px solid #9f86b6; outline-offset: 8px; border-radius: 24px; }
 .canvas canvas { display: block; }

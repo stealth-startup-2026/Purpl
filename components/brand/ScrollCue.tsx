@@ -2,21 +2,26 @@
 
 import { useEffect, useState } from 'react';
 import styles from './ScrollCue.module.css';
+import { heroScrollEnd } from './heroScroll';
 
 export function ScrollCue() {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const onScroll = () => {
-      const finalFolderScroll = window.innerHeight * 0.9;
+      const finalFolderScroll = heroScrollEnd();
       setVisible(window.scrollY < finalFolderScroll - 2);
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
+    const observer = new ResizeObserver(onScroll);
+    const intro = document.querySelector('[data-hero-intro]');
+    if (intro) observer.observe(intro);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
+      observer.disconnect();
     };
   }, []);
 
@@ -30,7 +35,7 @@ export function ScrollCue() {
       disabled={!visible}
       tabIndex={visible ? 0 : -1}
       onClick={() => window.scrollTo({
-        top: window.innerHeight * 0.9,
+        top: heroScrollEnd(),
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
       })}
     >

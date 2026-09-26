@@ -49,4 +49,14 @@ html:has([data-purpl-home], [data-purpl-page]) {
   background: #ffffff;
   scrollbar-gutter: auto;
   scrollbar-color: #d9d1e2 #ffffff;
+  overflow-x: clip;
+  overscroll-behavior: none;
+}
+
+/* Clip transformed artwork without creating a second scrolling ancestor for
+   the sticky hero. Keep the document itself as the native vertical scroller. */
+body:has([data-purpl-home], [data-purpl-page]) {
+  width: 100%;
+  overflow-x: clip;
+  overscroll-behavior: none;
 }

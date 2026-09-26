@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { readHeroScrollRange } from './heroScroll';
 
 export const finishes = {
   clay: { label: 'Matte clay', color: '#310c5d', roughness: 1, metalness: 0, transmission: 0, clearcoat: 0, specularIntensity: 0.08 },
@@ -75,6 +76,8 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
       `);
     };
     let model: THREE.Object3D | undefined;
+    const hitArea = container.querySelector<HTMLElement>('[data-model-hit-area]');
+    const hitMeshes: { mesh: THREE.Mesh; blob: THREE.Box3; folder: THREE.Box3 }[] = [];
     const details = new THREE.Group();
     const detailMaterial = new THREE.MeshStandardMaterial({ color: '#eee5f6', roughness: 1, transparent: true, opacity: 0 });
     const papers: THREE.Mesh[] = [];
@@ -117,17 +120,23 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
           const original = Array.isArray(child.material) ? child.material : [child.material];
           original.forEach(m => m.dispose());
           child.material = material;
+          const positions = child.geometry.attributes.position;
+          const blob = new THREE.Box3().setFromBufferAttribute(positions);
+          const folder = blob.clone();
           const folderPositions = child.geometry.morphAttributes.position?.[0];
           if (folderPositions) {
+            folder.makeEmpty();
             const base = new THREE.Vector3();
             for (let i = 0; i < folderPositions.count; i++) {
               const point = new THREE.Vector3().fromBufferAttribute(folderPositions, i);
               if (child.geometry.morphTargetsRelative) {
                 point.add(base.fromBufferAttribute(child.geometry.attributes.position, i));
               }
+              folder.expandByPoint(point);
               folderRestPoints.push(point.applyMatrix4(child.matrixWorld).applyEuler(folderRestRotation));
             }
           }
+          hitMeshes.push({ mesh: child, blob, folder });
         }
       });
       if (disposed) { disposeModel(gltf.scene); return; }
@@ -166,24 +175,34 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     const restingYaw = 0, restingPitch = 0;
     let yaw = restingYaw, pitch = restingPitch, yawVelocity = 0, pitchVelocity = 0;
     let drag = false, lastX = 0, lastY = 0, downX = 0, downY = 0;
+    let pointer: number | null = null;
+    let moved = false;
     const raycaster = new THREE.Raycaster();
     const down = (event: PointerEvent) => {
+      if (!event.isPrimary || event.button !== 0 || pointer !== null) return;
+      pointer = event.pointerId;
+      moved = false;
       drag = true; lastX = event.clientX; lastY = event.clientY;
       yawVelocity = 0; pitchVelocity = 0;
       downX = event.clientX; downY = event.clientY;
       container.setPointerCapture(event.pointerId);
     };
     const move = (event: PointerEvent) => {
-      if (!drag) return;
+      if (!drag || event.pointerId !== pointer) return;
+      moved ||= Math.hypot(event.clientX - downX, event.clientY - downY) >= 7;
       yaw += (event.clientX - lastX) * 0.009;
-      pitch = THREE.MathUtils.clamp(pitch + (event.clientY - lastY) * 0.009, -1.3, 1.3);
+      pitch += (event.clientY - lastY) * 0.009;
       lastX = event.clientX; lastY = event.clientY;
     };
     const up = (event: PointerEvent) => {
-      const isClick = drag && Math.hypot(event.clientX - downX, event.clientY - downY) < 7;
+      if (event.pointerId !== pointer) return;
+      const isClick = drag && !moved && Math.hypot(event.clientX - downX, event.clientY - downY) < 7;
+      pointer = null;
       drag = false;
+      if (container.hasPointerCapture(event.pointerId)) container.releasePointerCapture(event.pointerId);
       // Return by the shortest arc after any full turns during dragging.
       yaw = restingYaw + THREE.MathUtils.euclideanModulo(yaw - restingYaw + Math.PI, Math.PI * 2) - Math.PI;
+      pitch = restingPitch + THREE.MathUtils.euclideanModulo(pitch - restingPitch + Math.PI, Math.PI * 2) - Math.PI;
       if (!isClick || event.type !== 'pointerup' || !model || displayedMorph < 0.9) return;
       const rect = container.getBoundingClientRect();
       raycaster.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, -(event.clientY - rect.top) / rect.height * 2 + 1), camera);
@@ -199,6 +218,40 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     container.addEventListener('lostpointercapture', up);
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let lastFinish: Finish = 'clay', lastReset = 0, time = 0, previous = 0, displayedMorph = 0, displayedOpen = 0;
+    const hitBox = new THREE.Box3(), point = new THREE.Vector3();
+    let lastHitInset = '';
+    // Eight projected corners per mesh, not a per-frame vertex scan. Bounds
+    // interpolate with the morph and follow rotations without a full-canvas overlay.
+    const updateHitArea = () => {
+      if (!model || !hitArea || drag) return;
+      model.updateMatrixWorld(true);
+      let left = 1, top = 1, right = -1, bottom = -1;
+      const projectBox = (box: THREE.Box3, matrix: THREE.Matrix4) => {
+        for (let i = 0; i < 8; i++) {
+          point.set(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z)
+            .applyMatrix4(matrix).project(camera);
+          left = Math.min(left, point.x); right = Math.max(right, point.x);
+          top = Math.min(top, -point.y); bottom = Math.max(bottom, -point.y);
+        }
+      };
+      for (const { mesh, blob, folder } of hitMeshes) {
+        hitBox.min.copy(blob.min).lerp(folder.min, displayedMorph);
+        hitBox.max.copy(blob.max).lerp(folder.max, displayedMorph);
+        projectBox(hitBox, mesh.matrixWorld);
+      }
+      if (displayedMorph > 0.85) {
+        for (const mesh of [cover, ...papers]) {
+          if (!mesh.geometry.boundingBox) mesh.geometry.computeBoundingBox();
+          projectBox(mesh.geometry.boundingBox!, mesh.matrixWorld);
+        }
+      }
+      const inset = [top + 1, 1 - right, 1 - bottom, left + 1]
+        .map(edge => `${Math.max(0, edge * 50 - 1).toFixed(1)}%`).join(' ');
+      if (inset !== lastHitInset) {
+        hitArea.style.inset = inset;
+        lastHitInset = inset;
+      }
+    };
     renderer.setAnimationLoop(now => {
       const delta = Math.min((now - previous) / 1000, 0.05);
       previous = now;
@@ -265,6 +318,7 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
         );
         model.position.y = animate ? Math.sin(time * 0.8) * 0.035 : 0;
       }
+      updateHitArea();
       renderer.render(scene, camera);
     });
     return () => {
@@ -295,7 +349,8 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
         return;
       }
       if (settings.current.manualMorph) return;
-      const value = THREE.MathUtils.clamp(window.scrollY / (window.innerHeight * 0.9), 0, 1);
+      const { start, distance } = readHeroScrollRange();
+      const value = THREE.MathUtils.clamp((window.scrollY - start) / distance, 0, 1);
       settings.current.morph = value;
       if (value < 0.8) { settings.current.folderOpen = false; setFolderOpen(false); }
       setMorph(value);
@@ -305,10 +360,16 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('wheel', resumeScroll, { passive: true });
     window.addEventListener('touchmove', resumeScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    const observer = new ResizeObserver(onScroll);
+    const intro = document.querySelector('[data-hero-intro]');
+    if (intro) observer.observe(intro);
     return () => {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('wheel', resumeScroll);
       window.removeEventListener('touchmove', resumeScroll);
+      window.removeEventListener('resize', onScroll);
+      observer.disconnect();
     };
   }, [lockOpenMorph]);
 
