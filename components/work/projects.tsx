@@ -139,7 +139,7 @@ const projectsUnordered: Project[] = [
   {
     id: "terminl",
     brand: "terminl",
-    category: "webapp · in-house",
+    category: "in-house",
     tag: "coming soon",
     // Shelved 16 Sep 2026 while it is still in build.
     archived: true,
@@ -197,7 +197,7 @@ const projectsUnordered: Project[] = [
   {
     id: "caat",
     brand: "caat",
-    category: "webapp · in-house",
+    category: "in-house",
     description:
       "A college application platform where students track every deadline, essay, scholarship, and document, all in one place.",
     detail: [
@@ -274,7 +274,7 @@ const projectsUnordered: Project[] = [
   {
     id: "moup",
     brand: "moup",
-    category: "webapp · in-house",
+    category: "in-house",
     description:
       "Movies Ordered Using Pairwise. A film ranking app that replaces broken star ratings with head-to-head comparisons. Pick this or that, and build an ordered list of your favourites.",
     detail: [
@@ -330,7 +330,7 @@ const projectsUnordered: Project[] = [
   {
     id: "volleytube",
     brand: "volleytube",
-    category: "app · in-house",
+    category: "in-house",
     description:
       "A community sports app for Sydney volleyball: match results, video clips, and player profiles across the PVL, SVL, and YSVL leagues.",
     detail: [
@@ -405,7 +405,7 @@ const projectsUnordered: Project[] = [
     // Non-breaking spaces keep "Inner West Volley" together when the title wraps.
     brand: "ProVolley + Inner\u00a0West\u00a0Volley",
     subtitle: "Websites for both clubs",
-    category: "websites · client work",
+    category: "client work",
     description:
       "One of the most reputable clubs in the Premier Volleyball League and Sydney Volleyball League, plus its Inner West Volley club.",
     // Longer write-up parked in docs/copy/provolley-writeup.md. Inner West
@@ -494,7 +494,7 @@ const projectsUnordered: Project[] = [
     id: "welcome-blossom",
     brand: "Welcome Blossom",
     subtitle: "Florist website with gallery and enquiries",
-    category: "website · client work",
+    category: "client work",
     description:
       "A family florist on Penshurst St, Sydney: weddings, funerals, birthdays and events, with same-day delivery around St George.",
     detail: ["Live at welcomeblossom.com.au since September 2026."],
@@ -547,7 +547,7 @@ const projectsUnordered: Project[] = [
   {
     id: "innerwest",
     brand: "Inner West Volley",
-    category: "website · client work",
+    category: "client work",
     // Merged into the ProVolley card 18 Oct 2026; /innerwest redirects there.
     archived: true,
     description:
@@ -603,7 +603,7 @@ const projectsUnordered: Project[] = [
     id: "prosporter",
     brand: "ProSporter",
     subtitle: "Shopify migration + storefront design and build",
-    category: "headless ecommerce · client work",
+    category: "client work",
     description:
       "An Australian volleyball store, migrated from WordPress and WooCommerce to Shopify, with a headless Next.js storefront built from scratch.",
     detail: [
@@ -663,7 +663,7 @@ const projectsUnordered: Project[] = [
   {
     id: "lunch-dossier",
     brand: "the lunch dossier",
-    category: "webapp · in-house",
+    category: "in-house",
     description:
       "A small dossier for the team-lunch ritual: rotate who picks, run quick votes, and keep an honest archive of where your team has eaten.",
     detail: [
@@ -726,7 +726,7 @@ const projectsUnordered: Project[] = [
     id: "3d-configurator",
     brand: "3D configurator",
     subtitle: "for modular retail fixtures",
-    category: "3D models + configurator + website · client work",
+    category: "client work",
     tag: "in progress",
     description:
       "Lay out store floors from a modular fixture system in real-time 3D, built on the manufacturer's own 3D models, plus the 3D-first website for the range.",
@@ -775,7 +775,7 @@ const projectsUnordered: Project[] = [
   {
     id: "purpl-hq",
     brand: "purpl hq",
-    category: "desktop · in-house",
+    category: "in-house",
     tag: "coming soon",
     // Shelved 16 Sep 2026 while it is still in build.
     archived: true,

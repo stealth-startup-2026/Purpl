@@ -28,6 +28,7 @@ export function ProjectModal({ project, onClose }: Props) {
   const thumbsRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const [thumbScroll, setThumbScroll] = useState({ prev: false, next: false });
   const [moreBelow, setMoreBelow] = useState(false);
   const [fullImage, setFullImage] = useState<{ src: string; alt: string; width: number; height: number } | null>(null);
   // The keyboard handler below is bound once per open; refs let it see the
@@ -71,6 +72,27 @@ export function ProjectModal({ project, onClose }: Props) {
         : null,
     );
   }, [expanded, activeIdx]);
+
+  // Show the strip's arrows only while there are more thumbnails that way.
+  useEffect(() => {
+    const strip = thumbsRef.current;
+    if (!strip) return;
+    const update = () =>
+      setThumbScroll({
+        prev: strip.scrollLeft > 2,
+        next: strip.scrollLeft + strip.clientWidth < strip.scrollWidth - 2,
+      });
+    update();
+    strip.addEventListener("scroll", update, { passive: true });
+    const observer = new ResizeObserver(update);
+    observer.observe(strip);
+    return () => {
+      strip.removeEventListener("scroll", update);
+      observer.disconnect();
+    };
+  }, [renderProject]);
+  const scrollThumbs = (dir: 1 | -1) =>
+    thumbsRef.current?.scrollBy({ left: dir * thumbsRef.current.clientWidth * 0.75, behavior: "smooth" });
 
   // Show the fade cue while the scrollable body has more content below.
   useEffect(() => {
@@ -267,6 +289,17 @@ export function ProjectModal({ project, onClose }: Props) {
             {/* Thumbnail strip. Up to 4 shots fill the row; with more (e.g. a
                demo video pushed in front) it becomes a horizontal scroller so
                the first ~4 stay full-size and the rest peek to signal scroll. */}
+            <div className={styles.thumbWrap}>
+            {thumbScroll.prev && (
+              <button
+                type="button"
+                aria-label="Scroll thumbnails back"
+                className={cn(styles.thumbArrow, styles.thumbPrev)}
+                onClick={() => scrollThumbs(-1)}
+              >
+                <ChevronLeft size={16} strokeWidth={1.8} />
+              </button>
+            )}
             <div
               ref={thumbsRef}
               className={cn(
@@ -345,6 +378,17 @@ export function ProjectModal({ project, onClose }: Props) {
                   </span>
                 </button>
               ))}
+            </div>
+            {thumbScroll.next && (
+              <button
+                type="button"
+                aria-label="Scroll thumbnails forward"
+                className={cn(styles.thumbArrow, styles.thumbNext)}
+                onClick={() => scrollThumbs(1)}
+              >
+                <ChevronRight size={16} strokeWidth={1.8} />
+              </button>
+            )}
             </div>
           </div>
 

@@ -31,6 +31,12 @@
 .lightboxNext { top: 50%; right: 14px; transform: translateY(-50%); }
 .lightboxCount { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); color: #ffffffb3; font-size: 12px; letter-spacing: .1em; }
 .thumbnail { position: relative; min-height: 44px; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 8px; border: 2px solid transparent; background: #f4eff7; cursor: pointer; transition: border-color 180ms ease, opacity 180ms ease; }
+/* Arrows over the ends of the thumbnail strip while it can scroll that way. */
+.thumbWrap { position: relative; }
+.thumbArrow { position: absolute; top: calc(50% - 2px); z-index: 12; display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #e9e3ef; border-radius: 50%; background: #fff; color: #310c5d; box-shadow: 0 6px 16px -6px #310c5d40; cursor: pointer; transform: translateY(-50%); transition: background 180ms ease, border-color 180ms ease; }
+.thumbArrow:hover { background: #f6f2f8; border-color: #c5b1d3; }
+.thumbPrev { left: -10px; }
+.thumbNext { right: -10px; }
 .selected { border-color: #79529a; opacity: 1; }
 .unselected { border-color: #e9e3ef; opacity: .65; }
 .unselected:hover, .unselected:focus-visible { opacity: 1; }

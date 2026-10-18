@@ -20,9 +20,10 @@
 .artwork > * { width: 100%; box-shadow: none; }
 .cardCopy { padding: 24px 12px 26px; }
 .cardHeading { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.cardHeading h2 { margin: 0; color: #310c5d; font-family: var(--font-inter), sans-serif; font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 450; letter-spacing: -.065em; line-height: .96; }
-.subtitle { display: block; margin-top: .45em; color: #8a7799; font-size: .4em; font-weight: 450; letter-spacing: -.02em; line-height: 1.3; }
-.rowCopy .subtitle { margin-top: 2px; font-size: .62em; overflow: hidden; text-overflow: ellipsis; }
+.cardHeading h2 { margin: 0; color: #310c5d; font-family: var(--font-inter), sans-serif; font-size: clamp(1.75rem, 4vw, 2.6rem); font-weight: 450; letter-spacing: -.06em; line-height: 1; }
+/* Fixed sizes, not a fraction of the title, so it stays above the description. */
+.subtitle { display: block; margin-top: 8px; color: #8a7799; font-size: 18px; font-weight: 450; letter-spacing: -.02em; line-height: 1.3; }
+.rowCopy .subtitle { margin-top: 2px; font-size: 13px; overflow: hidden; text-overflow: ellipsis; }
 .cardHeading > span { font-size: 1.6rem; font-weight: 300; transition: transform 280ms; }
 .cardCopy > p { max-width: 570px; margin-top: 14px; color: #6f5b7d; font-size: .95rem; line-height: 1.55; }
 .card:hover { box-shadow: 0 26px 52px -14px #310c5d35, 0 8px 18px -6px #310c5d20; }
@@ -50,7 +51,8 @@
   .featured { gap: 22px; }
   .card { padding: 9px 9px 0; border-radius: 14px; }
   .cardCopy { padding: 18px 8px 20px; }
-  .cardHeading h2 { font-size: 2.15rem; }
+  .cardHeading h2 { font-size: 1.8rem; }
+  .cardHeading .subtitle { margin-top: 6px; font-size: 15px; }
   .cardCopy > p { margin-top: 11px; font-size: .83rem; line-height: 1.5; }
   .more { margin-top: 38px; padding-top: 20px; }
   .row { grid-template-columns: 70px minmax(0,1fr) 20px; gap: 12px; min-height: 82px; padding: 10px 4px 10px 0; }
