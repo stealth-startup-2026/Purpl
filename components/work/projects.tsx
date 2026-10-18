@@ -45,10 +45,13 @@ export interface Project {
   preview: ReactNode;
   liveUrl?: string;
   liveLabel?: string;
+  /** Further live sites shown in the same style beside the main one. */
+  moreLiveLinks?: { label: string; href: string }[];
   /**
-   * Secondary links shown in the modal's right-hand panel beneath the live
-   * URL pill: legal pages for pre-launch apps that need publicly-hosted URLs
-   * for App Store submission, or a related site (e.g. a club's sister site).
+   * Auxiliary doc links (privacy policy, terms, support page) shown in the
+   * modal's right-hand panel beneath the live URL pill. Used for pre-launch
+   * apps that need publicly-hosted legal URLs for App Store submission
+   * before the app itself ships.
    */
   legalLinks?: { label: string; href: string }[];
   gallery: GalleryItem[];
@@ -412,14 +415,14 @@ const projectsUnordered: Project[] = [
     // Volley used to be its own card; it now lives here as ProVolley's club.
     detail: [
       { heading: "ProVolley" },
-      "Live at provolley.com.au since September 2026.",
+      "ProVolley Academy is one of Sydney's most reputable volleyball clubs, with teams across the Premier and Sydney Volleyball Leagues and Volleyball Australia-accredited coaches. Its pathways run from junior development through to state, national and overseas college programs. Live at provolley.com.au since September 2026.",
       { heading: "Inner West Volley" },
       "ProVolley's Inner West club: inclusive indoor and beach volleyball for juniors through to seniors. Live at innerwestvolley.com.au since September 2026.",
     ],
     preview: provolleyPreview,
     liveUrl: "https://provolley.com.au",
     liveLabel: "provolley.com.au",
-    legalLinks: [{ label: "innerwestvolley.com.au", href: "https://innerwestvolley.com.au" }],
+    moreLiveLinks: [{ label: "innerwestvolley.com.au", href: "https://innerwestvolley.com.au" }],
     gallery: [
       { id: "01", alt: "ProVolley homepage hero", node: provolleyPreview },
       {

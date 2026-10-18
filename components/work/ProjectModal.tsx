@@ -395,19 +395,25 @@ export function ProjectModal({ project, onClose }: Props) {
           <div className="flex flex-col gap-7">
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5">
               {renderProject.liveUrl ? (
-                <a
-                  href={renderProject.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn("group", styles.liveLink)}
-                >
-                  {renderProject.liveLabel ?? renderProject.liveUrl}
-                  <ArrowUpRight
-                    size={16}
-                    strokeWidth={1.5}
-                    className="transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
-                  />
-                </a>
+                [
+                  { href: renderProject.liveUrl, label: renderProject.liveLabel ?? renderProject.liveUrl },
+                  ...(renderProject.moreLiveLinks ?? []),
+                ].map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn("group", styles.liveLink)}
+                  >
+                    {link.label}
+                    <ArrowUpRight
+                      size={16}
+                      strokeWidth={1.5}
+                      className="transition-transform duration-200 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-focus-visible:translate-x-0.5 group-focus-visible:-translate-y-0.5"
+                    />
+                  </a>
+                ))
               ) : (
                 <span className={styles.tag}>
                   not live yet
