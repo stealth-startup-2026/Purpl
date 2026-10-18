@@ -21,7 +21,7 @@ const uprights = (corners: [number, number][]) =>
  */
 export function ConfiguratorPreview() {
   return (
-    <div className={base.tile} aria-hidden="true" style={{ background: "linear-gradient(160deg, #f6f5f2 0%, #e8e6e1 100%)" }}>
+    <div className={base.tile} aria-hidden="true" style={{ background: "linear-gradient(160deg, #f6f5f2 0%, #e8e6e1 100%)", containerType: "inline-size" }}>
       <svg
         viewBox="0 0 160 100"
         className="absolute inset-0 h-full w-full"
@@ -48,8 +48,9 @@ export function ConfiguratorPreview() {
           <path key={h} d={shelf(h)} strokeOpacity="0.35" strokeDasharray="1.5 2" />
         ))}
       </svg>
-      <span className="absolute top-[8%] left-[6%] font-[family-name:var(--font-jetbrains)] text-[clamp(8px,1.4vw,11px)] uppercase tracking-[0.2em] text-[#2b2a28]/55">
-        in progress
+      {/* Sized to the tile (cqw), so it reads the same on cards, thumbnails and full size. */}
+      <span className="absolute top-[7%] left-[5.5%] font-[family-name:var(--font-jetbrains)] text-[clamp(10px,2.6cqw,20px)] font-medium uppercase tracking-[0.16em] text-[#2b2a28]/80">
+        work in progress
       </span>
     </div>
   );

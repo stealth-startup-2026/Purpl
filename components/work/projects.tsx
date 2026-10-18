@@ -727,11 +727,10 @@ const projectsUnordered: Project[] = [
     brand: "3D configurator",
     subtitle: "for modular retail fixtures",
     category: "client work",
-    tag: "in progress",
     description:
       "Lay out store floors from a modular fixture system in real-time 3D, built on the manufacturer's own 3D models, plus the 3D-first website for the range.",
     detail: [
-      "A real-time 3D configuration engine and marketing website for a modular retail shelving and accessories system. Currently in development.",
+      "A real-time 3D configuration engine and marketing website for a modular retail shelving and accessories system. Currently in development; client details are confidential until launch.",
       { heading: "The configurator" },
       "A browser-based 3D configurator for planning retail fit-outs. Lay out a store floor, build fixtures through a guided wizard and edit them part by part. Each fixture animates together piece by piece, following its real assembly sequence.",
       "Parts are 3D models converted from the manufacturer's CAD files (Revit, IFC and STEP to glTF). Assembly rules taken from the physical system decide what fits where, so layouts follow how the shelving and accessories actually go together.",
