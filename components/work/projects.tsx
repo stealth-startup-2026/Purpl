@@ -402,8 +402,9 @@ const projectsUnordered: Project[] = [
   },
   {
     id: "provolley",
-    brand: "ProVolley",
-    subtitle: "+ Inner West Volley",
+    // Non-breaking spaces keep "Inner West Volley" together when the title wraps.
+    brand: "ProVolley + Inner\u00a0West\u00a0Volley",
+    subtitle: "Websites for both clubs",
     category: "websites · client work",
     description:
       "One of the most reputable clubs in the Premier Volleyball League and Sydney Volleyball League, plus its Inner West Volley club.",
@@ -492,6 +493,7 @@ const projectsUnordered: Project[] = [
   {
     id: "welcome-blossom",
     brand: "Welcome Blossom",
+    subtitle: "Florist website with gallery and enquiries",
     category: "website · client work",
     description:
       "A family florist on Penshurst St, Sydney: weddings, funerals, birthdays and events, with same-day delivery around St George.",
