@@ -10,8 +10,8 @@ import { heroScrollEnd } from './heroScroll';
 import { useHeroViewport } from './useHeroViewport';
 import styles from './FolderPortfolio.module.css';
 
-// Rows below continue the card numbering, and their reveal delay in the CSS
-// (`.spill[data-open='true'] .row`) counts from this same number.
+// The rows' reveal delay in the CSS (`.spill[data-open='true'] .row`) counts
+// from this same number.
 const FEATURED_COUNT = 4;
 const featuredProjects = projects.slice(0, FEATURED_COUNT);
 const moreProjects = projects.slice(FEATURED_COUNT);
@@ -150,11 +150,6 @@ export function FolderPortfolio() {
                 >
                   <div className={styles.artwork}>{project.preview}</div>
                   <div className={styles.cardCopy}>
-                    <div className={styles.cardMeta}>
-                      <span>{String(index + 1).padStart(2, '0')}</span>
-                      <span>{project.category}</span>
-                      {project.tag && <span className={styles.tag}>{project.tag}</span>}
-                    </div>
                     <div className={styles.cardHeading}>
                       <h2>
                         {project.brand}
@@ -177,7 +172,6 @@ export function FolderPortfolio() {
                   className={styles.row}
                   style={{ '--card-index': index + FEATURED_COUNT } as CSSProperties}
                 >
-                  <span className={styles.rowNumber}>{String(index + FEATURED_COUNT + 1).padStart(2, '0')}</span>
                   <span className={styles.rowPreview}><span className={styles.rowPreviewScale}>{project.preview}</span></span>
                   <span className={styles.rowCopy}>
                     <strong>
@@ -186,7 +180,6 @@ export function FolderPortfolio() {
                     </strong>
                     <small>{project.category}</small>
                   </span>
-                  {project.tag && <span className={styles.rowTag}>{project.tag}</span>}
                   <span className={styles.rowArrow} aria-hidden="true">↗</span>
                 </Link>
               ))}

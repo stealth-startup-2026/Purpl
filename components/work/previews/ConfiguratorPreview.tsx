@@ -14,7 +14,7 @@ const uprights = (corners: [number, number][]) =>
   corners.map(([x, y]) => `M${x} ${y} V${y - BAY_HEIGHT}`).join(" ");
 
 /**
- * Preview tile for the 3D spatial configurator (client work, in progress).
+ * Preview tile for the 3D configurator (client work, in progress).
  * A half-built, line-drawn shelving bay on a neutral ground: solid parts are
  * placed, dashed parts are still to come. Stands in until there are
  * screenshots we can show publicly.

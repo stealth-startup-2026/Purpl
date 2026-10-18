@@ -716,12 +716,13 @@ const projectsUnordered: Project[] = [
   },
   {
     // Client work under wraps: keep the client and product unnamed until launch.
-    id: "spatial-configurator",
-    brand: "3D spatial configurator",
-    category: "3D engine + website · client work",
+    id: "3d-configurator",
+    brand: "3D configurator",
+    subtitle: "for modular retail fixtures",
+    category: "3D models + configurator + website · client work",
     tag: "in progress",
     description:
-      "A real-time 3D configuration engine for modular retail fixtures, and the 3D-first website that sells them.",
+      "A real-time configuration engine built on production 3D models, and the 3D-first website that sells the range.",
     detail: [
       "A real-time 3D configuration engine and marketing website for a modular retail shelving system. Currently in development.",
       { heading: "The configurator" },
@@ -741,7 +742,7 @@ const projectsUnordered: Project[] = [
         alt: "wireframe sketch beside the first 3D build",
         node: (
           <ImagePreview
-            src="/projects/spatial-configurator/sketch-to-build.jpg"
+            src="/projects/3d-configurator/sketch-to-build.jpg"
             alt="A hand-drawn configurator wireframe on a tablet, held in front of a monitor showing the first 3D build of a shelving bay"
             width={900}
             height={1600}
@@ -754,7 +755,7 @@ const projectsUnordered: Project[] = [
         alt: "the team at work",
         node: (
           <ImagePreview
-            src="/projects/spatial-configurator/team-at-work.jpg"
+            src="/projects/3d-configurator/team-at-work.jpg"
             alt="Two purpl developers working through a build on a laptop"
             width={800}
             height={600}
@@ -786,7 +787,7 @@ const projectsUnordered: Project[] = [
 // the literal definitions above can stay in any order.
 const WORK_ORDER = [
   // Featured: the first four become the big cards in the homepage folder.
-  "spatial-configurator",
+  "3d-configurator",
   "prosporter",
   "provolley",
   "welcome-blossom",
