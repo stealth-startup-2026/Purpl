@@ -65,17 +65,27 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     const { label: _initialLabel, ...initialMaterial } = finishes.clay;
     const material = new THREE.MeshPhysicalMaterial({ ...initialMaterial, thickness: 1.2, ior: 1.46, envMapIntensity: 0.8 });
     const grainUniform = { value: 0.22 };
-    material.onBeforeCompile = shader => {
+    // The grain scales the surface colour, which barely registers on the dark
+    // body (#310c5d is ~0.1 in linear blue) next to the lighter folder cover.
+    // A small additive lift, in the surface's own hue, gives the blob's grain
+    // the same visible shimmer under the moving lights.
+    const BODY_GRAIN_LIFT = 0.05;
+    const bodyGrainLift = { value: BODY_GRAIN_LIFT };
+    const coverGrainLift = { value: 0 };
+    const withGrain = (grainLift: { value: number }) => (shader: THREE.WebGLProgramParametersWithUniforms) => {
       shader.uniforms.grainAmount = grainUniform;
+      shader.uniforms.grainLift = grainLift;
       shader.vertexShader = 'varying vec3 vClayPosition;\n' + shader.vertexShader;
       shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvClayPosition = position;');
-      shader.fragmentShader = 'uniform float grainAmount;\nvarying vec3 vClayPosition;\n' + shader.fragmentShader;
+      shader.fragmentShader = 'uniform float grainAmount;\nuniform float grainLift;\nvarying vec3 vClayPosition;\n' + shader.fragmentShader;
       shader.fragmentShader = shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
         vec3 grainCell = floor(vClayPosition * 460.0);
         float clayGrain = fract(sin(dot(grainCell, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
-        diffuseColor.rgb *= 1.0 + (clayGrain - 0.5) * grainAmount * 2.0;
+        vec3 grainHue = normalize(diffuseColor.rgb + 0.0001);
+        diffuseColor.rgb = diffuseColor.rgb * (1.0 + (clayGrain - 0.5) * grainAmount * 2.0) + (clayGrain - 0.5) * grainLift * grainHue;
       `);
     };
+    material.onBeforeCompile = withGrain(bodyGrainLift);
     let model: THREE.Object3D | undefined;
     const hitArea = container.querySelector<HTMLElement>('[data-model-hit-area]');
     const hitMeshes: { mesh: THREE.Mesh; blob: THREE.Box3; folder: THREE.Box3 }[] = [];
@@ -90,7 +100,7 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
     }
     const coverMaterial = material.clone();
     coverMaterial.color.set('#582b85');
-    coverMaterial.onBeforeCompile = material.onBeforeCompile;
+    coverMaterial.onBeforeCompile = withGrain(coverGrainLift);
     coverMaterial.transparent = true;
     coverMaterial.opacity = 0;
     const coverHinge = new THREE.Group();
@@ -302,6 +312,7 @@ export function usePurplModel({ lockOpenMorph = false, onFolderBottomChange }: {
         coverMaterial.setValues(properties);
         coverMaterial.needsUpdate = true;
         grainUniform.value = lastFinish === 'clay' ? 0.22 : 0.025;
+        bodyGrainLift.value = lastFinish === 'clay' ? BODY_GRAIN_LIFT : 0;
         material.needsUpdate = true;
       }
       if (lastReset !== settings.current.reset) {
