@@ -7,6 +7,7 @@ import { ProsporterPreview } from "./previews/ProsporterPreview";
 import { WelcomeBlossomPreview } from "./previews/WelcomeBlossomPreview";
 import { PurplHqPreview } from "./previews/PurplHqPreview";
 import { LunchDossierPreview } from "./previews/LunchDossierPreview";
+import { ConfiguratorPreview } from "./previews/ConfiguratorPreview";
 import { ImagePreview } from "./previews/ImagePreview";
 import { PhoneShowcase, VolleytubeThumb } from "../volleytube/PhoneShowcase";
 
@@ -29,23 +30,25 @@ export interface GalleryItem {
 export interface Project {
   id: string;
   brand: string;
+  /** Smaller line set beside the brand, e.g. a sister club sharing the card. */
+  subtitle?: string;
   category: string;
   /** Short blurb shown on the row in the project list. */
   description: string;
   /**
-   * Longer write-up shown in the modal. One entry per paragraph.
-   * Falls back to `description` if omitted.
+   * Longer write-up shown in the modal. One entry per paragraph, or a
+   * `{ heading }` entry to start a titled section. Falls back to
+   * `description` if omitted.
    */
-  detail?: string[];
+  detail?: (string | { heading: string })[];
   tag?: string;
   preview: ReactNode;
   liveUrl?: string;
   liveLabel?: string;
   /**
-   * Auxiliary doc links (privacy policy, terms, support page) shown in the
-   * modal's right-hand panel beneath the live URL pill. Used for pre-launch
-   * apps that need publicly-hosted legal URLs for App Store submission
-   * before the app itself ships.
+   * Secondary links shown in the modal's right-hand panel beneath the live
+   * URL pill: legal pages for pre-launch apps that need publicly-hosted URLs
+   * for App Store submission, or a related site (e.g. a club's sister site).
    */
   legalLinks?: { label: string; href: string }[];
   gallery: GalleryItem[];
@@ -90,6 +93,7 @@ const prosporterPreview = <ProsporterPreview />;
 const welcomeBlossomPreview = <WelcomeBlossomPreview />;
 const purplHqPreview = <PurplHqPreview />;
 const lunchDossierPreview = <LunchDossierPreview />;
+const configuratorPreview = <ConfiguratorPreview />;
 
 // Real VolleyTube app screens (device-framed PNGs), grouped into the gallery
 // in themed pairs/trios.
@@ -399,14 +403,22 @@ const projectsUnordered: Project[] = [
   {
     id: "provolley",
     brand: "ProVolley",
-    category: "website · client work",
+    subtitle: "+ Inner West Volley",
+    category: "websites · client work",
     description:
-      "One of the most reputable clubs in the Premier Volleyball League and Sydney Volleyball League.",
-    // Longer write-up parked in docs/copy/provolley-writeup.md.
-    detail: ["Live at provolley.com.au since September 2026."],
+      "One of the most reputable clubs in the Premier Volleyball League and Sydney Volleyball League, plus its Inner West Volley club.",
+    // Longer write-up parked in docs/copy/provolley-writeup.md. Inner West
+    // Volley used to be its own card; it now lives here as ProVolley's club.
+    detail: [
+      { heading: "ProVolley" },
+      "Live at provolley.com.au since September 2026.",
+      { heading: "Inner West Volley" },
+      "ProVolley's Inner West club: inclusive indoor and beach volleyball for juniors through to seniors. Live at innerwestvolley.com.au since September 2026.",
+    ],
     preview: provolleyPreview,
     liveUrl: "https://provolley.com.au",
     liveLabel: "provolley.com.au",
+    legalLinks: [{ label: "innerwestvolley.com.au", href: "https://innerwestvolley.com.au" }],
     gallery: [
       { id: "01", alt: "ProVolley homepage hero", node: provolleyPreview },
       {
@@ -445,6 +457,33 @@ const projectsUnordered: Project[] = [
             width={2560}
             height={1600}
             background="#0a1f4c"
+          />
+        ),
+      },
+      { id: "05", alt: "Inner West Volley homepage hero", node: innerwestPreview },
+      {
+        id: "06",
+        alt: "Inner West Volley programs section",
+        node: (
+          <ImagePreview
+            src="/projects/innerwest/programs.jpg"
+            alt="Inner West Volley programs section: Junior Advanced Program, Junior Development Program and School Holiday Camps cards"
+            width={2560}
+            height={1600}
+            background={INNERWEST_PAGE_BG}
+          />
+        ),
+      },
+      {
+        id: "07",
+        alt: "Inner West Volley teams page",
+        node: (
+          <ImagePreview
+            src="/projects/innerwest/teams.jpg"
+            alt="Inner West Volley teams page with each team's season record fed from Volleyball NSW"
+            width={2560}
+            height={1600}
+            background={INNERWEST_PAGE_BG}
           />
         ),
       },
@@ -507,6 +546,8 @@ const projectsUnordered: Project[] = [
     id: "innerwest",
     brand: "Inner West Volley",
     category: "website · client work",
+    // Merged into the ProVolley card 18 Oct 2026; /innerwest redirects there.
+    archived: true,
     description:
       "Sydney's Inner West volleyball club, inclusive indoor and beach volleyball for juniors through to seniors.",
     detail: ["Live at innerwestvolley.com.au since September 2026."],
@@ -674,6 +715,56 @@ const projectsUnordered: Project[] = [
     ],
   },
   {
+    // Client work under wraps: keep the client and product unnamed until launch.
+    id: "spatial-configurator",
+    brand: "3D spatial configurator",
+    category: "3D engine + website · client work",
+    tag: "in progress",
+    description:
+      "A real-time 3D configuration engine for modular retail fixtures, and the 3D-first website that sells them.",
+    detail: [
+      "A real-time 3D configuration engine and marketing website for a modular retail shelving system. Currently in development.",
+      { heading: "The configurator" },
+      "A browser-based 3D configurator for planning retail fit-outs. Lay out a store floor, build fixtures through a guided wizard and edit them part by part. Each fixture animates together piece by piece, following its real assembly sequence.",
+      "Every part is a production 3D model converted from the manufacturer's CAD masters (Revit, IFC and STEP to glTF). An encoded assembly grammar decides what fits where, so every configuration can be built as shown.",
+      { heading: "The website" },
+      "A 3D-led marketing site for the product range. Path-traced renders and looping animated sequences show the system installed in real retail spaces. Space pages cover each store type, and an enquiry flow sends layouts straight to sales.",
+      "Built with React, three.js and React Three Fiber, and prerendered for search.",
+      { heading: "Internal tooling" },
+      "A source-linked knowledge base of the physical system, built from photos, teardown measurements and CAD exports. Every dimension is tagged as design intent or measured reality, and both apps import their numbers from it. A desktop authoring app on top defines fixture families and presets, validates them and tracks catalogue coverage.",
+    ],
+    preview: configuratorPreview,
+    gallery: [
+      { id: "01", alt: "in progress", node: configuratorPreview },
+      {
+        id: "02",
+        alt: "wireframe sketch beside the first 3D build",
+        node: (
+          <ImagePreview
+            src="/projects/spatial-configurator/sketch-to-build.jpg"
+            alt="A hand-drawn configurator wireframe on a tablet, held in front of a monitor showing the first 3D build of a shelving bay"
+            width={900}
+            height={1600}
+            background="#e8e6e1"
+          />
+        ),
+      },
+      {
+        id: "03",
+        alt: "the team at work",
+        node: (
+          <ImagePreview
+            src="/projects/spatial-configurator/team-at-work.jpg"
+            alt="Two purpl developers working through a build on a laptop"
+            width={800}
+            height={600}
+            background="#e8e6e1"
+          />
+        ),
+      },
+    ],
+  },
+  {
     id: "purpl-hq",
     brand: "purpl hq",
     category: "desktop · in-house",
@@ -694,16 +785,19 @@ const projectsUnordered: Project[] = [
 // Display order for the "our work" gallery. Edit this list to reorder the cards;
 // the literal definitions above can stay in any order.
 const WORK_ORDER = [
-  "caat",
-  "volleytube",
+  // Featured: the first four become the big cards in the homepage folder.
+  "spatial-configurator",
+  "prosporter",
   "provolley",
   "welcome-blossom",
-  "prosporter",
-  "innerwest",
+  // More from the folder.
+  "caat",
+  "volleytube",
   "moup",
-  "terminl",
   "lunch-dossier",
+  "terminl",
   "purpl-hq",
+  "innerwest",
 ];
 
 /**

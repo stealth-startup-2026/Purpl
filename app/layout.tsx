@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito_Sans, Playfair_Display, Source_Serif_4, JetBrains_Mono, Fraunces, Inter } from "next/font/google";
 import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
-import { SiteBackground } from "@/components/SiteBackground";
-import { Footer } from "@/components/Footer";
 import "./globals.css";
 
 const nunito = Nunito_Sans({
@@ -90,10 +88,8 @@ export default function RootLayout({
         className={`${nunito.variable} ${playfair.variable} ${sourceSerif.variable} ${jetbrains.variable} ${fraunces.variable} ${inter.variable}`}
         style={{ fontFamily: "var(--font-nunito), system-ui, sans-serif" }}
       >
-        <SiteBackground />
         {children}
         {modal}
-        <Footer />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

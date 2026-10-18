@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { TopNav } from "@/components/TopNav";
+import { PageShell } from "@/components/brand/ContentPage";
 import { VolleytubeAppIcon } from "@/components/volleytube/AppIcon";
 import { VolleytubeAppScreens } from "@/components/volleytube/AppScreens";
 import { cn } from "@/lib/utils";
@@ -33,10 +33,8 @@ const mono = { fontFamily: "var(--font-jetbrains), monospace" };
 
 export default function VolleytubeDownloadPage() {
   return (
-    <>
-      <TopNav />
-      <main className="relative z-[2] flex flex-1 flex-col px-10 py-16 max-sm:px-5 max-sm:py-12">
-        <div className="mx-auto my-auto w-full max-w-6xl">
+    <PageShell wide>
+        <div>
           {/* ---- Hero ---- */}
           <section className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-20">
             <div className="flex flex-col">
@@ -54,7 +52,7 @@ export default function VolleytubeDownloadPage() {
               </div>
               <h1
                 className={cn(
-                  "text-[2.2rem] leading-[1.05] tracking-[-0.01em] text-white md:text-[3.4rem]",
+                  "text-[2.2rem] leading-[1.05] tracking-[-0.01em] text-[var(--color-ink)] md:text-[3.4rem]",
                   styles.reveal,
                 )}
                 style={{
@@ -68,7 +66,7 @@ export default function VolleytubeDownloadPage() {
 
               <p
                 className={cn(
-                  "mt-6 max-w-xl text-[1.02rem] font-light leading-[1.7] text-white/75",
+                  "mt-6 max-w-xl text-[1.02rem] font-light leading-[1.7] text-[var(--color-ink-soft)]",
                   styles.reveal,
                 )}
                 style={{ animationDelay: "0.13s" }}
@@ -86,7 +84,7 @@ export default function VolleytubeDownloadPage() {
                   href="https://apps.apple.com/au/app/volleytube/id6773233438"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-md border border-[var(--color-line)] px-6 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-white outline-none transition-[background,border,opacity] hover:bg-white/10"
+                  className="group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-md border border-[var(--color-line)] px-6 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-[var(--color-ink)] outline-none transition-[background,border,opacity] hover:bg-[#f6f2f8]"
                   style={{ fontFamily: "var(--font-jetbrains), monospace" }}
                 >
                   Download on the App Store
@@ -134,10 +132,10 @@ export default function VolleytubeDownloadPage() {
                   >
                     {f.no}
                   </span>
-                  <h2 className="text-[1.05rem] font-normal tracking-[0.01em] text-white">
+                  <h2 className="text-[1.05rem] font-normal tracking-[0.01em] text-[var(--color-ink)]">
                     {f.title}
                   </h2>
-                  <p className="text-[0.92rem] font-light leading-[1.65] text-white/65">
+                  <p className="text-[0.92rem] font-light leading-[1.65] text-[var(--color-ink-soft)]">
                     {f.body}
                   </p>
                 </div>
@@ -145,7 +143,6 @@ export default function VolleytubeDownloadPage() {
             </div>
           </section>
         </div>
-      </main>
-    </>
+    </PageShell>
   );
 }

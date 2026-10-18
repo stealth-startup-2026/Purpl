@@ -12,7 +12,7 @@ import type { Project } from "./projects";
  * The only behavioural difference is close — `router.back()` is safe when
  * the visitor came from elsewhere on the site, but if they landed straight
  * here (e.g. an App Store reviewer clicking a link), history is empty and we
- * fall back to `/work` rather than leaving them stuck on the page.
+ * fall back to the homepage folder rather than leaving them stuck on the page.
  */
 export function ProjectPageView({ project }: { project: Project }) {
   const router = useRouter();
@@ -21,7 +21,7 @@ export function ProjectPageView({ project }: { project: Project }) {
     if (typeof window !== "undefined" && window.history.length > 1) {
       router.back();
     } else {
-      router.push("/work");
+      router.push("/#folder-projects");
     }
   };
 

@@ -128,6 +128,9 @@ export function ProjectModal({ project, onClose }: Props) {
               className={styles.title}
             >
               {renderProject.brand}
+              {renderProject.subtitle && (
+                <span className={styles.subtitle}>{renderProject.subtitle}</span>
+              )}
             </h2>
             <div className={styles.meta}>
               {renderProject.category}
@@ -309,9 +312,13 @@ export function ProjectModal({ project, onClose }: Props) {
               {(renderProject.detail && renderProject.detail.length > 0
                 ? renderProject.detail
                 : [renderProject.description]
-              ).map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
+              ).map((block, i) =>
+                typeof block === "string" ? (
+                  <p key={i}>{block}</p>
+                ) : (
+                  <h3 key={i} className={styles.detailHeading}>{block.heading}</h3>
+                ),
+              )}
             </div>
           </div>
         </div>

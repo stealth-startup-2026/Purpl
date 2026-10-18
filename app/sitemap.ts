@@ -9,7 +9,6 @@ const projectSlugs = projects.map((p) => p.id);
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: base, priority: 1.0, changeFrequency: "monthly" },
-    { url: `${base}/work`, priority: 0.9, changeFrequency: "monthly" },
     { url: `${base}/about`, priority: 0.7, changeFrequency: "yearly" },
     { url: `${base}/contact`, priority: 0.7, changeFrequency: "yearly" },
   ];

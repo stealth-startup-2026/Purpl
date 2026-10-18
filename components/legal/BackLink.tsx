@@ -5,7 +5,7 @@ import { ArrowLeft } from "lucide-react";
 
 /**
  * "Back" affordance for legal sub-pages. Pops the browser history so the user
- * lands wherever they came from (e.g. the work modal at `/work`). When the
+ * lands wherever they came from (e.g. a project modal opened from the homepage). When the
  * page is the very first entry in the session — typical of a reviewer
  * following the Privacy URL straight from App Store Connect — falls back to
  * the home page so the link is never a dead-end.
@@ -25,7 +25,7 @@ export function BackLink() {
     <button
       type="button"
       onClick={handleClick}
-      className="group inline-flex items-center gap-1.5 text-[0.72rem] uppercase tracking-[0.22em] font-light text-[var(--color-ink-faint)] outline-none transition-colors hover:text-white/85 focus-visible:text-white/85"
+      className="group inline-flex items-center gap-1.5 text-[0.72rem] uppercase tracking-[0.22em] font-light text-[var(--color-ink-faint)] outline-none transition-colors hover:text-[var(--color-ink)] focus-visible:text-[var(--color-ink)]"
     >
       <ArrowLeft
         size={13}

@@ -7,7 +7,7 @@ import { ProjectModal } from "./ProjectModal";
 /**
  * Inner of every per-project intercepting route under `app/@modal/(.)<id>/`.
  * Looks up the project by id and renders the existing ProjectModal with a
- * close handler that pops the browser history (returns the user to /work).
+ * close handler that pops the browser history (returns the user to the homepage folder).
  *
  * Why this lives behind a wrapper instead of one shared `(.)[project]/page.tsx`:
  *

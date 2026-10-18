@@ -52,12 +52,12 @@ export function WaitlistForm() {
     return (
       <div
         role="status"
-        className="flex items-center gap-3 rounded-md border border-[var(--color-line-soft)] bg-white/[0.03] px-5 py-4"
+        className="flex items-center gap-3 rounded-md border border-[var(--color-line-soft)] bg-[#fcfafd] px-5 py-4"
       >
-        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white">
-          <Check size={14} strokeWidth={2.25} className="text-white" />
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[var(--color-ink)]">
+          <Check size={14} strokeWidth={2.25} className="text-[var(--color-ink)]" />
         </span>
-        <p className="text-[0.95rem] font-light leading-snug text-white/85">
+        <p className="text-[0.95rem] font-light leading-snug text-[var(--color-ink)]">
           You&rsquo;re on the list. We&rsquo;ll email you the moment VolleyTube goes live.
         </p>
       </div>
@@ -97,16 +97,16 @@ export function WaitlistForm() {
             if (status === "error") setStatus("idle");
           }}
           className={cn(
-            "h-12 w-full flex-1 rounded-md border bg-white/[0.03] px-4 text-[0.95rem] text-white tracking-[0.01em] outline-none transition-colors placeholder:text-[var(--color-ink-faint)]",
+            "h-12 w-full flex-1 rounded-md border bg-[#fcfafd] px-4 text-[0.95rem] text-[var(--color-ink)] tracking-[0.01em] outline-none transition-colors placeholder:text-[var(--color-ink-faint)]",
             invalid
               ? "border-[var(--color-vt-red)]"
-              : "border-[var(--color-line-soft)] focus:border-white/55",
+              : "border-[var(--color-line-soft)] focus:border-[var(--color-ink-soft)]",
           )}
         />
         <button
           type="submit"
           disabled={submitting}
-          className="group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-md border border-[var(--color-line)] px-6 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-white outline-none transition-[background,border,opacity] hover:bg-white/10 focus-visible:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+          className="group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-md border border-[var(--color-line)] px-6 text-[0.78rem] font-medium uppercase tracking-[0.16em] text-[var(--color-ink)] outline-none transition-[background,border,opacity] hover:bg-[#f6f2f8] focus-visible:bg-[#f6f2f8] disabled:cursor-not-allowed disabled:opacity-50"
           style={{ fontFamily: "var(--font-jetbrains), monospace" }}
         >
           {submitting ? "Joining" : "Join waitlist"}

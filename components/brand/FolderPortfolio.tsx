@@ -10,8 +10,11 @@ import { heroScrollEnd } from './heroScroll';
 import { useHeroViewport } from './useHeroViewport';
 import styles from './FolderPortfolio.module.css';
 
-const featuredProjects = projects.slice(0, 3);
-const moreProjects = projects.slice(3);
+// Rows below continue the card numbering, and their reveal delay in the CSS
+// (`.spill[data-open='true'] .row`) counts from this same number.
+const FEATURED_COUNT = 4;
+const featuredProjects = projects.slice(0, FEATURED_COUNT);
+const moreProjects = projects.slice(FEATURED_COUNT);
 
 export function FolderPortfolio() {
   const [open, setOpen] = useState(false);
@@ -26,6 +29,9 @@ export function FolderPortfolio() {
     }
     window.scrollTo({ top: heroScrollEnd(), behavior: 'instant' });
     setOpenRequest(1);
+    // The hash is a one-off request to open the folder. Drop it once honoured,
+    // so the address bar stops claiming it and a reload starts from the hero.
+    window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search);
   }, []);
   const folderBottom = useRef(0.72);
   const updateFolderBottom = useCallback((ratio: number) => {
@@ -68,7 +74,7 @@ export function FolderPortfolio() {
 
     const scene = viewport.current.getBoundingClientRect();
     const mobile = window.matchMedia('(max-width: 640px)').matches;
-    // All three real cards start at the same point behind the folder's lower
+    // All featured cards start at the same point behind the folder's lower
     // edge. Measure final list positions so this also works on narrow screens.
     const sourceY = scene.top + window.scrollY + scene.height * (mobile ? 0.38 : 0.37)
       + modelPosition.current.offsetHeight * (mobile ? 0.82 : 0.78) * (folderBottom.current - 0.5) - 16;
@@ -150,7 +156,10 @@ export function FolderPortfolio() {
                       {project.tag && <span className={styles.tag}>{project.tag}</span>}
                     </div>
                     <div className={styles.cardHeading}>
-                      <h2>{project.brand}</h2>
+                      <h2>
+                        {project.brand}
+                        {project.subtitle && <span className={styles.subtitle}>{project.subtitle}</span>}
+                      </h2>
                       <span aria-hidden="true">↗</span>
                     </div>
                     <p>{project.description}</p>
@@ -166,12 +175,15 @@ export function FolderPortfolio() {
                   href={`/${project.id}`}
                   aria-label={`View ${project.brand} project`}
                   className={styles.row}
-                  style={{ '--card-index': index + 3 } as CSSProperties}
+                  style={{ '--card-index': index + FEATURED_COUNT } as CSSProperties}
                 >
-                  <span className={styles.rowNumber}>{String(index + 4).padStart(2, '0')}</span>
-                  <span className={styles.rowPreview}>{project.preview}</span>
+                  <span className={styles.rowNumber}>{String(index + FEATURED_COUNT + 1).padStart(2, '0')}</span>
+                  <span className={styles.rowPreview}><span className={styles.rowPreviewScale}>{project.preview}</span></span>
                   <span className={styles.rowCopy}>
-                    <strong>{project.brand}</strong>
+                    <strong>
+                      {project.brand}
+                      {project.subtitle && <span className={styles.subtitle}>{project.subtitle}</span>}
+                    </strong>
                     <small>{project.category}</small>
                   </span>
                   {project.tag && <span className={styles.rowTag}>{project.tag}</span>}

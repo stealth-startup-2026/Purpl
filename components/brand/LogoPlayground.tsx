@@ -44,7 +44,6 @@ export function LogoPlayground() {
               settings.current.manualMorph = true; settings.current.folderOpen = !folderOpen; settings.current.morph = 1;
               setMorph(1); setFolderOpen(!folderOpen);
             }}>{folderOpen ? 'Close folder' : 'Open folder'}</button>
-            <Link href="/work">See original work page ↗</Link>
           </div>
           <a className={styles.download} href="/models/purpl-pebble.glb" download>Download 3D model <span>GLB ↓</span></a>
         </section>

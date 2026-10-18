@@ -38,7 +38,7 @@ export function TopNav() {
         <LinkQuiet href="/about" className="text-base max-sm:text-sm">
           about us
         </LinkQuiet>
-        <LinkQuiet href="/work" className="text-base max-sm:text-sm">
+        <LinkQuiet href="/#folder-projects" className="text-base max-sm:text-sm">
           our work
         </LinkQuiet>
         <span aria-disabled="true" className="text-base max-sm:text-sm opacity-30 select-none">

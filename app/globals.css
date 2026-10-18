@@ -1,14 +1,15 @@
 @import "tailwindcss";
 
-/* Purpl design tokens. Used across every page; matches the original styles.css. */
+/* Purpl design tokens: purple ink on the white portfolio canvas. The original
+   dark-purple theme is preserved in archive/legacy-site. */
 @theme {
   --color-bg: #310c5d;
   --color-bg-deep: #1e0838;
-  --color-ink: #ffffff;
-  --color-ink-soft: rgba(255, 255, 255, 0.55);
-  --color-ink-faint: rgba(255, 255, 255, 0.32);
-  --color-line: rgba(255, 255, 255, 0.7);
-  --color-line-soft: rgba(255, 255, 255, 0.12);
+  --color-ink: #310c5d;
+  --color-ink-soft: #705c7e;
+  --color-ink-faint: #8b779c;
+  --color-line: #c5b1d3;
+  --color-line-soft: #e9e3ef;
 
   /* Brand red used inside project previews */
   --color-caat-red: #b81f2f;
@@ -20,17 +21,9 @@
 }
 
 html {
-  /* The purple gradient lives on the root so it paints at the very back, which
-     lets the dot-grid canvas (fixed, -z-10) sit above it but still behind all
-     page content on every page. Moving it here from body fixed the dots being
-     hidden on non-home pages. */
-  background:
-    radial-gradient(ellipse at 50% 40%, #3f1570 0%, var(--color-bg) 45%, var(--color-bg-deep) 100%)
-    var(--color-bg-deep);
-  background-attachment: fixed;
-  scrollbar-gutter: stable;
+  background: #ffffff;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  scrollbar-color: #d9d1e2 #ffffff;
 }
 
 body {
@@ -44,11 +37,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* The new portfolio starts with a genuinely white, untextured canvas. */
 html:has([data-purpl-home], [data-purpl-page]) {
-  background: #ffffff;
-  scrollbar-gutter: auto;
-  scrollbar-color: #d9d1e2 #ffffff;
   overflow-x: clip;
   overscroll-behavior: none;
 }

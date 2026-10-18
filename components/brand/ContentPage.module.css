@@ -1,5 +1,7 @@
 .page { min-height: 100svh; background: #fff; color: #310c5d; font-family: var(--font-inter), sans-serif; }
 .content { width: min(100% - 72px, 960px); margin: 0 auto; padding: clamp(170px, 20svh, 220px) 0 140px; }
+.wide { width: min(100% - 72px, 1152px); }
+.eyebrow { margin: 0 0 14px; color: #8b779c; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
 .title { margin: 0 0 48px; font-size: clamp(48px, 7vw, 80px); font-weight: 450; letter-spacing: -.065em; line-height: 1.05; }
 .prose { max-width: 740px; color: #705c7e; font-size: 17px; line-height: 1.8; }
 .prose p { margin: 0 0 24px; }
@@ -20,6 +22,7 @@
 .content a:focus-visible { outline: 2px solid #927ba3; outline-offset: 6px; border-radius: 2px; }
 @media (max-width: 640px) {
   .content { width: calc(100% - 44px); padding: 160px 0 110px; }
+  .wide { width: calc(100% - 44px); }
   .title { margin-bottom: 34px; }
   .prose { font-size: 15px; line-height: 1.85; }
   .prose p:first-child { font-size: 20px; }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { TopNav } from "@/components/TopNav";
+import { PageShell } from "@/components/brand/ContentPage";
 import { VolleytubeAppIcon } from "@/components/volleytube/AppIcon";
 import { VolleytubeAppScreens } from "@/components/volleytube/AppScreens";
 import { WaitlistForm } from "@/components/volleytube/WaitlistForm";
@@ -34,10 +34,8 @@ const mono = { fontFamily: "var(--font-jetbrains), monospace" };
 
 export default function VolleytubeWaitlistPage() {
   return (
-    <>
-      <TopNav />
-      <main className="relative z-[2] flex flex-1 flex-col px-10 py-16 max-sm:px-5 max-sm:py-12">
-        <div className="mx-auto my-auto w-full max-w-6xl">
+    <PageShell wide>
+        <div>
           {/* ---- Hero ---- */}
           <section className="grid items-center gap-14 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-20">
             <div className="flex flex-col">
@@ -55,7 +53,7 @@ export default function VolleytubeWaitlistPage() {
               </div>
               <h1
                 className={cn(
-                  "text-[2.2rem] leading-[1.05] tracking-[-0.01em] text-white md:text-[3.4rem]",
+                  "text-[2.2rem] leading-[1.05] tracking-[-0.01em] text-[var(--color-ink)] md:text-[3.4rem]",
                   styles.reveal,
                 )}
                 style={{
@@ -69,7 +67,7 @@ export default function VolleytubeWaitlistPage() {
 
               <p
                 className={cn(
-                  "mt-6 max-w-xl text-[1.02rem] font-light leading-[1.7] text-white/75",
+                  "mt-6 max-w-xl text-[1.02rem] font-light leading-[1.7] text-[var(--color-ink-soft)]",
                   styles.reveal,
                 )}
                 style={{ animationDelay: "0.13s" }}
@@ -120,10 +118,10 @@ export default function VolleytubeWaitlistPage() {
                   >
                     {f.no}
                   </span>
-                  <h2 className="text-[1.05rem] font-normal tracking-[0.01em] text-white">
+                  <h2 className="text-[1.05rem] font-normal tracking-[0.01em] text-[var(--color-ink)]">
                     {f.title}
                   </h2>
-                  <p className="text-[0.92rem] font-light leading-[1.65] text-white/65">
+                  <p className="text-[0.92rem] font-light leading-[1.65] text-[var(--color-ink-soft)]">
                     {f.body}
                   </p>
                 </div>
@@ -131,7 +129,6 @@ export default function VolleytubeWaitlistPage() {
             </div>
           </section>
         </div>
-      </main>
-    </>
+    </PageShell>
   );
 }
