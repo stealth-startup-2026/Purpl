@@ -52,7 +52,7 @@ export function VideoStage({
         autoPlay
         playsInline
         onError={() => setFailed(true)}
-        className="h-full w-full bg-black object-cover"
+        className="h-full w-full bg-black object-contain"
       />
     );
   }
@@ -69,7 +69,7 @@ export function VideoStage({
         alt=""
         fill
         sizes="(min-width: 1024px) 60vw, 100vw"
-        className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+        className="object-contain transition-transform duration-500 ease-out group-hover:scale-[1.03]"
       />
       <span className="absolute inset-0 bg-[rgba(8,5,20,0.18)] transition-colors group-hover:bg-[rgba(8,5,20,0.08)]" />
       <span className="absolute inset-0 flex items-center justify-center">

@@ -27,7 +27,16 @@ export function ImagePreview({
   background?: string;
 }) {
   return (
-    <div className={cn(base.tile)} style={{ background }}>
+    // data-full-* lets the project modal open the original image at its own
+    // shape in the full-size view (it may receive this tile pre-rendered).
+    <div
+      className={cn(base.tile)}
+      style={{ background }}
+      data-full-src={src}
+      data-full-alt={alt}
+      data-full-width={width}
+      data-full-height={height}
+    >
       <Image
         src={src}
         alt={alt}

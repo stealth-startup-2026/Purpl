@@ -600,12 +600,15 @@ const projectsUnordered: Project[] = [
   {
     id: "prosporter",
     brand: "ProSporter",
-    category: "online store · client work",
+    category: "headless ecommerce · client work",
     description:
-      "An Australian online volleyball store, indoor and beach apparel and gear for players of all levels.",
+      "An Australian volleyball store, migrated from WordPress and WooCommerce to Shopify, with a headless storefront designed and built from scratch.",
     detail: [
-      "ProSporter is an Australian online volleyball store offering indoor and beach apparel and gear for players of all levels. We designed the site and migrated the existing ecommerce store from WooCommerce to Shopify.",
-      "Live at prosporter.com.au since September 2026.",
+      "An Australian online volleyball store for indoor and beach apparel and gear. Live at prosporter.com.au since September 2026.",
+      { heading: "Platform migration" },
+      "Moved the store off its WordPress and WooCommerce stack onto Shopify. The catalogue, inventory, checkout and payments now run on Shopify's commerce backend.",
+      { heading: "Headless storefront" },
+      "Designed and built a custom storefront from scratch on Shopify's Storefront API, decoupled from Shopify's theme layer. Browsing, collections, product pages and the cart are our own front end, handing off to Shopify checkout.",
     ],
     preview: prosporterPreview,
     liveUrl: "https://prosporter.com.au",

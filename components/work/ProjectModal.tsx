@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { X, ArrowUpRight } from "lucide-react";
+import { X, ArrowUpRight, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { YouTubeStage } from "./YouTubeStage";
 import { VideoStage } from "./VideoStage";
@@ -22,14 +22,58 @@ export function ProjectModal({ project, onClose }: Props) {
   const [renderProject, setRenderProject] = useState<Project | null>(project);
   const [visible, setVisible] = useState(false);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [expanded, setExpanded] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const thumbsRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [fullImage, setFullImage] = useState<{ src: string; alt: string; width: number; height: number } | null>(null);
+  // The keyboard handler below is bound once per open; refs let it see the
+  // current lightbox state and gallery position without rebinding.
+  const expandedRef = useRef(false);
+  expandedRef.current = expanded;
+  const stepRef = useRef<(dir: 1 | -1) => void>(() => {});
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
 
   // Reset gallery slot when switching projects
   useEffect(() => {
-    if (project) setActiveIdx(0);
+    if (project) {
+      setActiveIdx(0);
+      setExpanded(false);
+    }
   }, [project]);
+
+  // Keep the selected thumbnail in view when the strip scrolls.
+  useEffect(() => {
+    const thumb = thumbsRef.current?.children[activeIdx] as HTMLElement | undefined;
+    const strip = thumbsRef.current;
+    if (!thumb || !strip || strip.scrollWidth <= strip.clientWidth) return;
+    strip.scrollTo({ left: thumb.offsetLeft - (strip.clientWidth - thumb.clientWidth) / 2, behavior: "smooth" });
+  }, [activeIdx]);
+
+  // Screenshots and photos open at their own shape, filling the screen; read
+  // the original from the stage's ImagePreview tile. Hand-built mockups have
+  // no original and keep the 16:10 tile they were designed for.
+  useLayoutEffect(() => {
+    if (!expanded) return;
+    const tile = stageRef.current?.querySelector<HTMLElement>("[data-full-src]");
+    setFullImage(
+      tile
+        ? {
+            src: tile.dataset.fullSrc!,
+            alt: tile.dataset.fullAlt ?? "",
+            width: Number(tile.dataset.fullWidth),
+            height: Number(tile.dataset.fullHeight),
+          }
+        : null,
+    );
+  }, [expanded, activeIdx]);
+
+  // Move focus into the full-size view when it opens.
+  useEffect(() => {
+    if (expanded) lightboxRef.current?.querySelector<HTMLElement>("button")?.focus();
+  }, [expanded]);
 
   // Mount/unmount + enter/exit transitions
   useEffect(() => {
@@ -65,11 +109,19 @@ export function ProjectModal({ project, onClose }: Props) {
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") {
         e.preventDefault();
-        onClose();
+        // Escape steps back one layer: full-size view first, then the modal.
+        if (expandedRef.current) setExpanded(false);
+        else onClose();
         return;
       }
-      if (e.key === "Tab" && dialogRef.current) {
-        const focusables = dialogRef.current.querySelectorAll<HTMLElement>(
+      if (expandedRef.current && (e.key === "ArrowLeft" || e.key === "ArrowRight")) {
+        e.preventDefault();
+        stepRef.current(e.key === "ArrowLeft" ? -1 : 1);
+        return;
+      }
+      const trap = expandedRef.current ? lightboxRef.current : dialogRef.current;
+      if (e.key === "Tab" && trap) {
+        const focusables = trap.querySelectorAll<HTMLElement>(
           'a[href], button:not([disabled]), iframe, video[controls], [tabindex]:not([tabindex="-1"])',
         );
         if (focusables.length === 0) return;
@@ -97,6 +149,14 @@ export function ProjectModal({ project, onClose }: Props) {
 
   if (!renderProject) return null;
   const active = renderProject.gallery[activeIdx] ?? renderProject.gallery[0];
+  // The full-size view steps through still shots only; videos have their own
+  // player controls.
+  const stills = renderProject.gallery.flatMap((item, i) => (item.video ? [] : [i]));
+  const stillPos = stills.indexOf(activeIdx);
+  stepRef.current = (dir) => {
+    if (stills.length < 2) return;
+    setActiveIdx(stills[(stillPos + dir + stills.length) % stills.length]);
+  };
 
   return (
     <div
@@ -154,7 +214,7 @@ export function ProjectModal({ project, onClose }: Props) {
 
         <div className={styles.body}>
           <div className={styles.gallery}>
-            <div className={styles.stage} key={active.id}>
+            <div className={styles.stage} key={active.id} ref={stageRef}>
               {active.video ? (
                 active.video.src ? (
                   <VideoStage
@@ -171,13 +231,26 @@ export function ProjectModal({ project, onClose }: Props) {
                   />
                 )
               ) : (
-                active.node
+                <>
+                  <div className={styles.stageFrame} onClick={() => setExpanded(true)}>
+                    {active.node}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setExpanded(true)}
+                    aria-label={`View ${active.alt} full size`}
+                    className={styles.expand}
+                  >
+                    <Maximize2 size={15} strokeWidth={1.6} />
+                  </button>
+                </>
               )}
             </div>
             {/* Thumbnail strip. Up to 4 shots fill the row; with more (e.g. a
                demo video pushed in front) it becomes a horizontal scroller so
                the first ~4 stay full-size and the rest peek to signal scroll. */}
             <div
+              ref={thumbsRef}
               className={cn(
                 "gap-2",
                 renderProject.gallery.length > 4
@@ -323,6 +396,76 @@ export function ProjectModal({ project, onClose }: Props) {
           </div>
         </div>
       </div>
+      {expanded && !active.video && (
+        <div
+          ref={lightboxRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${active.alt}, full size`}
+          className={styles.lightbox}
+          onClick={(e) => {
+            e.stopPropagation();
+            setExpanded(false);
+          }}
+        >
+          {fullImage ? (
+            <Image
+              key={fullImage.src}
+              src={fullImage.src}
+              alt={fullImage.alt}
+              width={fullImage.width}
+              height={fullImage.height}
+              sizes="100vw"
+              className={styles.lightboxImage}
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <div className={styles.lightboxFrame} onClick={(e) => e.stopPropagation()}>
+              {active.node}
+            </div>
+          )}
+          <button
+            type="button"
+            aria-label="Close full size view"
+            className={cn(styles.lightboxButton, styles.lightboxClose)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setExpanded(false);
+            }}
+          >
+            <X size={18} strokeWidth={1.5} />
+          </button>
+          {stills.length > 1 && (
+            <>
+              <button
+                type="button"
+                aria-label="Previous image"
+                className={cn(styles.lightboxButton, styles.lightboxPrev)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  stepRef.current(-1);
+                }}
+              >
+                <ChevronLeft size={20} strokeWidth={1.5} />
+              </button>
+              <button
+                type="button"
+                aria-label="Next image"
+                className={cn(styles.lightboxButton, styles.lightboxNext)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  stepRef.current(1);
+                }}
+              >
+                <ChevronRight size={20} strokeWidth={1.5} />
+              </button>
+              <span className={styles.lightboxCount} aria-live="polite">
+                {stillPos + 1} / {stills.length}
+              </span>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }
