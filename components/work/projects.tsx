@@ -602,13 +602,14 @@ const projectsUnordered: Project[] = [
     brand: "ProSporter",
     category: "headless ecommerce · client work",
     description:
-      "An Australian volleyball store, migrated from WordPress and WooCommerce to Shopify, with a headless storefront designed and built from scratch.",
+      "An Australian volleyball store, migrated from WordPress and WooCommerce to Shopify, with a headless Next.js storefront built from scratch.",
     detail: [
       "An Australian online volleyball store for indoor and beach apparel and gear. Live at prosporter.com.au since September 2026.",
       { heading: "Platform migration" },
-      "Moved the store off its WordPress and WooCommerce stack onto Shopify. The catalogue, inventory, checkout and payments now run on Shopify's commerce backend.",
+      "Moved the store off WordPress and WooCommerce onto Shopify using a Python migration pipeline: extract, normalise, load through the Shopify Admin API, then reconcile every count against the source. 150+ products, 700+ variants, inventory, collections, pages, blog posts, SEO metadata and customer accounts came across; historical orders went to a separate archive.",
+      "A 370-URL redirect map keeps every legacy product, category and post link working.",
       { heading: "Headless storefront" },
-      "Designed and built a custom storefront from scratch on Shopify's Storefront API, decoupled from Shopify's theme layer. Browsing, collections, product pages and the cart are our own front end, handing off to Shopify checkout.",
+      "Designed and built from scratch in Next.js on Shopify's Storefront and Cart APIs, with Shopify-hosted checkout. Custom collection filtering, search, cart drawer and blog, kept in sync by signed Shopify webhooks. Scores 98 on mobile Lighthouse.",
     ],
     preview: prosporterPreview,
     liveUrl: "https://prosporter.com.au",
