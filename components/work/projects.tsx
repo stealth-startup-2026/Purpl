@@ -722,7 +722,7 @@ const projectsUnordered: Project[] = [
     category: "3D models + configurator + website · client work",
     tag: "in progress",
     description:
-      "A real-time configuration engine built on production 3D models, and the 3D-first website that sells the range.",
+      "Fit out entire store floors from a modular fixture system in real-time 3D, built on production models, plus the 3D-first website that sells the range.",
     detail: [
       "A real-time 3D configuration engine and marketing website for a modular retail shelving system. Currently in development.",
       { heading: "The configurator" },
