@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { X, ArrowUpRight, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
+import { X, ArrowUpRight, ChevronDown, ChevronLeft, ChevronRight, Maximize2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { YouTubeStage } from "./YouTubeStage";
 import { VideoStage } from "./VideoStage";
@@ -27,6 +27,8 @@ export function ProjectModal({ project, onClose }: Props) {
   const lightboxRef = useRef<HTMLDivElement>(null);
   const thumbsRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [moreBelow, setMoreBelow] = useState(false);
   const [fullImage, setFullImage] = useState<{ src: string; alt: string; width: number; height: number } | null>(null);
   // The keyboard handler below is bound once per open; refs let it see the
   // current lightbox state and gallery position without rebinding.
@@ -69,6 +71,22 @@ export function ProjectModal({ project, onClose }: Props) {
         : null,
     );
   }, [expanded, activeIdx]);
+
+  // Show the fade cue while the scrollable body has more content below.
+  useEffect(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+    const update = () => setMoreBelow(body.scrollHeight - body.scrollTop - body.clientHeight > 24);
+    update();
+    body.addEventListener("scroll", update, { passive: true });
+    const observer = new ResizeObserver(update);
+    observer.observe(body);
+    Array.from(body.children).forEach((child) => observer.observe(child));
+    return () => {
+      body.removeEventListener("scroll", update);
+      observer.disconnect();
+    };
+  }, [renderProject]);
 
   // Move focus into the full-size view when it opens.
   useEffect(() => {
@@ -182,16 +200,16 @@ export function ProjectModal({ project, onClose }: Props) {
         }}
       >
         <header className={styles.header}>
-          <div className="flex flex-col gap-1.5 min-w-0">
+          <div className={styles.heading}>
             <h2
               id="project-modal-title"
               className={styles.title}
             >
               {renderProject.brand}
-              {renderProject.subtitle && (
-                <span className={styles.subtitle}>{renderProject.subtitle}</span>
-              )}
             </h2>
+            {renderProject.subtitle && (
+              <p className={styles.subtitle}>{renderProject.subtitle}</p>
+            )}
             <div className={styles.meta}>
               {renderProject.category}
               {renderProject.tag ? (
@@ -212,7 +230,7 @@ export function ProjectModal({ project, onClose }: Props) {
           </button>
         </header>
 
-        <div className={styles.body}>
+        <div className={styles.body} ref={bodyRef}>
           <div className={styles.gallery}>
             <div className={styles.stage} key={active.id} ref={stageRef}>
               {active.video ? (
@@ -394,6 +412,9 @@ export function ProjectModal({ project, onClose }: Props) {
               )}
             </div>
           </div>
+        </div>
+        <div className={styles.moreFade} data-visible={moreBelow} aria-hidden="true">
+          <ChevronDown size={18} strokeWidth={1.5} />
         </div>
       </div>
       {expanded && !active.video && (

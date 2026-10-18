@@ -276,7 +276,7 @@ const projectsUnordered: Project[] = [
     brand: "moup",
     category: "webapp · in-house",
     description:
-      "Movies Ordered Using Pairwise. A film ranking app that replaces broken star ratings with head-to-head comparisons. Pick this or that, and build a perfectly ordered list of your favourites.",
+      "Movies Ordered Using Pairwise. A film ranking app that replaces broken star ratings with head-to-head comparisons. Pick this or that, and build an ordered list of your favourites.",
     detail: [
       "It started with a friend calling me out for never giving things ratings. We'd be talking about a film or a show and I'd just say whether I liked it or not. My defence was that 1-10 is inherently flawed. Tell someone a restaurant was a 6/10 and the first thing they ask is 'what was wrong with it?' Somewhere along the way 7/10 became socially accepted as average, which leaves 8-9-10 as the only real band to rank the stuff you actually like. Two films on the same number can also feel completely different. The digit just flattens what made each one good. What pulled me out of that loop was thinking about ranking in competitive games. Chess, Counter-Strike, League of Legends. Ranks there aren't assigned. They're earned through head-to-head results.",
       "moup is what happens when you point that idea at film and replace 1-10 with one question: do you like this or that more? Search any title, log it, add to a watchlist, then keep running those quick gut calls. The ordered list of your favourites drops out the bottom. The first version is something we're genuinely happy with. Next on the roadmap is Letterboxd import. Most film people already have years of ratings sitting there, and asking them to start from zero is a real barrier. The goal isn't max users. If you've got a minute, the live demo's on the landing page.",
@@ -600,16 +600,17 @@ const projectsUnordered: Project[] = [
   {
     id: "prosporter",
     brand: "ProSporter",
+    subtitle: "Shopify migration + storefront design and build",
     category: "headless ecommerce · client work",
     description:
       "An Australian volleyball store, migrated from WordPress and WooCommerce to Shopify, with a headless Next.js storefront built from scratch.",
     detail: [
       "An Australian online volleyball store for indoor and beach apparel and gear. Live at prosporter.com.au since September 2026.",
       { heading: "Platform migration" },
-      "Moved the store off WordPress and WooCommerce onto Shopify using a Python migration pipeline: extract, normalise, load through the Shopify Admin API, then reconcile every count against the source. 150+ products, 700+ variants, inventory, collections, pages, blog posts, SEO metadata and customer accounts came across; historical orders went to a separate archive.",
-      "A 370-URL redirect map keeps every legacy product, category and post link working.",
+      "Moved the store off WordPress and WooCommerce onto Shopify using a Python migration pipeline: extract, normalise, load through the Shopify Admin API, then reconcile counts against the source. 150+ products, 700+ variants, inventory, collections, pages, blog posts, SEO metadata and customer accounts came across; historical orders went to a separate archive.",
+      "A 370-URL redirect map points legacy product, category and post links to their new pages.",
       { heading: "Headless storefront" },
-      "Designed and built from scratch in Next.js on Shopify's Storefront and Cart APIs, with Shopify-hosted checkout. Custom collection filtering, search, cart drawer and blog, kept in sync by signed Shopify webhooks. Scores 98 on mobile Lighthouse.",
+      "Designed and built from scratch in Next.js on Shopify's Storefront and Cart APIs, with Shopify-hosted checkout. Custom collection filtering, search, cart drawer and blog, kept in sync by signed Shopify webhooks. Scored 98 on mobile Lighthouse in pre-launch testing.",
     ],
     preview: prosporterPreview,
     liveUrl: "https://prosporter.com.au",
@@ -726,17 +727,17 @@ const projectsUnordered: Project[] = [
     category: "3D models + configurator + website · client work",
     tag: "in progress",
     description:
-      "Fit out entire store floors from a modular fixture system in real-time 3D, built on production models, plus the 3D-first website that sells the range.",
+      "Lay out store floors from a modular fixture system in real-time 3D, built on the manufacturer's own 3D models, plus the 3D-first website for the range.",
     detail: [
-      "A real-time 3D configuration engine and marketing website for a modular retail shelving system. Currently in development.",
+      "A real-time 3D configuration engine and marketing website for a modular retail shelving and accessories system. Currently in development.",
       { heading: "The configurator" },
       "A browser-based 3D configurator for planning retail fit-outs. Lay out a store floor, build fixtures through a guided wizard and edit them part by part. Each fixture animates together piece by piece, following its real assembly sequence.",
-      "Every part is a production 3D model converted from the manufacturer's CAD masters (Revit, IFC and STEP to glTF). An encoded assembly grammar decides what fits where, so every configuration can be built as shown.",
+      "Parts are 3D models converted from the manufacturer's CAD files (Revit, IFC and STEP to glTF). Assembly rules taken from the physical system decide what fits where, so layouts follow how the shelving and accessories actually go together.",
       { heading: "The website" },
-      "A 3D-led marketing site for the product range. Path-traced renders and looping animated sequences show the system installed in real retail spaces. Space pages cover each store type, and an enquiry flow sends layouts straight to sales.",
+      "A 3D-led marketing site for the product range. Much of its looping animated footage is rendered in Blender, showing the system in retail settings, with pages for each store type and an enquiry flow for design consultations.",
       "Built with React, three.js and React Three Fiber, and prerendered for search.",
       { heading: "Internal tooling" },
-      "A source-linked knowledge base of the physical system, built from photos, teardown measurements and CAD exports. Every dimension is tagged as design intent or measured reality, and both apps import their numbers from it. A desktop authoring app on top defines fixture families and presets, validates them and tracks catalogue coverage.",
+      "A source-linked knowledge base of the physical system, built from photos, teardown measurements and CAD exports, with dimensions tagged as design intent or measured reality. Both apps import their numbers from it, and a small desktop app on top is used to define fixture families and presets and track catalogue coverage.",
     ],
     preview: configuratorPreview,
     gallery: [
