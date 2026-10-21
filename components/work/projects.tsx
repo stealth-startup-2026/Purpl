@@ -125,7 +125,7 @@ const PROVOLLEY_PAGE_BG = "#f8fafc";
 // Welcome Blossom pages sit on the site's warm cream background.
 const WELCOME_BLOSSOM_BG = "#fdf9f7";
 // ProSporter store pages sit on white.
-const PROSPORTER_PAGE_BG = "#ffffff";
+const PROSPORTER_PAGE_BG = "#ebebe8";
 // Inner West Volley pages sit on the site's pale blue-grey background.
 const INNERWEST_PAGE_BG = "#eef2f7";
 const terminlOverview = (
@@ -621,14 +621,14 @@ const projectsUnordered: Project[] = [
     liveUrl: "https://prosporter.com.au",
     liveLabel: "prosporter.com.au",
     gallery: [
-      { id: "01", alt: "ProSporter store homepage hero", node: prosporterPreview },
+      { id: "01", alt: "ProSporter home page on desktop and phone", node: prosporterPreview },
       {
         id: "02",
-        alt: "shop by category tiles",
+        alt: "home, collection and product pages on phones",
         node: (
           <ImagePreview
-            src="/projects/prosporter/categories.jpg"
-            alt="ProSporter shop-by-category tiles: tops, shorts and pants, hoodies and jackets, jerseys, accessories, with indoor and beach collections below"
+            src="/projects/prosporter/mobile.jpg"
+            alt="ProSporter on three phones: the Play in your colours home page, the jerseys collection with filters, and a jersey product page"
             width={2560}
             height={1600}
             background={PROSPORTER_PAGE_BG}
@@ -637,11 +637,11 @@ const projectsUnordered: Project[] = [
       },
       {
         id: "03",
-        alt: "new arrivals product grid",
+        alt: "collection page with filters",
         node: (
           <ImagePreview
-            src="/projects/prosporter/arrivals.jpg"
-            alt="ProSporter new arrivals grid with club jerseys, polos and track pants, each with category, name and price"
+            src="/projects/prosporter/desktop-jerseys.jpg"
+            alt="ProSporter jerseys collection on desktop, with availability, gender, colour, size and price filters beside the product grid"
             width={2560}
             height={1600}
             background={PROSPORTER_PAGE_BG}
@@ -650,11 +650,11 @@ const projectsUnordered: Project[] = [
       },
       {
         id: "04",
-        alt: "product page with sizes and add to bag",
+        alt: "product page with sizes and colour",
         node: (
           <ImagePreview
-            src="/projects/prosporter/product.jpg"
-            alt="ProSporter product page for the ProVolley Women's Polo 2026/27: gallery, price, size picker and product details"
+            src="/projects/prosporter/desktop-product.jpg"
+            alt="ProSporter product page for the Carrum Downs Royals away jersey: image, price, size and colour pickers and product details"
             width={2560}
             height={1600}
             background={PROSPORTER_PAGE_BG}

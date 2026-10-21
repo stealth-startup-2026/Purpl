@@ -5,14 +5,15 @@ import styles from "./ProsporterPreview.module.css";
 
 /**
  * Preview tile for ProSporter (client work, live at prosporter.com.au).
- * Uses the homepage hero captured from the live site (1280x800 viewport @2x).
+ * The home page on desktop and phone, captured from the live site and framed on
+ * a soft ground (desktop 1440x900 @2x, phone 390x844 @3x).
  */
 export function ProsporterPreview() {
   return (
     <div className={cn(base.tile, styles.tile)} aria-hidden="true">
       <Image
-        src="/projects/prosporter/home.jpg"
-        alt="ProSporter store homepage, hero section"
+        src="/projects/prosporter/responsive.jpg"
+        alt="ProSporter home page on desktop and phone"
         width={2560}
         height={1600}
         className={styles.image}
