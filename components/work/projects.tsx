@@ -615,7 +615,7 @@ const projectsUnordered: Project[] = [
       "Moved the store off WordPress and WooCommerce onto Shopify using a Python migration pipeline: extract, normalise, load through the Shopify Admin API, then reconcile counts against the source. 150+ products, 700+ variants, inventory, collections, pages, blog posts, SEO metadata and customer accounts came across; historical orders went to a separate archive.",
       "A 370-URL redirect map points legacy product, category and post links to their new pages.",
       { heading: "Headless storefront" },
-      "Designed and built from scratch in Next.js on Shopify's Storefront and Cart APIs, with Shopify-hosted checkout. Custom collection filtering, search, cart drawer and blog, kept in sync by signed Shopify webhooks. Scored 98 on mobile Lighthouse in pre-launch testing.",
+      "Responsiveness was the old site's biggest weakness, so the new storefront was designed mobile-first. Built from scratch in Next.js on Shopify's Storefront and Cart APIs, with Shopify-hosted checkout. Custom collection filtering, search, cart drawer and blog, kept in sync by signed Shopify webhooks. Scored 98 on mobile Lighthouse in pre-launch testing.",
     ],
     preview: prosporterPreview,
     liveUrl: "https://prosporter.com.au",
