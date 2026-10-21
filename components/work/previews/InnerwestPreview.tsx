@@ -5,14 +5,15 @@ import styles from "./InnerwestPreview.module.css";
 
 /**
  * Preview tile for Inner West Volley (client work, live at innerwestvolley.com.au).
- * Uses the homepage hero captured from the live site (1280x800 viewport @2x).
+ * The home page on desktop and phone, captured from the live site and framed on
+ * a soft ground (desktop 1440x900 @2x, phone 390x844 @3x).
  */
 export function InnerwestPreview() {
   return (
     <div className={cn(base.tile, styles.tile)} aria-hidden="true">
       <Image
-        src="/projects/innerwest/home.jpg"
-        alt="Inner West Volleyball Club site, hero section"
+        src="/projects/innerwest/responsive.jpg"
+        alt="Inner West Volley home page on desktop and phone"
         width={2560}
         height={1600}
         className={styles.image}

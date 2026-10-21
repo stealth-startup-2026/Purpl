@@ -5,14 +5,15 @@ import styles from "./ProvolleyPreview.module.css";
 
 /**
  * Preview tile for ProVolley Academy (client work, live at provolley.com.au).
- * Uses the homepage hero captured from the live site (1280x800 viewport @2x).
+ * The home page on desktop and phone, captured from the live site and framed on
+ * a soft ground (desktop 1440x900 @2x, phone 390x844 @3x).
  */
 export function ProvolleyPreview() {
   return (
     <div className={cn(base.tile, styles.tile)} aria-hidden="true">
       <Image
-        src="/projects/provolley/home.jpg"
-        alt="ProVolley Academy site, hero section"
+        src="/projects/provolley/responsive.jpg"
+        alt="ProVolley home page on desktop and phone"
         width={2560}
         height={1600}
         className={styles.image}

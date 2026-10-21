@@ -120,12 +120,8 @@ const volleytubePreview = (
 
 // terminl uses real captured app screenshots (dark editor theme) for every slot.
 const TERMINL_BG = "#0b0f14";
-// ProVolley rankings section sits on the site's off-white page background.
-const PROVOLLEY_PAGE_BG = "#f8fafc";
-// Welcome Blossom pages sit on the site's warm cream background.
-const WELCOME_BLOSSOM_BG = "#fdf9f7";
-// ProSporter store pages sit on white.
-const PROSPORTER_PAGE_BG = "#ebebe8";
+// Ground behind the framed desktop and phone showcase shots of client sites.
+const SHOWCASE_BG = "#ebebe8";
 // Inner West Volley pages sit on the site's pale blue-grey background.
 const INNERWEST_PAGE_BG = "#eef2f7";
 const terminlOverview = (
@@ -424,70 +420,70 @@ const projectsUnordered: Project[] = [
     liveLabel: "provolley.com.au",
     moreLiveLinks: [{ label: "innerwestvolley.com.au", href: "https://innerwestvolley.com.au" }],
     gallery: [
-      { id: "01", alt: "ProVolley homepage hero", node: provolleyPreview },
+      { id: "01", alt: "ProVolley home page on desktop and phone", node: provolleyPreview },
       {
         id: "02",
-        alt: "team rankings table fed live from Volleyball NSW",
+        alt: "home, team and events pages on phones",
         node: (
           <ImagePreview
-            src="/projects/provolley/rankings.png"
-            alt="ProVolley team rankings and statistics table with played, wins, losses, win rate, points and ladder position for every team"
+            src="/projects/provolley/mobile.jpg"
+            alt="ProVolley on three phones: the Elevate your game home page, the Women's Premier team page with season record cards, and the events calendar"
             width={2560}
             height={1600}
-            background={PROVOLLEY_PAGE_BG}
+            background={SHOWCASE_BG}
           />
         ),
       },
       {
         id: "03",
-        alt: "events calendar with trials and socials",
+        alt: "team page with season record",
         node: (
           <ImagePreview
-            src="/projects/provolley/calendar.png"
-            alt="ProVolley events calendar for September 2026 with colour-coded trials and Thursday mixed socials"
-            width={2880}
-            height={1800}
-            background="#ffffff"
+            src="/projects/provolley/desktop-team.jpg"
+            alt="ProVolley Women's Premier team page on desktop with season record cards: 13 played, 12 wins, 1 loss, 92% win rate, 37 points"
+            width={2560}
+            height={1600}
+            background={SHOWCASE_BG}
           />
         ),
       },
       {
         id: "04",
-        alt: "team page with live season record",
+        alt: "team rankings and statistics",
         node: (
           <ImagePreview
-            src="/projects/provolley/team.jpg"
-            alt="ProVolley Women's Premier team page with season record cards: 13 played, 12 wins, 92% win rate, 1st of 10 on the ladder"
+            src="/projects/provolley/desktop-rankings.jpg"
+            alt="ProVolley team rankings and statistics table on desktop with played, wins, losses, win rate, points and ladder position for every team"
             width={2560}
             height={1600}
-            background="#0a1f4c"
+            background={SHOWCASE_BG}
           />
         ),
       },
-      { id: "05", alt: "Inner West Volley homepage hero", node: innerwestPreview },
+      { id: "05", alt: "Inner West Volley home page on desktop and phone", node: innerwestPreview },
       {
         id: "06",
-        alt: "Inner West Volley programs section",
+        alt: "home, programs and teams pages on phones",
         node: (
           <ImagePreview
-            src="/projects/innerwest/programs.jpg"
-            alt="Inner West Volley programs section: Junior Advanced Program, Junior Development Program and School Holiday Camps cards"
+            src="/projects/innerwest/mobile.jpg"
+            alt="Inner West Volley on three phones: the Your favourite volleyball club in Sydney home page, the programs page and the teams page"
             width={2560}
             height={1600}
-            background={INNERWEST_PAGE_BG}
+            background={SHOWCASE_BG}
           />
         ),
       },
       {
         id: "07",
-        alt: "Inner West Volley teams page",
+        alt: "teams page with season records",
         node: (
           <ImagePreview
-            src="/projects/innerwest/teams.jpg"
-            alt="Inner West Volley teams page with each team's season record fed from Volleyball NSW"
+            src="/projects/innerwest/desktop-teams.jpg"
+            alt="Inner West Volley teams page on desktop, with each team's season record fed from Volleyball NSW"
             width={2560}
             height={1600}
-            background={INNERWEST_PAGE_BG}
+            background={SHOWCASE_BG}
           />
         ),
       },
@@ -505,43 +501,43 @@ const projectsUnordered: Project[] = [
     liveUrl: "https://welcomeblossom.com.au",
     liveLabel: "welcomeblossom.com.au",
     gallery: [
-      { id: "01", alt: "Welcome Blossom homepage hero", node: welcomeBlossomPreview },
+      { id: "01", alt: "Welcome Blossom home page on desktop and phone", node: welcomeBlossomPreview },
       {
         id: "02",
-        alt: "gallery of arrangements from the shop",
+        alt: "home, gallery and services pages on phones",
         node: (
           <ImagePreview
-            src="/projects/welcome-blossom/gallery.jpg"
-            alt="Welcome Blossom gallery page, recent arrangements from the shop in torn-paper frames"
+            src="/projects/welcome-blossom/mobile.jpg"
+            alt="Welcome Blossom on three phones: the floral home page, the From the shop gallery and the services page"
             width={2560}
             height={1600}
-            background={WELCOME_BLOSSOM_BG}
+            background={SHOWCASE_BG}
           />
         ),
       },
       {
         id: "03",
-        alt: "services page, weddings",
+        alt: "gallery of recent arrangements",
         node: (
           <ImagePreview
-            src="/projects/welcome-blossom/services.jpg"
-            alt="Welcome Blossom services page, weddings section with three arrangement photos"
+            src="/projects/welcome-blossom/desktop-gallery.jpg"
+            alt="Welcome Blossom gallery page on desktop, recent arrangements from the shop in torn-paper frames"
             width={2560}
             height={1600}
-            background={WELCOME_BLOSSOM_BG}
+            background={SHOWCASE_BG}
           />
         ),
       },
       {
         id: "04",
-        alt: "contact page with enquiry form and opening hours",
+        alt: "contact page with enquiry form",
         node: (
           <ImagePreview
-            src="/projects/welcome-blossom/contact.jpg"
-            alt="Welcome Blossom contact page with shop details, opening hours card and the enquiry form"
-            width={2880}
-            height={1800}
-            background={WELCOME_BLOSSOM_BG}
+            src="/projects/welcome-blossom/desktop-contact.jpg"
+            alt="Welcome Blossom contact page on desktop with shop details, opening hours card and the enquiry form"
+            width={2560}
+            height={1600}
+            background={SHOWCASE_BG}
           />
         ),
       },
@@ -631,7 +627,7 @@ const projectsUnordered: Project[] = [
             alt="ProSporter on three phones: the Play in your colours home page, the jerseys collection with filters, and a jersey product page"
             width={2560}
             height={1600}
-            background={PROSPORTER_PAGE_BG}
+            background={SHOWCASE_BG}
           />
         ),
       },
@@ -644,7 +640,7 @@ const projectsUnordered: Project[] = [
             alt="ProSporter jerseys collection on desktop, with availability, gender, colour, size and price filters beside the product grid"
             width={2560}
             height={1600}
-            background={PROSPORTER_PAGE_BG}
+            background={SHOWCASE_BG}
           />
         ),
       },
@@ -657,7 +653,7 @@ const projectsUnordered: Project[] = [
             alt="ProSporter product page for the Carrum Downs Royals away jersey: image, price, size and colour pickers and product details"
             width={2560}
             height={1600}
-            background={PROSPORTER_PAGE_BG}
+            background={SHOWCASE_BG}
           />
         ),
       },
