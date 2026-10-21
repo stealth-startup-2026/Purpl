@@ -727,11 +727,11 @@ const projectsUnordered: Project[] = [
   {
     // Client work under wraps: keep the client and product unnamed until launch.
     id: "3d-configurator",
-    brand: "3D configurator",
+    brand: "3D configurator + website",
     subtitle: "for modular retail fixtures",
     category: "client work",
     description:
-      "Lay out store floors from a modular fixture system in real-time 3D, built on the manufacturer's own 3D models, plus the 3D-first website for the range.",
+      "A real-time 3D configuration engine and marketing website for a modular retail shelving and accessories system.",
     detail: [
       "A real-time 3D configuration engine and marketing website for a modular retail shelving and accessories system. Currently in development; client details are confidential until launch.",
       { heading: "The configurator" },
