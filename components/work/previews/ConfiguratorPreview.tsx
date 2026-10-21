@@ -76,8 +76,8 @@ function draw({ origin: [ox, oy], scale: s, uprights, height, rails, placed, tod
 
 // Being configured: a single bay, half built on the floor grid.
 const configuring = draw({
-  origin: [86, 158],
-  scale: 1.05,
+  origin: [74, 157],
+  scale: 1.6,
   uprights: [-CELL, CELL],
   height: 55,
   rails: [30, 45],
@@ -88,8 +88,8 @@ const configuring = draw({
 
 // On the website: a finished, wider two-bay run, fully stocked.
 const finished = draw({
-  origin: [244, 120],
-  scale: 0.5,
+  origin: [226, 121],
+  scale: 0.78,
   uprights: [-2 * CELL, 0, 2 * CELL],
   height: 62,
   rails: [62],
@@ -103,7 +103,8 @@ const finished = draw({
 });
 
 // A browser window showing the website for the range.
-const SITE = { x: 176, y: 52, w: 124, h: 120, bar: 9 };
+// Sized and placed to balance the bay, centred in the area below the banner.
+const SITE = { x: 154, y: 43, w: 150, h: 140, bar: 9 };
 const text = (x: number, y: number, widths: number[]) =>
   widths.map((w, i) => (
     <rect key={i} x={x} y={y + i * 4.2} width={w} height="2.2" rx="0.8" fill={LINE} fillOpacity={i === 0 ? 0.85 : 0.25} />
@@ -128,7 +129,7 @@ export function ConfiguratorPreview() {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        {configuring.floor(3)}
+        {configuring.floor(2)}
         {configuring.body}
 
         <rect x={x} y={y + 2.5} width={w} height={h} rx="3" fill="#000" fillOpacity="0.06" stroke="none" />
@@ -138,13 +139,13 @@ export function ConfiguratorPreview() {
           <circle key={i} cx={x + 5 + i * 4} cy={y + bar / 2} r="1.1" fill={LINE} fillOpacity="0.35" stroke="none" />
         ))}
         {/* Hero footage: the finished fixture, with a play mark for the loop */}
-        <rect x={x + 7} y={y + 16} width={w - 14} height="58" rx="1.5" fill={TOP} stroke="none" />
+        <rect x={x + 8} y={y + 17} width={w - 16} height="70" rx="1.5" fill={TOP} stroke="none" />
         {finished.body}
-        <circle cx={x + 18} cy={y + 66} r="5" fill={PAGE} fillOpacity="0.9" stroke="none" />
-        <path d={`M${x + 16.6} ${y + 63.6} L${x + 20.6} ${y + 66} L${x + 16.6} ${y + 68.4} Z`} fill={LINE} fillOpacity="0.8" stroke="none" />
-        <g stroke="none">{text(x + 7, y + 82, [62, 84, 70])}</g>
-        <rect x={x + 7} y={y + 98} width="26" height="9" rx="1.5" fill={LINE} fillOpacity="0.85" stroke="none" />
-        <rect x={x + 36} y={y + 98} width="26" height="9" rx="1.5" strokeOpacity="0.5" strokeWidth="0.6" />
+        <circle cx={x + 20} cy={y + 76} r="5.5" fill={PAGE} fillOpacity="0.9" stroke="none" />
+        <path d={`M${x + 18.5} ${y + 73.4} L${x + 22.8} ${y + 76} L${x + 18.5} ${y + 78.6} Z`} fill={LINE} fillOpacity="0.8" stroke="none" />
+        <g stroke="none">{text(x + 8, y + 97, [74, 104, 86])}</g>
+        <rect x={x + 8} y={y + 115} width="30" height="10" rx="1.5" fill={LINE} fillOpacity="0.85" stroke="none" />
+        <rect x={x + 42} y={y + 115} width="30" height="10" rx="1.5" strokeOpacity="0.5" strokeWidth="0.6" />
       </svg>
       {/* Status banner across the top, in the title purple. Sized to the tile
           (cqw), so it reads the same on cards, thumbnails and full size. */}
