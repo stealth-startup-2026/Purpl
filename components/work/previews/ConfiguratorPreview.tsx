@@ -114,7 +114,7 @@ const text = (x: number, y: number, widths: number[]) =>
  * Preview tile for the 3D configurator and website (client work, in progress).
  * Left, a single shelving bay half built on a floor grid, as in the
  * configurator: placed parts solid, parts still to come dashed. Right, the
- * website for the range, with a finished fixture in its looping hero footage.
+ * website for the range, with a finished fixture in its hero.
  * Stands in until there are screenshots we can show publicly.
  */
 export function ConfiguratorPreview() {
@@ -138,11 +138,9 @@ export function ConfiguratorPreview() {
         {[0, 1, 2].map((i) => (
           <circle key={i} cx={x + 5 + i * 4} cy={y + bar / 2} r="1.1" fill={LINE} fillOpacity="0.35" stroke="none" />
         ))}
-        {/* Hero footage: the finished fixture, with a play mark for the loop */}
+        {/* Hero: the finished fixture */}
         <rect x={x + 8} y={y + 17} width={w - 16} height="70" rx="1.5" fill={TOP} stroke="none" />
         {finished.body}
-        <circle cx={x + 20} cy={y + 76} r="5.5" fill={PAGE} fillOpacity="0.9" stroke="none" />
-        <path d={`M${x + 18.5} ${y + 73.4} L${x + 22.8} ${y + 76} L${x + 18.5} ${y + 78.6} Z`} fill={LINE} fillOpacity="0.8" stroke="none" />
         <g stroke="none">{text(x + 8, y + 97, [74, 104, 86])}</g>
         <rect x={x + 8} y={y + 115} width="30" height="10" rx="1.5" fill={LINE} fillOpacity="0.85" stroke="none" />
         <rect x={x + 42} y={y + 115} width="30" height="10" rx="1.5" strokeOpacity="0.5" strokeWidth="0.6" />

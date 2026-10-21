@@ -6,7 +6,7 @@ import styles from "./InnerwestPreview.module.css";
 /**
  * Preview tile for Inner West Volley (client work, live at innerwestvolley.com.au).
  * The home page on desktop and phone, captured from the live site and framed on
- * a soft ground (desktop 1440x900 @2x, phone 390x844 @3x).
+ * a ground in the brand colour (desktop 1440x900 @2x, phone 390x844 @3x).
  */
 export function InnerwestPreview() {
   return (
