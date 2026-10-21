@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { X } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './StudioIndex.module.css';
 
@@ -70,12 +69,10 @@ export function StudioIndex({ onWork }: { onWork?: () => void }) {
           if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) close();
         }}
       >
-        <div className={styles.sheet}>
-          <div className={styles.heading}>
-            <button type="button" className={styles.close} onClick={close} aria-label="Close menu" autoFocus>
-              <X size={19} strokeWidth={1.25} />
-            </button>
-          </div>
+        {/* No close button inside: the menu lines above turn into an X while open,
+            and a click there lands on the backdrop, which closes the menu. Escape
+            also closes it. Focus starts on the sheet so no link looks preselected. */}
+        <div className={styles.sheet} tabIndex={-1} autoFocus>
           <nav aria-label="Main navigation" className={styles.links}>
             <Link href={onWork ? '#folder-projects' : '/#folder-projects'} className={styles.item} onClick={event => { close(); if (onWork) { event.preventDefault(); onWork(); } }}>
               our work
